@@ -310,6 +310,24 @@ public final class FileHelper {
     }
 
     /**
+     * Method to determine the directory depth of the file system object.
+     *
+     * @return
+     */
+    public static int getDepth(FileSystemObject file)
+    {
+        String mParent = file.getParent();
+        if(mParent == null)
+            return 0;
+        return mParent.split("/").length;
+    }
+
+    public static File getFile(FileSystemObject file)
+    {
+        return new File(FileHelper.addTrailingSlash(file.getParent()) + file.getName());
+    }
+
+    /**
      * Method that returns the parent directory of a file/folder
      *
      * @param path The file/folder

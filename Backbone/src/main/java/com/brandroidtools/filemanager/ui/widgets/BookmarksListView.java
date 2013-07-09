@@ -17,7 +17,6 @@
 
 package com.brandroidtools.filemanager.ui.widgets;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.database.Cursor;
@@ -38,7 +37,6 @@ import com.brandroidtools.filemanager.bus.events.BookmarkDeleteEvent;
 import com.brandroidtools.filemanager.bus.events.BookmarkOpenEvent;
 import com.brandroidtools.filemanager.bus.events.BookmarkRefreshEvent;
 import com.brandroidtools.filemanager.model.Bookmark;
-import com.brandroidtools.filemanager.model.FileSystemStorageVolume;
 import com.brandroidtools.filemanager.preferences.AccessMode;
 import com.brandroidtools.filemanager.preferences.Bookmarks;
 import com.brandroidtools.filemanager.preferences.FileManagerSettings;
@@ -59,7 +57,7 @@ import java.util.List;
  */
 public class BookmarksListView extends ListView implements OnItemClickListener, OnClickListener {
 
-    private static final String TAG = "BookmarksListView"; //$NON-NLS-1$
+    private static final String TAG = "BB.BookmarksListView"; //$NON-NLS-1$
 
     // Bookmark list XML tags
     private static final String TAG_BOOKMARKS = "Bookmarks"; //$NON-NLS-1$
@@ -336,17 +334,18 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
 
         try {
             //Recovery sdcards from storage manager
-            FileSystemStorageVolume[] volumes = StorageHelper.getStorageVolumes(mActivity);
+            Object[] volumes = StorageHelper.getStorageVolumes(mActivity);
             int cc = volumes.length;
             for (int i = 0; i < cc ; i++) {
-                if (volumes[i].getPath().toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
+                String path = StorageHelper.getStoragePath(volumes[i]);
+                if (path.toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
                     bookmarks.add(
                             new Bookmark(
                                     Bookmark.BOOKMARK_TYPE.USB,
                                     Bookmark.BOOKMARK_CATEGORY.LOCATIONS,
                                     StorageHelper.getStorageVolumeDescription(
                                             mActivity, volumes[i]),
-                                    volumes[i].getPath()));
+                                    path));
                 } else {
                     bookmarks.add(
                             new Bookmark(
@@ -354,7 +353,7 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
                                     Bookmark.BOOKMARK_CATEGORY.LOCATIONS,
                                     StorageHelper.getStorageVolumeDescription(
                                             mActivity, volumes[i]),
-                                    volumes[i].getPath()));
+                                    path));
                 }
             }
 

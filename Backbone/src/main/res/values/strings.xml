@@ -178,6 +178,7 @@
     <string name="parent_dir">Parent folder</string>
     <!-- External storage descripton -->
     <string name="external_storage">External storage</string>
+    <string name="internal_storage">Internal storage</string>
     <!-- Usb storage descripton -->
     <string name="usb_storage">USB storage</string>
 

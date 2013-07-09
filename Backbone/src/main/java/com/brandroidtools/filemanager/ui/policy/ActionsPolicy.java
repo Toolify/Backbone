@@ -33,7 +33,7 @@ import com.brandroidtools.filemanager.util.ExceptionUtil;
 public abstract class ActionsPolicy {
 
     /**
-     * An interface for using in conjunction with AsyncTask for have
+     * An interface for using in conjunction with ImageAsyncTask for have
      * a
      */
     protected interface BackgroundCallable {

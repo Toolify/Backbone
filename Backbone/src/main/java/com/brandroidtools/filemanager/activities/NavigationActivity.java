@@ -1425,11 +1425,12 @@ public class NavigationActivity extends Activity
         this.mChRooted = true;
 
         //Change to first storage volume
-        FileSystemStorageVolume[] volumes =
+        Object[] volumes =
                 StorageHelper.getStorageVolumes(this);
         if (volumes != null && volumes.length > 0) {
             for (int x = 0; x < mPagerAdapter.getCount();x++) {
-                mPagerAdapter.getFragment(mViewPager, x).enterChRooted(volumes[0].getPath());
+                mPagerAdapter.getFragment(mViewPager, x).enterChRooted(
+                        StorageHelper.getStoragePath(volumes[0]));
             }
         }
 

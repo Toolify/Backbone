@@ -53,6 +53,9 @@ import com.brandroidtools.filemanager.parcelables.SearchInfoParcelable;
 import com.brandroidtools.filemanager.preferences.*;
 import com.brandroidtools.filemanager.ui.ThemeManager;
 import com.brandroidtools.filemanager.actionmode.SelectionModeCallback;
+import com.brandroidtools.filemanager.ui.image.ImageCache;
+import com.brandroidtools.filemanager.ui.image.ImageCache.ImageCacheParams;
+import com.brandroidtools.filemanager.ui.image.ImageFetcher;
 import com.brandroidtools.filemanager.ui.policy.*;
 import com.brandroidtools.filemanager.ui.widgets.*;
 import com.brandroidtools.filemanager.ui.widgets.FlingerListView.OnItemFlingerListener;
@@ -64,6 +67,7 @@ public class NavigationFragment extends Fragment implements
         OnHistoryListener, OnSelectionChangedListener, OnSelectionListener, OnRequestRefreshListener {
 
     private static final String TAG = "NavigationFragment"; //$NON-NLS-1$
+    private static final String IMAGE_CACHE_DIR = "thumbs";
 
     /**
      * An interface to communicate a request for show the menu associated
@@ -182,6 +186,10 @@ public class NavigationFragment extends Fragment implements
 
     public List<History> mHistory;
 
+    private int mImageThumbSize;
+    private int mImageThumbSpacing;
+    private ImageFetcher mImageFetcher;
+
     private final Object mSync = new Object();
 
     private OnHistoryListener mOnHistoryListener;
@@ -211,7 +219,7 @@ public class NavigationFragment extends Fragment implements
     /**
      * @hide
      */
-    AdapterView<?> mAdapterView;
+    AbsListView mAdapterView;
     /**
      * @hide
      */
@@ -241,6 +249,19 @@ public class NavigationFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = (NavigationActivity)getActivity();
+
+        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.navigation_row_height);
+
+        //TODO: This should also be set every time the view mode (list, grid) is changed
+        ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
+
+        //TODO: Make a way for mImageFetchers to share the same % of cache
+        cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.fso_type_image_drawable);
+        mImageFetcher.addImageCache(getActivity().getFragmentManager(), cacheParams);
     }
 
     @Override
@@ -277,6 +298,79 @@ public class NavigationFragment extends Fragment implements
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        mImageFetcher.setExitTasksEarly(false);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mImageFetcher.setPauseWork(false);
+        mImageFetcher.setExitTasksEarly(true);
+        mImageFetcher.flushCache();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageFetcher.closeCache();
+    }
+
+    /**
+     * Invoked when the instance need to be saved.
+     *
+     * @return NavigationViewInfoParcelable The serialized info
+     */
+    public NavigationViewInfoParcelable onSaveState() {
+        int top;
+
+        //Return the persistent the data
+        NavigationViewInfoParcelable parcel = new NavigationViewInfoParcelable();
+        parcel.setId(this.mId);
+        parcel.setCurrentDir(this.mCurrentDir);
+        parcel.setChRooted(this.mChRooted);
+        parcel.setSelectedFiles(this.mAdapter.getSelectedItems());
+        parcel.setFiles(this.mFiles);
+        parcel.setScrollIndex(this.mAdapterView.getFirstVisiblePosition());
+        if (this.mAdapterView instanceof ListView) {
+            View topView = this.mAdapterView.getChildAt(0);
+            top = (topView == null) ? 0 : topView.getTop();
+        } else {
+            top = 0;
+        }
+        parcel.setScrollIndexOffset(top);
+        return parcel;
+    }
+
+    /**
+     * Invoked when the instance need to be restored.
+     *
+     * @param info The serialized info
+     */
+    public void onRestoreState(NavigationViewInfoParcelable info) {
+        //Restore the data
+        this.mId = info.getId();
+        this.mCurrentDir = info.getCurrentDir();
+        this.mChRooted = info.getChRooted();
+        this.mFiles = info.getFiles();
+        this.mAdapter.setSelectedItems(info.getSelectedFiles());
+
+        //Update the views
+        refresh(info.getScrollIndex(), info.getScrollIndexOffset());
+    }
+
+    /**
      * Create a new instance of FileListFragment, providing "num" as an
      * argument.
      */
@@ -301,6 +395,69 @@ public class NavigationFragment extends Fragment implements
         } finally {
             a.recycle();
         }
+    }
+
+    /**
+     * Method that initializes the view. This method loads all the necessary
+     * information and create an appropriate layout for the view.
+     *
+     * @param tarray The type array
+     */
+    private void init(TypedArray tarray) {
+        // Retrieve the mode
+        this.mNavigationMode = NAVIGATION_MODE.BROWSABLE;
+        int mode = tarray.getInteger(
+                R.styleable.Navigable_navigation,
+                NAVIGATION_MODE.BROWSABLE.ordinal());
+        if (mode >= 0 && mode < NAVIGATION_MODE.values().length) {
+            this.mNavigationMode = NAVIGATION_MODE.values()[mode];
+        }
+
+        // Initialize default restrictions (no restrictions)
+        this.mRestrictions = new HashMap<DisplayRestrictions, Object>();
+
+        //Initialize variables
+        this.mFiles = new ArrayList<FileSystemObject>();
+
+        // Is ChRooted environment?
+        if (this.mNavigationMode.compareTo(NAVIGATION_MODE.PICKABLE) == 0) {
+            // Pick mode is always ChRooted
+            this.mChRooted = true;
+        } else {
+            this.mChRooted =
+                    FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
+        }
+
+        //Retrieve the default configuration
+        if (this.mNavigationMode.compareTo(NAVIGATION_MODE.BROWSABLE) == 0) {
+            SharedPreferences preferences = Preferences.getSharedPreferences();
+            int viewMode = preferences.getInt(
+                    FileManagerSettings.SETTINGS_LAYOUT_MODE.getId(),
+                    ((ObjectIdentifier)FileManagerSettings.
+                            SETTINGS_LAYOUT_MODE.getDefaultValue()).getId());
+            changeViewMode(NavigationLayoutMode.fromId(viewMode));
+        } else {
+            // Pick mode has always a details layout
+            changeViewMode(NavigationLayoutMode.DETAILS);
+        }
+
+        mAdapterView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                // Pause fetcher to ensure smoother scrolling when flinging
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    mImageFetcher.setPauseWork(true);
+                } else {
+                    mImageFetcher.setPauseWork(false);
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+            }
+        });
+
     }
 
     /**
@@ -349,10 +506,10 @@ public class NavigationFragment extends Fragment implements
         if (this.mChRooted) {
             // Initial directory is the first external sdcard (sdcard, emmc, usb, ...)
             if (!StorageHelper.isPathInStorageVolume(initialDir)) {
-                FileSystemStorageVolume[] volumes =
+                Object[] volumes =
                         StorageHelper.getStorageVolumes(mActivity);
                 if (volumes != null && volumes.length > 0) {
-                    initialDir = volumes[0].getPath();
+                    initialDir = StorageHelper.getStoragePath(volumes[0]);
                     //Ensure that initial directory is an absolute directory
                     initialDir = FileHelper.getAbsPath(initialDir);
                 } else {
@@ -429,94 +586,6 @@ public class NavigationFragment extends Fragment implements
                         R.string.msgs_settings_invalid_initial_directory,
                         initialDir),
                 Toast.LENGTH_SHORT);
-    }
-
-    /**
-     * Invoked when the instance need to be saved.
-     *
-     * @return NavigationViewInfoParcelable The serialized info
-     */
-    public NavigationViewInfoParcelable onSaveState() {
-        int top;
-
-        //Return the persistent the data
-        NavigationViewInfoParcelable parcel = new NavigationViewInfoParcelable();
-        parcel.setId(this.mId);
-        parcel.setCurrentDir(this.mCurrentDir);
-        parcel.setChRooted(this.mChRooted);
-        parcel.setSelectedFiles(this.mAdapter.getSelectedItems());
-        parcel.setFiles(this.mFiles);
-        parcel.setScrollIndex(this.mAdapterView.getFirstVisiblePosition());
-        if (this.mAdapterView instanceof ListView) {
-            View topView = this.mAdapterView.getChildAt(0);
-            top = (topView == null) ? 0 : topView.getTop();
-        } else {
-            top = 0;
-        }
-        parcel.setScrollIndexOffset(top);
-        return parcel;
-    }
-
-    /**
-     * Invoked when the instance need to be restored.
-     *
-     * @param info The serialized info
-     */
-    public void onRestoreState(NavigationViewInfoParcelable info) {
-        //Restore the data
-        this.mId = info.getId();
-        this.mCurrentDir = info.getCurrentDir();
-        this.mChRooted = info.getChRooted();
-        this.mFiles = info.getFiles();
-        this.mAdapter.setSelectedItems(info.getSelectedFiles());
-
-        //Update the views
-        refresh(info.getScrollIndex(), info.getScrollIndexOffset());
-    }
-
-    /**
-     * Method that initializes the view. This method loads all the necessary
-     * information and create an appropriate layout for the view.
-     *
-     * @param tarray The type array
-     */
-    private void init(TypedArray tarray) {
-        // Retrieve the mode
-        this.mNavigationMode = NAVIGATION_MODE.BROWSABLE;
-        int mode = tarray.getInteger(
-                R.styleable.Navigable_navigation,
-                NAVIGATION_MODE.BROWSABLE.ordinal());
-        if (mode >= 0 && mode < NAVIGATION_MODE.values().length) {
-            this.mNavigationMode = NAVIGATION_MODE.values()[mode];
-        }
-
-        // Initialize default restrictions (no restrictions)
-        this.mRestrictions = new HashMap<DisplayRestrictions, Object>();
-
-        //Initialize variables
-        this.mFiles = new ArrayList<FileSystemObject>();
-
-        // Is ChRooted environment?
-        if (this.mNavigationMode.compareTo(NAVIGATION_MODE.PICKABLE) == 0) {
-            // Pick mode is always ChRooted
-            this.mChRooted = true;
-        } else {
-            this.mChRooted =
-                    FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
-        }
-
-        //Retrieve the default configuration
-        if (this.mNavigationMode.compareTo(NAVIGATION_MODE.BROWSABLE) == 0) {
-            SharedPreferences preferences = Preferences.getSharedPreferences();
-            int viewMode = preferences.getInt(
-                    FileManagerSettings.SETTINGS_LAYOUT_MODE.getId(),
-                    ((ObjectIdentifier)FileManagerSettings.
-                            SETTINGS_LAYOUT_MODE.getDefaultValue()).getId());
-            changeViewMode(NavigationLayoutMode.fromId(viewMode));
-        } else {
-            // Pick mode has always a details layout
-            changeViewMode(NavigationLayoutMode.DETAILS);
-        }
     }
 
     /**
@@ -806,15 +875,15 @@ public class NavigationFragment extends Fragment implements
                                     getDefaultValue()).booleanValue());
 
             //Creates the new layout
-            AdapterView<ListAdapter> newView = null;
+            AbsListView newView = null;
             int itemResourceId = -1;
             if (newMode.compareTo(NavigationLayoutMode.ICONS) == 0) {
-                newView = (AdapterView<ListAdapter>)mNavigationViewHolder.inflate(
+                newView = (AbsListView)mNavigationViewHolder.inflate(
                         mActivity, RESOURCE_MODE_ICONS_LAYOUT, null);
                 itemResourceId = RESOURCE_MODE_ICONS_ITEM;
 
             } else if (newMode.compareTo(NavigationLayoutMode.SIMPLE) == 0) {
-                newView =  (AdapterView<ListAdapter>)mNavigationViewHolder.inflate(
+                newView =  (AbsListView)mNavigationViewHolder.inflate(
                         mActivity, RESOURCE_MODE_SIMPLE_LAYOUT, null);
                 itemResourceId = RESOURCE_MODE_SIMPLE_ITEM;
 
@@ -827,7 +896,7 @@ public class NavigationFragment extends Fragment implements
                 }
 
             } else if (newMode.compareTo(NavigationLayoutMode.DETAILS) == 0) {
-                newView =  (AdapterView<ListAdapter>)mNavigationViewHolder.inflate(
+                newView =  (AbsListView)mNavigationViewHolder.inflate(
                         mActivity, RESOURCE_MODE_DETAILS_LAYOUT, null);
                 itemResourceId = RESOURCE_MODE_DETAILS_ITEM;
 
@@ -849,7 +918,8 @@ public class NavigationFragment extends Fragment implements
                             mActivity,
                             new ArrayList<FileSystemObject>(),
                             itemResourceId,
-                            this.mNavigationMode.compareTo(NAVIGATION_MODE.PICKABLE) == 0);
+                            this.mNavigationMode.compareTo(NAVIGATION_MODE.PICKABLE) == 0,
+                            mImageFetcher);
             adapter.setOnSelectionChangedListener(this);
 
             //Remove current layout
@@ -1589,9 +1659,9 @@ public class NavigationFragment extends Fragment implements
 
         // Check if the path is owned by one of the storage volumes
         if (!StorageHelper.isPathInStorageVolume(newDir)) {
-            FileSystemStorageVolume[] volumes = StorageHelper.getStorageVolumes(mActivity);
+            Object[] volumes = StorageHelper.getStorageVolumes(mActivity);
             if (volumes != null && volumes.length > 0) {
-                return volumes[0].getPath();
+                return StorageHelper.getStoragePath(volumes[0]);
             }
         }
         return newDir;

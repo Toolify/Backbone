@@ -23,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.brandroidtools.filemanager.R;
@@ -38,8 +40,10 @@ import com.brandroidtools.filemanager.model.ParentDirectory;
 import com.brandroidtools.filemanager.ui.IconHolder;
 import com.brandroidtools.filemanager.ui.ThemeManager;
 import com.brandroidtools.filemanager.ui.ThemeManager.Theme;
+import com.brandroidtools.filemanager.ui.image.ImageFetcher;
 import com.brandroidtools.filemanager.util.FileHelper;
 import com.brandroidtools.filemanager.util.MimeTypeHelper;
+import com.brandroidtools.filemanager.util.MimeTypeHelper.MimeTypeCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +100,7 @@ public class FileSystemObjectAdapter
         String mName;
         String mSummary;
         String mSize;
+        String mImagePath;
         boolean mDynamic;
     }
 
@@ -105,6 +110,7 @@ public class FileSystemObjectAdapter
     private final int mItemViewResourceId;
     private List<FileSystemObject> mSelectedItems;
     private final boolean mPickable;
+    private ImageFetcher mImageFetcher;
 
     private OnSelectionChangedListener mOnSelectionChangedListener;
 
@@ -130,12 +136,13 @@ public class FileSystemObjectAdapter
      */
     public FileSystemObjectAdapter(
             Context context, List<FileSystemObject> files,
-            int itemViewResourceId, boolean pickable) {
+            int itemViewResourceId, boolean pickable, ImageFetcher imageFetcher) {
         super(context, RESOURCE_ITEM_NAME, files);
         this.mIconHolder = new IconHolder();
         this.mItemViewResourceId = itemViewResourceId;
         this.mSelectedItems = new ArrayList<FileSystemObject>();
         this.mPickable = pickable;
+        this.mImageFetcher = imageFetcher;
 
         //Do cache of the data for better performance
         loadDefaultIcons();
@@ -236,23 +243,14 @@ public class FileSystemObjectAdapter
                                 getContext(), "checkbox_deselected_drawable"); //$NON-NLS-1$
             }
             this.mData[i].mDynamic = MimeTypeHelper.getIsDynamic(getContext(), fso);
+            this.mData[i].mImagePath = null;
             if (this.mData[i].mDynamic) {
-                // Produce specific icon for file (e.g. apk or image thumbnail)
-                // TODO: Generate lazy loader instead of loading icon during processData()
+                // Produce specific icon for file (e.g. apk or image thumbnail) and store it
                 if (FileHelper.getExtension(fso).equals("apk")) {
-                    String filePath = fso.getFullPath();
-                    PackageInfo packageInfo = getContext().getPackageManager().getPackageArchiveInfo(
-                            filePath, PackageManager.GET_ACTIVITIES);
-                    if (packageInfo != null) {
-                        ApplicationInfo appInfo = packageInfo.applicationInfo;
-                        if (Build.VERSION.SDK_INT >= 8) {
-                            appInfo.sourceDir = filePath;
-                            appInfo.publicSourceDir = filePath;
-                        }
-                        this.mData[i].mDwIcon = appInfo.loadIcon(getContext().getPackageManager());
-                    }
-                } else if (MimeTypeHelper.getCategory(getContext(), fso).equals("IMAGE")) {
-                    // TODO: generate thumbnail for dynamic image
+                    this.mData[i].mImagePath = fso.getFullPath();
+                } else if (MimeTypeHelper.getCategory(getContext(), fso) == MimeTypeCategory.IMAGE) {
+                    // Gather image file path for lazy loading
+                    this.mData[i].mImagePath = fso.getFullPath();
                 } else {
                     // Icon is marked as dynamic in mimetypes.properties but wasn't handled above
                     this.mData[i].mDwIcon = this.mIconHolder.getDrawable(
@@ -277,7 +275,7 @@ public class FileSystemObjectAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Check to reuse view
-        View v = convertView;
+        View v = null;
         if (v == null) {
             //Create the view holder
             LayoutInflater li =
@@ -304,6 +302,24 @@ public class FileSystemObjectAdapter
         //Retrieve the view holder
         ViewHolder viewHolder = (ViewHolder)v.getTag();
 
+        //TODO: Handling image thumbnails and apk icons via these extra imageViews is messy and
+        //probably overly memory intensive.  Need to figure out a way to make the imageFetcher
+        //squash those "dyamic" bitmaps into the drawable this thing started out with: mIvIcon
+
+        //Gather image thumbnail or generate apk icon if it hasn't been generated yet
+        if (this.mData[position].mImagePath != null && !this.mData[position].mImagePath.isEmpty()) {
+            viewHolder.mIvIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams)viewHolder.mIvIcon.getLayoutParams());
+            if(lp != null)
+            {
+                lp.setMargins(0, 0, 0, 0);
+                viewHolder.mIvIcon.setLayoutParams(lp);
+            }
+            mImageFetcher.loadImage(this.mData[position].mImagePath, viewHolder.mIvIcon);
+        } else {
+            viewHolder.mIvIcon.setImageDrawable(dataHolder.mDwIcon);
+        }
+
         // Apply the current theme
         Theme theme = ThemeManager.getCurrentTheme(getContext());
         theme.setBackgroundDrawable(
@@ -322,7 +338,6 @@ public class FileSystemObjectAdapter
         }*/
 
         //Set the data
-        viewHolder.mIvIcon.setImageDrawable(dataHolder.mDwIcon);
         viewHolder.mTvName.setText(dataHolder.mName);
         if (viewHolder.mTvSummary != null) {
             viewHolder.mTvSummary.setText(dataHolder.mSummary);
@@ -380,13 +395,12 @@ public class FileSystemObjectAdapter
         if (this.mData != null) {
             Theme theme = ThemeManager.getCurrentTheme(getContext());
             int cc = this.mData.length;
-            for (int i = 0; i < cc; i++) {
-                DataHolder data = this.mData[i];
+            for (DataHolder data : this.mData) {
                 if (data.mName.compareTo(fso.getName()) == 0) {
                     //Select/Deselect the item
                     data.mSelected = !data.mSelected;
                     if (v != null) {
-                        ((View)v.getParent()).setSelected(data.mSelected);
+                        ((View) v.getParent()).setSelected(data.mSelected);
                     }
                     if (data.mSelected) {
                         data.mDwCheck =
@@ -396,19 +410,19 @@ public class FileSystemObjectAdapter
                         data.mDwCheck =
                                 theme.getDrawable(
                                         getContext(),
-                                            "checkbox_deselected_drawable"); //$NON-NLS-1$
+                                        "checkbox_deselected_drawable"); //$NON-NLS-1$
                     }
                     if (v != null) {
-                        ((ImageView)v).setImageDrawable(data.mDwCheck);
+                        ((ImageView) v).setImageDrawable(data.mDwCheck);
                         if (data.mSelected) {
                             theme.setBackgroundDrawable(
                                     getContext(),
-                                    (View)v.getParent(),
+                                    (View) v.getParent(),
                                     "selectors_selected_drawable"); //$NON-NLS-1$
                         } else {
                             theme.setBackgroundDrawable(
                                     getContext(),
-                                    (View)v.getParent(),
+                                    (View) v.getParent(),
                                     "selectors_deselected_drawable"); //$NON-NLS-1$
                         }
                     }

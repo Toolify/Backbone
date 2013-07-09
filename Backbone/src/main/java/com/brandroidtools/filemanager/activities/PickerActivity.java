@@ -46,7 +46,6 @@ import com.brandroidtools.filemanager.adapters.CheckableListAdapter.CheckableIte
 import com.brandroidtools.filemanager.console.ConsoleBuilder;
 import com.brandroidtools.filemanager.fragments.NavigationFragment;
 import com.brandroidtools.filemanager.model.FileSystemObject;
-import com.brandroidtools.filemanager.model.FileSystemStorageVolume;
 import com.brandroidtools.filemanager.preferences.DisplayRestrictions;
 import com.brandroidtools.filemanager.preferences.FileManagerSettings;
 import com.brandroidtools.filemanager.preferences.Preferences;
@@ -551,7 +550,7 @@ public class PickerActivity extends FragmentActivity
      */
     private void showStorageVolumesPopUp(View anchor) {
         // Create a list (but not checkable)
-        final FileSystemStorageVolume[] volumes = StorageHelper.getStorageVolumes(PickerActivity.this);
+        final Object[] volumes = StorageHelper.getStorageVolumes(PickerActivity.this);
         List<CheckableItem> descriptions = new ArrayList<CheckableItem>();
         if (volumes != null) {
             int cc = volumes.length;
@@ -572,7 +571,8 @@ public class PickerActivity extends FragmentActivity
                 popup.dismiss();
                 if (volumes != null) {
                     PickerActivity.this.
-                            mNavigationFragment.changeCurrentDir(volumes[position].getPath());
+                            mNavigationFragment.changeCurrentDir(
+                                StorageHelper.getStoragePath(volumes[position]));
                 }
             }
         });

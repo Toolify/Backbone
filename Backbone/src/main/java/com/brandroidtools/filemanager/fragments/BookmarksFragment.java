@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -43,8 +42,6 @@ import com.brandroidtools.filemanager.bus.events.BookmarkOpenEvent;
 import com.brandroidtools.filemanager.bus.events.BookmarkRefreshEvent;
 import com.brandroidtools.filemanager.model.Bookmark;
 import com.brandroidtools.filemanager.model.Bookmark.BOOKMARK_TYPE;
-import com.brandroidtools.filemanager.model.FileSystemObject;
-import com.brandroidtools.filemanager.model.FileSystemStorageVolume;
 import com.brandroidtools.filemanager.preferences.AccessMode;
 import com.brandroidtools.filemanager.preferences.Bookmarks;
 import com.brandroidtools.filemanager.preferences.FileManagerSettings;
@@ -58,7 +55,6 @@ import com.brandroidtools.filemanager.ui.widgets.FlingerListView.OnItemFlingerRe
 import com.brandroidtools.filemanager.util.*;
 import com.squareup.otto.Subscribe;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -465,17 +461,18 @@ public class BookmarksFragment extends Fragment implements OnItemClickListener, 
 
         try {
             //Recovery sdcards from storage manager
-            FileSystemStorageVolume[] volumes = StorageHelper.getStorageVolumes(mActivity.getApplication());
+            Object[] volumes = StorageHelper.getStorageVolumes(mActivity.getApplication());
             int cc = volumes.length;
             for (int i = 0; i < cc ; i++) {
-                if (volumes[i].getPath().toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
+                String path = StorageHelper.getStoragePath(volumes[i]);
+                if (path.toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
                     bookmarks.add(
                             new Bookmark(
                                     BOOKMARK_TYPE.USB,
                                     Bookmark.BOOKMARK_CATEGORY.LOCATIONS,
                                     StorageHelper.getStorageVolumeDescription(
                                             mActivity.getApplication(), volumes[i]),
-                                    volumes[i].getPath()));
+                                    path));
                 } else {
                     bookmarks.add(
                             new Bookmark(
@@ -483,7 +480,7 @@ public class BookmarksFragment extends Fragment implements OnItemClickListener, 
                                     Bookmark.BOOKMARK_CATEGORY.LOCATIONS,
                                     StorageHelper.getStorageVolumeDescription(
                                             mActivity.getApplication(), volumes[i]),
-                                    volumes[i].getPath()));
+                                    path));
                 }
             }
 
