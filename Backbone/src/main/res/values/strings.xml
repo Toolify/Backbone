@@ -374,6 +374,8 @@
         to delete it?
     </string>
 
+    <string name="pick_file_type">Choose a File Type</string>
+
     <!-- History * History activity title -->
     <string name="history">History</string>
     <!-- History * The history is empty -->
@@ -1001,12 +1003,12 @@
     <string name="welcome_title">Welcome</string>
     <!-- Welcome Dialog * Message -->
     <string name="welcome_msg">
-        Welcome to the CyanogenMod file manager.
+        Welcome to the Backbone file manager.
         \n\nThis app allows you to explore the file system and do operations that could break
         your device. To prevent damage, the app will start in a safe, low-privileged mode.
         \n\nYou can access the advanced, full-privileged mode via Settings. It\'s your
         responsibility to ensure that an operation doesn\'t break your system.
-        \n\nThe CyanogenMod Team.\n
+        \n\nThe Toolify\\CyanogenMod Team.\n
     </string>
 
 </resources>

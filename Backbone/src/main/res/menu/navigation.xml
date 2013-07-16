@@ -38,11 +38,6 @@
             android:showAsAction="ifRoom"
             android:title="@string/actions_menu_refresh"/>
     <item
-            android:id="@+id/mnu_actions_new_directory"
-            android:icon="?attr/actionIconNewDirectory"
-            android:showAsAction="ifRoom"
-            android:title="@string/actions_menu_new_directory"/>
-    <item
             android:id="@+id/mnu_actions_new_file"
             android:icon="?attr/actionIconNewFile"
             android:showAsAction="ifRoom"

@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
@@ -40,9 +41,29 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.InflateException;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
@@ -53,13 +74,20 @@ import me.toolify.backbone.bus.BusProvider;
 import me.toolify.backbone.bus.events.BookmarkDeleteEvent;
 import me.toolify.backbone.bus.events.BookmarkOpenEvent;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
-import me.toolify.backbone.console.*;
+import me.toolify.backbone.console.Console;
+import me.toolify.backbone.console.ConsoleAllocException;
+import me.toolify.backbone.console.ConsoleBuilder;
+import me.toolify.backbone.console.NoSuchFileOrDirectory;
 import me.toolify.backbone.fragments.HistoryFragment;
 import me.toolify.backbone.fragments.NavigationFragment;
 import me.toolify.backbone.fragments.NavigationFragment.OnNavigationRequestMenuListener;
 import me.toolify.backbone.listeners.OnCopyMoveListener;
 import me.toolify.backbone.listeners.OnRequestRefreshListener;
-import me.toolify.backbone.model.*;
+import me.toolify.backbone.model.Bookmark;
+import me.toolify.backbone.model.DiskUsage;
+import me.toolify.backbone.model.FileSystemObject;
+import me.toolify.backbone.model.History;
+import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.parcelables.NavigationViewInfoParcelable;
 import me.toolify.backbone.parcelables.SearchInfoParcelable;
 import me.toolify.backbone.preferences.AccessMode;
@@ -78,17 +106,16 @@ import me.toolify.backbone.ui.policy.CopyMoveActionPolicy;
 import me.toolify.backbone.ui.policy.CopyMoveActionPolicy.COPY_MOVE_OPERATION;
 import me.toolify.backbone.ui.policy.InfoActionPolicy;
 import me.toolify.backbone.ui.policy.NewActionPolicy;
-import me.toolify.backbone.ui.widgets.*;
-import me.toolify.backbone.util.*;
-
-import com.squareup.otto.Subscribe;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import me.toolify.backbone.ui.widgets.BookmarksListView;
+import me.toolify.backbone.ui.widgets.Breadcrumb;
+import me.toolify.backbone.ui.widgets.BreadcrumbItem;
+import me.toolify.backbone.ui.widgets.BreadcrumbListener;
+import me.toolify.backbone.ui.widgets.NavigationCustomTitleView;
+import me.toolify.backbone.util.CommandHelper;
+import me.toolify.backbone.util.DialogHelper;
+import me.toolify.backbone.util.ExceptionUtil;
+import me.toolify.backbone.util.FileHelper;
+import me.toolify.backbone.util.StorageHelper;
 
 /**
  * The main navigation activity. This activity is the center of the application.
@@ -711,9 +738,15 @@ public class NavigationActivity extends Activity
                 break;
 
             //- Create new object
-            case R.id.mnu_actions_new_directory:
             case R.id.mnu_actions_new_file:
-                showInputNameDialog(item);
+                showFileTypeDialog(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which >= 0)
+                            showInputNameDialog(which);
+                        else dialog.dismiss();
+                    }
+                });
                 break;
 
             // Paste selection
@@ -996,7 +1029,7 @@ public class NavigationActivity extends Activity
 
         //Create a show the popup menu
         final ListPopupWindow popup = DialogHelper.createListPopupWindow(this, adapter, anchor);
-        popup.setOnItemClickListener(new OnItemClickListener() {
+        popup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 FileManagerSettings setting =
@@ -1258,23 +1291,27 @@ public class NavigationActivity extends Activity
     /**
      * Method that show a new dialog for input a name.
      *
-     * @param menuItem The item menu associated
+     * @param fileTypeIndex The file_type array index associated
      */
-    private void showInputNameDialog(final MenuItem menuItem) {
+    private void showInputNameDialog(final int fileTypeIndex) {
+        String[] fileTypes = getResources().getStringArray(R.array.file_types);
+        String title = fileTypes[0];
+        if(fileTypeIndex < fileTypes.length)
+            title = fileTypes[fileTypeIndex];
 
         //Show the input name dialog
         final InputNameDialog inputNameDialog =
                 new InputNameDialog(
                         this,
                         getCurrentNavigationFragment().onRequestCurrentItems(),
-                        menuItem.getTitle().toString());
+                        title);
         inputNameDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 //Retrieve the name an execute the action
                 try {
                     String name = inputNameDialog.getName();
-                    createNewFileSystemObject(menuItem.getItemId(), name);
+                    createNewFileSystemObject(fileTypeIndex, name);
 
                 } catch (InflateException e) {
                     //TODO handle this exception properly
@@ -1284,19 +1321,47 @@ public class NavigationActivity extends Activity
         inputNameDialog.show();
     }
 
+    private void showFileTypeDialog(final DialogInterface.OnClickListener onclick)
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.file_types)){
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View ret = super.getView(position, convertView, parent);
+                if(ret instanceof TextView)
+                {
+                    int res = R.drawable.ic_fso_folder_drawable;
+                    if(position == 1)
+                        res = R.drawable.ic_fso_default_drawable;
+                    Drawable d = getResources().getDrawable(res);
+                    ((TextView)ret).setCompoundDrawablePadding(8);
+                    ((TextView)ret).setCompoundDrawablesRelativeWithIntrinsicBounds(d, null, null, null);
+                    return ret;
+                }
+                return ret;
+            }
+        };
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.pick_file_type)
+                .setAdapter(adapter, onclick)
+                .setNegativeButton(R.string.cancel, onclick)
+                .create()
+                .show();
+    }
+
     /**
      * Method that create the a new file system object.
      *
-     * @param menuId The menu identifier (need to determine the fso type)
+     * @param fileTypeIndex The file_type array index
      * @param name The name of the file system object
      * @hide
      */
-    void createNewFileSystemObject(final int menuId, final String name) {
-        switch (menuId) {
-            case R.id.mnu_actions_new_directory:
+    void createNewFileSystemObject(final int fileTypeIndex, final String name) {
+        switch (fileTypeIndex) {
+            case 0:
                 NewActionPolicy.createNewDirectory(this, name, getCurrentNavigationFragment(), this);
                 break;
-            case R.id.mnu_actions_new_file:
+            case 1:
                 NewActionPolicy.createNewFile(this, name, getCurrentNavigationFragment(), this);
                 break;
             default:
