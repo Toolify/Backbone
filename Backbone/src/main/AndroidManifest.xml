@@ -16,16 +16,15 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="me.toolify.backbone"
-  android:versionCode="101"
-  android:versionName="1.0.1">
+  android:versionCode="1"
+  android:versionName="0.0.0.1">
 
-  <original-package android:name="com.brandroidtools.filemanager" />
+  <original-package android:name="me.toolify.backbone" />
 
   <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" />
 
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-  <uses-permission android:name="android.permission.SET_PREFERRED_APPLICATIONS" />
   <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
   <uses-permission android:name="android.permission.NFC"/>
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -73,15 +72,6 @@
       <meta-data
         android:name="android.app.searchable"
         android:resource="@xml/searchable" />
-    </activity>
-
-    <activity
-      android:name=".activities.BookmarksActivity"
-      android:label="@string/bookmarks"
-      android:uiOptions="none"
-      android:windowSoftInputMode="adjustNothing"
-      android:configChanges="orientation|keyboardHidden|screenSize"
-      android:exported="false">
     </activity>
 
     <activity

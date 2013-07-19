@@ -114,4 +114,14 @@
         <item>@string/pref_license_cmfm_details</item>
     </string-array>
 
+    <string-array name="file_types">
+        <item>@string/actions_menu_new_directory</item>
+        <item>@string/actions_menu_new_file</item>
+    </string-array>
+
+    <integer-array name="file_type_icons">
+        <item>@drawable/ic_fso_folder_drawable</item>
+        <item>@drawable/ic_fso_default_drawable</item>
+    </integer-array>
+
 </resources>

@@ -117,7 +117,7 @@ public class NavigationFragmentPagerAdapter extends PagerAdapter {
         }
         if (fragment != mCurrentPrimaryItem) {
             fragment.setMenuVisibility(false);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if (android.os.Build.VERSION.SDK_INT >= 15) {
             	fragment.setUserVisibleHint(false);
             }
         }
@@ -148,13 +148,13 @@ public class NavigationFragmentPagerAdapter extends PagerAdapter {
         if (fragment != mCurrentPrimaryItem) {
             if (mCurrentPrimaryItem != null) {
                 mCurrentPrimaryItem.setMenuVisibility(false);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                if (android.os.Build.VERSION.SDK_INT >= 15) {
                 	mCurrentPrimaryItem.setUserVisibleHint(false);
                 }
             }
             if (fragment != null) {
                 fragment.setMenuVisibility(true);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                if (android.os.Build.VERSION.SDK_INT >= 15) {
                 	fragment.setUserVisibleHint(true);
                 }
             }

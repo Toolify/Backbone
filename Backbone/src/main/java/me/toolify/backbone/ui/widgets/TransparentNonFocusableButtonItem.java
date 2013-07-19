@@ -17,7 +17,10 @@
 package me.toolify.backbone.ui.widgets;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
+
+import me.toolify.backbone.R;
 
 /**
  * A class that represents a button from an action bar that can't gain focus
@@ -66,6 +69,9 @@ public class TransparentNonFocusableButtonItem extends NonFocusableButtonItem {
      */
     private void init() {
         //Remove focus
-        setBackground(null);
+        if(Build.VERSION.SDK_INT >= 16)
+            setBackground(null);
+        else
+            setBackgroundDrawable(null);
     }
 }
