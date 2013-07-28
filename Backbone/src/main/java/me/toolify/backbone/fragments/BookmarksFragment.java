@@ -42,6 +42,7 @@ import me.toolify.backbone.bus.events.BookmarkOpenEvent;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
 import me.toolify.backbone.model.Bookmark;
 import me.toolify.backbone.model.Bookmark.BOOKMARK_TYPE;
+import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.preferences.AccessMode;
 import me.toolify.backbone.preferences.Bookmarks;
 import me.toolify.backbone.preferences.FileManagerSettings;
@@ -465,6 +466,7 @@ public class BookmarksFragment extends Fragment implements OnItemClickListener, 
             int cc = volumes.length;
             for (int i = 0; i < cc ; i++) {
                 String path = StorageHelper.getStoragePath(volumes[i]);
+                if(!StorageHelper.isValidMount(path)) continue;
                 if (path.toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
                     bookmarks.add(
                             new Bookmark(

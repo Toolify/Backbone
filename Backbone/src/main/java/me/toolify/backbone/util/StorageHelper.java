@@ -146,6 +146,12 @@ public final class StorageHelper {
         return false;
     }
 
+    /**
+     * Method that determines the mount path of a {@link StorageVolume} object.
+     *
+     * @param volume Object returned from {@link StorageHelper.getStorageVolumes()}
+     * @return Mounted path
+     */
     public static String getStoragePath(Object volume)
     {
         try {
@@ -153,10 +159,27 @@ public final class StorageHelper {
             Object gpo = gpm.invoke(volume);
             return String.valueOf(gpo);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+            if(volume instanceof String) return (String)volume;
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Method that determines whether a path returned from
+     * {@link StorageHelper.getStorageVolumes()} is a valid, mounted, path.
+     * @param path Path to root of mount
+     * @return boolean Whether path is mounted & valid
+     */
+    public static boolean isValidMount(String path)
+    {
+        MountPoint mp = MountPointHelper.getMountPointFromDirectory(path);
+        if(mp == null) return false;
+        if(mp.getOptions() == null) return false;
+        String opts = mp.getOptions();
+        if(opts != null && opts.indexOf("mode=0")>-1)
+            return false; // Skip drives that are not owner read/write
+        return true;
     }
 
     /**

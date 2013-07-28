@@ -37,6 +37,7 @@ import me.toolify.backbone.bus.events.BookmarkDeleteEvent;
 import me.toolify.backbone.bus.events.BookmarkOpenEvent;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
 import me.toolify.backbone.model.Bookmark;
+import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.preferences.AccessMode;
 import me.toolify.backbone.preferences.Bookmarks;
 import me.toolify.backbone.preferences.FileManagerSettings;
@@ -45,6 +46,7 @@ import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.dialogs.InitialDirectoryDialog;
 import me.toolify.backbone.util.DialogHelper;
 import me.toolify.backbone.util.ExceptionUtil;
+import me.toolify.backbone.util.MountPointHelper;
 import me.toolify.backbone.util.StorageHelper;
 import me.toolify.backbone.util.XmlUtils;
 import com.squareup.otto.Subscribe;
@@ -338,6 +340,7 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
             int cc = volumes.length;
             for (int i = 0; i < cc ; i++) {
                 String path = StorageHelper.getStoragePath(volumes[i]);
+                if(!StorageHelper.isValidMount(path)) continue;
                 if (path.toLowerCase().indexOf("usb") != -1) { //$NON-NLS-1$
                     bookmarks.add(
                             new Bookmark(
