@@ -111,6 +111,7 @@ import me.toolify.backbone.ui.widgets.BookmarksListView;
 import me.toolify.backbone.ui.widgets.Breadcrumb;
 import me.toolify.backbone.ui.widgets.BreadcrumbItem;
 import me.toolify.backbone.ui.widgets.BreadcrumbListener;
+import me.toolify.backbone.ui.widgets.FsoPropertiesView;
 import me.toolify.backbone.ui.widgets.NavigationCustomTitleView;
 import me.toolify.backbone.util.CommandHelper;
 import me.toolify.backbone.util.DialogHelper;
@@ -305,7 +306,8 @@ public class NavigationActivity extends Activity
     private ActionBar mActionBar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private BookmarksListView mDrawerList;
+    private BookmarksListView mBookmarkDrawer;
+    private FsoPropertiesView mInfoDrawer;
     private View mTitleLayout;
     private NavigationCustomTitleView mTitle;
     private Breadcrumb mBreadcrumb;
@@ -405,6 +407,11 @@ public class NavigationActivity extends Activity
                     mBreadcrumb.changeBreadcrumbPath(getCurrentNavigationFragment().getCurrentDir(), mChRooted);
                 }
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+
+                // The properties drawer should not be reopened once it has been closed.
+                if (view instanceof FsoPropertiesView) {
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, view);
+                }
             }
 
             /** Called when a drawer has settled in a completely open state. */
@@ -420,7 +427,9 @@ public class NavigationActivity extends Activity
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        mDrawerList = (BookmarksListView) findViewById(R.id.left_drawer);
+        mBookmarkDrawer = (BookmarksListView) findViewById(R.id.left_drawer);
+        mInfoDrawer = (FsoPropertiesView) findViewById(R.id.right_drawer);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mInfoDrawer);
 
         // Apply the theme
         applyTheme();
@@ -451,7 +460,7 @@ public class NavigationActivity extends Activity
         
         // Register ourselves so that we can provide the initial value.
         BusProvider.getInstance().register(this);
-        BusProvider.getInstance().register(mDrawerList);
+        BusProvider.getInstance().register(mBookmarkDrawer);
 
         BusProvider.getInstance().post(new BookmarkRefreshEvent());
     }
@@ -462,7 +471,7 @@ public class NavigationActivity extends Activity
 
         // Always unregister when an object no longer should be on the bus.
         BusProvider.getInstance().unregister(this);
-        BusProvider.getInstance().unregister(mDrawerList);
+        BusProvider.getInstance().unregister(mBookmarkDrawer);
     }
 
     /**
@@ -764,7 +773,8 @@ public class NavigationActivity extends Activity
                 break;
 
             case R.id.mnu_actions_properties_current_folder:
-                openPropertiesDialog(getCurrentNavigationFragment().getCurrentDir());
+
+                openPropertiesDrawer(getCurrentNavigationFragment().getCurrentDir());
                 break;
 
             //- Add to bookmarks
@@ -1379,7 +1389,7 @@ public class NavigationActivity extends Activity
         }
     }
 
-    private void openPropertiesDialog(Object item) {
+    public void openPropertiesDrawer(Object item) {
         // Resolve the full path
         String path = String.valueOf(item);
         if (item instanceof FileSystemObject) {
@@ -1411,8 +1421,15 @@ public class NavigationActivity extends Activity
             return;
         }
 
-        InfoActionPolicy.showPropertiesDialog(this, fso, this);
-
+        //TODO: When the properties drawer is done, remove InfoActionPolicy and FsoPropertiesDialog
+        //InfoActionPolicy.showPropertiesDialog(this, fso, this);
+        if (mDrawerLayout.isDrawerOpen(mInfoDrawer)) {
+            mDrawerLayout.closeDrawer(mInfoDrawer);
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerLayout.openDrawer(mInfoDrawer);
+            mInfoDrawer.loadFso(fso);
+        }
     }
 
     /**

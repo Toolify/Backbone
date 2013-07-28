@@ -30,4 +30,11 @@
             android:divider="?android:attr/listDivider"
             android:dividerHeight="0dp"
             android:background="@color/dark_grey"/>
+
+    <me.toolify.backbone.ui.widgets.FsoPropertiesView
+            android:id="@+id/right_drawer"
+            android:layout_width="@dimen/nav_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@android:color/white"/>
 </android.support.v4.widget.DrawerLayout>
