@@ -27,13 +27,15 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import me.toolify.backbone.R;
+import me.toolify.backbone.dashclock.DashExtension;
+import me.toolify.backbone.dashclock.DashSettings;
 import me.toolify.backbone.preferences.FileManagerSettings;
 import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.ThemeManager.Theme;
 import me.toolify.backbone.util.AndroidHelper;
-
-import java.util.List;
 
 /**
  * The {@link SettingsPreferences} preferences
@@ -113,6 +115,19 @@ public class SettingsPreferences extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
+        if(DashExtension.isEnabled(this))
+        {
+            Header dashHeader = new Header();
+            dashHeader.titleRes = R.string.dashclock_settings;
+            dashHeader.intent = new Intent(this, DashSettings.class);
+            target.add(dashHeader);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateHeaders();
     }
 
     /**

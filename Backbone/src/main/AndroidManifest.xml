@@ -197,6 +197,26 @@
       </intent-filter>
     </activity>
 
+      <service android:name=".dashclock.DashExtension"
+               android:icon="@drawable/ic_holo_dark_sdcard"
+               android:label="@string/dashclock_extension_title"
+               android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+          <intent-filter>
+              <action android:name="com.google.android.apps.dashclock.Extension" />
+          </intent-filter>
+          <meta-data android:name="protocolVersion" android:value="2" />
+          <meta-data android:name="worldReadable" android:value="true" />
+          <meta-data android:name="description"
+                     android:value="@string/dashclock_extension_description" />
+          <meta-data android:name="settingsActivity"
+                     android:value=".dashclock.DashSettings" />
+      </service>
+
+      <activity android:name=".dashclock.DashSettings"
+                android:icon="@drawable/ic_launcher_settings"
+                android:label="@string/dashclock_settings"
+                android:exported="true" />
+
   </application>
 
 </manifest>

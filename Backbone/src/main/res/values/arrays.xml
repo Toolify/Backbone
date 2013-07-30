@@ -124,4 +124,11 @@
         <item>@drawable/ic_fso_default_drawable</item>
     </integer-array>
 
+    <integer-array name="dash_icons">
+        <item>@drawable/dashclock_sd</item>
+        <item>@drawable/dashclock_folder</item>
+        <item>@drawable/dashclock_phone</item>
+        <item>@drawable/dashclock_database</item>
+        <item>@drawable/dashclock_usb</item>
+    </integer-array>
 </resources>

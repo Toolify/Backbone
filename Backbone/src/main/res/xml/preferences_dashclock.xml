@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:key="pref_usage"
+        android:defaultValue="true"
+        android:title="@string/dashclock_usage"
+        />
+    <PreferenceCategory
+        android:title="@string/dashclock_settings_storage_title"
+        android:key="pref_storage"
+        >
+    </PreferenceCategory>
+</PreferenceScreen>

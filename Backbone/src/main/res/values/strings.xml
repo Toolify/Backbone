@@ -1011,4 +1011,14 @@
         \n\nThe Toolify\\CyanogenMod Team.\n
     </string>
 
+    <string name="dashclock_extension_title">Filesystem status</string>
+    <string name="dashclock_extension_description">Displays a summary of available drives on device. Shows either free or used disk space.</string>
+    <string name="dashclock_settings">Backbone extension settings</string>
+    <string name="dashclock_icon">Icon</string>
+    <string name="dashclock_usage">Disk usage to display</string>
+    <string name="dashclock_settings_storage_title">Storage to display</string>
+    <string name="dashclock_autorotate">Auto-rotate storage shown in dashclock</string>
+    <string name="dashclock_rotate_on">Rotate each storage every 30s.</string>
+    <string name="dashclock_rotate_off">Summarize all storage together.</string>
+
 </resources>
