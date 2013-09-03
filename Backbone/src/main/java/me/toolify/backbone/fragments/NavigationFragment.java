@@ -288,10 +288,13 @@ public class NavigationFragment extends Fragment implements
             @Override
             public void run() {
                 //Initialize navigation
-                initNavigation(false, null);
-                if (mActivity.isFirstRun() == true)
+                if (mActivity.isFirstRun() == true) {
+                    initNavigation(false, getActivity().getIntent());
                     mActivity.updateTitleActionBar();
-                mActivity.setFirstRun(false);
+                    mActivity.setFirstRun(false);
+                } else {
+                    initNavigation(false, null);
+                }
             };
         });
     }
