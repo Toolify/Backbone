@@ -52,6 +52,7 @@ import me.toolify.backbone.preferences.Preferences;
 import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.ThemeManager.Theme;
 import me.toolify.backbone.ui.widgets.Breadcrumb;
+import me.toolify.backbone.ui.widgets.BreadcrumbItem;
 import me.toolify.backbone.ui.widgets.ButtonItem;
 import me.toolify.backbone.fragments.NavigationFragment.OnDirectoryChangedListener;
 import me.toolify.backbone.fragments.NavigationFragment.OnFilePickedListener;
@@ -71,8 +72,9 @@ import java.util.Map;
  * The activity for allow to use a {@link FragmentActivity} like, to pick a file from other
  * application.
  */
-public class PickerActivity extends FragmentActivity
-        implements OnCancelListener, OnDismissListener, OnFilePickedListener, OnDirectoryChangedListener {
+public class PickerActivity extends AbstractNavigationActivity
+        implements OnCancelListener, OnDismissListener,
+        OnFilePickedListener, OnDirectoryChangedListener {
 
     private static final String TAG = "PickerActivity"; //$NON-NLS-1$
 
@@ -125,6 +127,9 @@ public class PickerActivity extends FragmentActivity
      */
     @Override
     protected void onCreate(Bundle state) {
+        //Save state
+        super.onCreate(state);
+
         if (DEBUG) {
             Log.d(TAG, "PickerActivity.onCreate"); //$NON-NLS-1$
         }
@@ -136,9 +141,6 @@ public class PickerActivity extends FragmentActivity
 
         // Initialize the activity
         init();
-
-        //Save state
-        super.onCreate(state);
     }
 
     /**
@@ -246,21 +248,12 @@ public class PickerActivity extends FragmentActivity
             }
         });
 
-        // Breadcrumb
-        Breadcrumb breadcrumb = (Breadcrumb)this.mRootView.findViewById(R.id.breadcrumb_view);
-        // Set the free disk space warning level of the breadcrumb widget
-        String fds = Preferences.getSharedPreferences().getString(
-                FileManagerSettings.SETTINGS_DISK_USAGE_WARNING_LEVEL.getId(),
-                (String)FileManagerSettings.SETTINGS_DISK_USAGE_WARNING_LEVEL.getDefaultValue());
-        breadcrumb.setFreeDiskSpaceWarningLevel(Integer.parseInt(fds));
-
         // Navigation view
         this.mNavigationFragment =
                 (NavigationFragment)getFragmentManager().findFragmentById (R.id.navigation_fragment);
         this.mNavigationFragment.setRestrictions(restrictions);
         this.mNavigationFragment.setOnFilePickedListener(this);
         this.mNavigationFragment.setOnDirectoryChangedListener(this);
-        this.mNavigationFragment.setBreadcrumb(breadcrumb);
 
         // Apply the current theme
         applyTheme();
@@ -577,6 +570,28 @@ public class PickerActivity extends FragmentActivity
             }
         });
         popup.show();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void updateTitleActionBar() {
+        Breadcrumb breadcrumb = (Breadcrumb)this.mRootView.findViewById(R.id.breadcrumb_view);
+        // Set the free disk space warning level of the breadcrumb widget
+        String fds = Preferences.getSharedPreferences().getString(
+                FileManagerSettings.SETTINGS_DISK_USAGE_WARNING_LEVEL.getId(),
+                (String)FileManagerSettings.SETTINGS_DISK_USAGE_WARNING_LEVEL.getDefaultValue());
+        breadcrumb.setFreeDiskSpaceWarningLevel(Integer.parseInt(fds));
+
+        this.mNavigationFragment.setBreadcrumb(breadcrumb);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBreadcrumbItemClick(BreadcrumbItem item) {
+        this.mNavigationFragment.changeCurrentDir(item.getItemPath());
     }
 
     /**

@@ -38,6 +38,7 @@ import android.widget.*;
 
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
+import me.toolify.backbone.activities.AbstractNavigationActivity;
 import me.toolify.backbone.activities.NavigationActivity;
 import me.toolify.backbone.adapters.FileSystemObjectAdapter;
 import me.toolify.backbone.adapters.FileSystemObjectAdapter.OnSelectionChangedListener;
@@ -237,7 +238,7 @@ public class NavigationFragment extends Fragment implements
     //The current layout identifier (is shared for all the mode layout)
     private static final int RESOURCE_CURRENT_LAYOUT = R.id.navigation_view_layout;
 
-    private NavigationActivity mActivity;
+    private AbstractNavigationActivity mActivity;
 
     /**
      * @hide
@@ -247,7 +248,7 @@ public class NavigationFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = (NavigationActivity)getActivity();
+        mActivity = (AbstractNavigationActivity)getActivity();
 
         mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.navigation_row_height);
 
@@ -390,7 +391,9 @@ public class NavigationFragment extends Fragment implements
      * Method that initializes the navigation views of the activity
      */
     private void initNavigationViewContainer() {
-        mNavigationViewHolder = (LinearLayout)getView().findViewById(R.id.navigation_view_container);
+        // Since navigation_fragment.xml only contains a single LinearLayout, we can assume
+        // that getView() will safely return the appropriate view.
+        mNavigationViewHolder = (LinearLayout)getView();
         TypedArray a = mActivity.obtainStyledAttributes(R.styleable.Navigable);
         try {
             init(a);
@@ -1554,9 +1557,11 @@ public class NavigationFragment extends Fragment implements
             updateSelectionModeView();
         } else {
             mSelectionModeCallback = new SelectionModeCallback(mActivity, false);
-            mSelectionModeCallback.setOnRequestRefreshListener(mActivity);
             mSelectionModeCallback.setOnSelectionListener(this);
-            mSelectionModeCallback.setOnCopyMoveListener(mActivity);
+            if(mActivity instanceof NavigationActivity) {
+                mSelectionModeCallback.setOnRequestRefreshListener((NavigationActivity)mActivity);
+                mSelectionModeCallback.setOnCopyMoveListener((NavigationActivity)mActivity);
+            }
             mActivity.startActionMode(mSelectionModeCallback);
         }
     }

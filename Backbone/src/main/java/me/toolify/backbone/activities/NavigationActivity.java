@@ -19,7 +19,6 @@ package me.toolify.backbone.activities;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
@@ -105,12 +104,10 @@ import me.toolify.backbone.ui.dialogs.InputNameDialog;
 import me.toolify.backbone.ui.policy.BookmarksActionPolicy;
 import me.toolify.backbone.ui.policy.CopyMoveActionPolicy;
 import me.toolify.backbone.ui.policy.CopyMoveActionPolicy.COPY_MOVE_OPERATION;
-import me.toolify.backbone.ui.policy.InfoActionPolicy;
 import me.toolify.backbone.ui.policy.NewActionPolicy;
 import me.toolify.backbone.ui.widgets.BookmarksListView;
 import me.toolify.backbone.ui.widgets.Breadcrumb;
 import me.toolify.backbone.ui.widgets.BreadcrumbItem;
-import me.toolify.backbone.ui.widgets.BreadcrumbListener;
 import me.toolify.backbone.ui.widgets.FsoPropertiesView;
 import me.toolify.backbone.ui.widgets.NavigationCustomTitleView;
 import me.toolify.backbone.util.CommandHelper;
@@ -131,10 +128,9 @@ import me.toolify.backbone.util.StorageHelper;
  * {@link android.app.Activity#onRestoreInstanceState(android.os.Bundle)} are not implemented, and every time
  * the app is killed, is restarted from his initial state.
  */
-public class NavigationActivity extends Activity
+public class NavigationActivity extends AbstractNavigationActivity
     implements OnRequestRefreshListener, OnCopyMoveListener,
-        OnNavigationRequestMenuListener, OnPageChangeListener,
-        BreadcrumbListener {
+        OnNavigationRequestMenuListener, OnPageChangeListener {
 
     private static final String TAG = "NavigationActivity"; //$NON-NLS-1$
 
@@ -191,11 +187,6 @@ public class NavigationActivity extends Activity
     // After this time user need to tap 2 times the back button to
     // exit, and the toast is shown again after the first tap.
     private static final int RELEASE_EXIT_CHECK_TIMEOUT = 3500;
-
-    // The flag indicating whether or not the application is just starting up.
-    // Used in initializing the action bar's breadcrumb once the fragments have
-    // finished loading.
-    private boolean mFirstRun = true;
 
     private final BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
         @Override
@@ -630,7 +621,7 @@ public class NavigationActivity extends Activity
     }
 
     /**
-     * Method that updates the titlebar of the activity.
+     * {@inheritDoc}
      */
     public void updateTitleActionBar() {
 
@@ -1546,23 +1537,7 @@ public class NavigationActivity extends Activity
         return this.mChRooted;
     }
 
-    /**
-     * Method called when a controlled exit is required
-     * @hide
-     */
-    public void exit() {
-        try {
-            FileManagerApplication.destroyBackgroundConsole();
-        } catch (Throwable ex) {
-            /**NON BLOCK**/
-        }
-        try {
-            ConsoleBuilder.destroyConsole();
-        } catch (Throwable ex) {
-            /**NON BLOCK**/
-        }
-        finish();
-    }
+
 
     /**
      * {@inheritDoc}
@@ -1605,20 +1580,6 @@ public class NavigationActivity extends Activity
     @Override
     public void onPageScrollStateChanged(int state) {
         //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * Determine whether the "just started up" flag is true or not.
-     */
-    public boolean isFirstRun() {
-        return mFirstRun;
-    }
-
-    /**
-     * Change the app's "just started up" flag
-     */
-    public void setFirstRun(boolean firstRun) {
-        this.mFirstRun = firstRun;
     }
 
     /**
