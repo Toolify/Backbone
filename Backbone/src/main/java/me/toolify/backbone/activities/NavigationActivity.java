@@ -966,7 +966,8 @@ public class NavigationActivity extends AbstractNavigationActivity
     @Subscribe
     public void onBookmarkOpen(BookmarkOpenEvent event) {
     	String path = event.path;
-    	// Check that the bookmark exists
+        Bookmark b = Bookmarks.getBookmark(getContentResolver(), path);
+        // Check that the bookmark exists
         try {
             FileSystemObject fso = CommandHelper.getFileInfo(this, path, null);
             if (fso != null) {
@@ -975,10 +976,12 @@ public class NavigationActivity extends AbstractNavigationActivity
             } else {
                 // The bookmark not exists, delete the user-defined bookmark
                 try {
-                	BusProvider.postEvent(new BookmarkDeleteEvent(path));
-                	Bookmark b = Bookmarks.getBookmark(getContentResolver(), path);
-                    Bookmarks.removeBookmark(this, b);
-                    BusProvider.postEvent(new BookmarkRefreshEvent());
+                    if(b.getType() == Bookmark.BOOKMARK_TYPE.USER_DEFINED)
+                    {
+                        BusProvider.postEvent(new BookmarkDeleteEvent(path));
+                        Bookmarks.removeBookmark(this, b);
+                        BusProvider.postEvent(new BookmarkRefreshEvent());
+                    }
                 } catch (Exception ex) {/**NON BLOCK**/}
             }
         } catch (Exception e) {
@@ -987,7 +990,8 @@ public class NavigationActivity extends AbstractNavigationActivity
             if (e instanceof NoSuchFileOrDirectory || e instanceof FileNotFoundException) {
                 // The bookmark not exists, delete the user-defined bookmark
                 try {
-                	BusProvider.postEvent(new BookmarkDeleteEvent(path));
+                    if(b.getType() == Bookmark.BOOKMARK_TYPE.USER_DEFINED)
+                	    BusProvider.postEvent(new BookmarkDeleteEvent(path));
                 } catch (Exception ex) {/**NON BLOCK**/}
             }
             return;
