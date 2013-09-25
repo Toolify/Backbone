@@ -29,7 +29,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.toolify.backbone.R;
+import me.toolify.backbone.bus.BusProvider;
+import me.toolify.backbone.bus.events.OpenPropertiesDrawerEvent;
 import me.toolify.backbone.model.FileSystemObject;
 import me.toolify.backbone.model.ParentDirectory;
 import me.toolify.backbone.ui.IconHolder;
@@ -39,9 +44,6 @@ import me.toolify.backbone.ui.image.ImageFetcher;
 import me.toolify.backbone.util.FileHelper;
 import me.toolify.backbone.util.MimeTypeHelper;
 import me.toolify.backbone.util.MimeTypeHelper.MimeTypeCategory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An implementation of {@link ArrayAdapter} for display file system objects.
@@ -72,8 +74,8 @@ public class FileSystemObjectAdapter
         public ViewHolder() {
             super();
         }
-        ImageButton mBtCheck;
-        ImageView mIvIcon;
+        ImageButton mBtInfo;
+        ImageView mBtIcon;
         TextView mTvName;
         TextView mTvSummary;
         TextView mTvSize;
@@ -109,8 +111,8 @@ public class FileSystemObjectAdapter
 
     private OnSelectionChangedListener mOnSelectionChangedListener;
 
-    //The resource of the item check
-    private static final int RESOURCE_ITEM_CHECK = R.id.navigation_view_item_check;
+    //The resource of the item info button
+    private static final int RESOURCE_ITEM_INFO = R.id.navigation_view_item_info;
     //The resource of the item icon
     private static final int RESOURCE_ITEM_ICON = R.id.navigation_view_item_icon;
     //The resource of the item name
@@ -228,15 +230,6 @@ public class FileSystemObjectAdapter
             //Build the data holder
             this.mData[i] = new FileSystemObjectAdapter.DataHolder();
             this.mData[i].mSelected = this.mSelectedItems.contains(fso);
-            if (this.mData[i].mSelected) {
-                this.mData[i].mDwCheck =
-                        theme.getDrawable(
-                                getContext(), "checkbox_selected_drawable"); //$NON-NLS-1$
-            } else {
-                this.mData[i].mDwCheck =
-                        theme.getDrawable(
-                                getContext(), "checkbox_deselected_drawable"); //$NON-NLS-1$
-            }
             this.mData[i].mDynamic = MimeTypeHelper.getIsDynamic(getContext(), fso);
             this.mData[i].mImagePath = null;
             if (this.mData[i].mDynamic) {
@@ -277,16 +270,16 @@ public class FileSystemObjectAdapter
                     (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = li.inflate(this.mItemViewResourceId, parent, false);
             ViewHolder viewHolder = new FileSystemObjectAdapter.ViewHolder();
-            viewHolder.mIvIcon = (ImageView)v.findViewById(RESOURCE_ITEM_ICON);
+            viewHolder.mBtIcon = (ImageButton)v.findViewById(RESOURCE_ITEM_ICON);
             viewHolder.mTvName = (TextView)v.findViewById(RESOURCE_ITEM_NAME);
             viewHolder.mTvSummary = (TextView)v.findViewById(RESOURCE_ITEM_SUMMARY);
             viewHolder.mTvSize = (TextView)v.findViewById(RESOURCE_ITEM_SIZE);
             if (!this.mPickable) {
-                viewHolder.mBtCheck = (ImageButton)v.findViewById(RESOURCE_ITEM_CHECK);
-                viewHolder.mBtCheck.setOnClickListener(this);
+                viewHolder.mBtInfo = (ImageButton)v.findViewById(RESOURCE_ITEM_INFO);
+                viewHolder.mBtInfo.setOnClickListener(this);
             } else {
-                viewHolder.mBtCheck = (ImageButton)v.findViewById(RESOURCE_ITEM_CHECK);
-                viewHolder.mBtCheck.setVisibility(View.GONE);
+                viewHolder.mBtInfo = (ImageButton)v.findViewById(RESOURCE_ITEM_INFO);
+                viewHolder.mBtInfo.setVisibility(View.GONE);
             }
             v.setTag(viewHolder);
         }
@@ -297,22 +290,18 @@ public class FileSystemObjectAdapter
         //Retrieve the view holder
         ViewHolder viewHolder = (ViewHolder)v.getTag();
 
-        //TODO: Handling image thumbnails and apk icons via these extra imageViews is messy and
-        //probably overly memory intensive.  Need to figure out a way to make the imageFetcher
-        //squash those "dyamic" bitmaps into the drawable this thing started out with: mIvIcon
-
         //Gather image thumbnail or generate apk icon if it hasn't been generated yet
         if (this.mData[position].mImagePath != null && !this.mData[position].mImagePath.isEmpty()) {
-            viewHolder.mIvIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams)viewHolder.mIvIcon.getLayoutParams());
+            viewHolder.mBtIcon.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            RelativeLayout.LayoutParams lp = ((RelativeLayout.LayoutParams)viewHolder.mBtIcon.getLayoutParams());
             if(lp != null)
             {
                 lp.setMargins(0, 0, 0, 0);
-                viewHolder.mIvIcon.setLayoutParams(lp);
+                viewHolder.mBtIcon.setLayoutParams(lp);
             }
-            mImageFetcher.loadImage(this.mData[position].mImagePath, viewHolder.mIvIcon);
+            mImageFetcher.loadImage(this.mData[position].mImagePath, viewHolder.mBtIcon);
         } else {
-            viewHolder.mIvIcon.setImageDrawable(dataHolder.mDwIcon);
+            viewHolder.mBtIcon.setImageDrawable(dataHolder.mDwIcon);
         }
 
         // Apply the current theme
@@ -341,11 +330,15 @@ public class FileSystemObjectAdapter
             viewHolder.mTvSize.setText(dataHolder.mSize);
         }
         if (!this.mPickable) {
-            viewHolder.mBtCheck.setVisibility(
+            viewHolder.mBtInfo.setVisibility(
                     dataHolder.mName.compareTo(
                             FileHelper.PARENT_DIRECTORY) == 0 ? View.INVISIBLE : View.VISIBLE);
-            viewHolder.mBtCheck.setImageDrawable(dataHolder.mDwCheck);
-            viewHolder.mBtCheck.setTag(Integer.valueOf(position));
+            //Enable selection via icon clicks on non-parent directory file items
+            if (dataHolder.mName.compareTo(FileHelper.PARENT_DIRECTORY) != 0){
+                viewHolder.mBtIcon.setOnClickListener(this);
+            }
+            viewHolder.mBtIcon.setTag(Integer.valueOf(position));
+            viewHolder.mBtInfo.setTag(Integer.valueOf(position));
 
             // Apply theme
             if (dataHolder.mSelected) {
@@ -397,18 +390,7 @@ public class FileSystemObjectAdapter
                     if (v != null) {
                         ((View) v.getParent()).setSelected(data.mSelected);
                     }
-                    if (data.mSelected) {
-                        data.mDwCheck =
-                                theme.getDrawable(
-                                        getContext(), "checkbox_selected_drawable"); //$NON-NLS-1$
-                    } else {
-                        data.mDwCheck =
-                                theme.getDrawable(
-                                        getContext(),
-                                        "checkbox_deselected_drawable"); //$NON-NLS-1$
-                    }
                     if (v != null) {
-                        ((ImageView) v).setImageDrawable(data.mDwCheck);
                         if (data.mSelected) {
                             theme.setBackgroundDrawable(
                                     getContext(),
@@ -567,9 +549,12 @@ public class FileSystemObjectAdapter
 
         //What button was pressed?
         switch (v.getId()) {
-            case RESOURCE_ITEM_CHECK:
+            case RESOURCE_ITEM_ICON:
                 //Get the row item view
                 toggleSelection(v, fso);
+                break;
+            case RESOURCE_ITEM_INFO:
+                BusProvider.postEvent(new OpenPropertiesDrawerEvent(fso));
                 break;
             default:
                 break;

@@ -18,6 +18,8 @@ package me.toolify.backbone.bus;
 
 import com.squareup.otto.Bus;
 
+import me.toolify.backbone.bus.events.BusEvent;
+
 /**
  * Maintains a singleton instance for obtaining the bus. Ideally this would be replaced with a more efficient means
  * such as through injection directly into interested classes.
@@ -28,6 +30,31 @@ public final class BusProvider {
   public static Bus getInstance() {
     return BUS;
   }
+
+    /**
+     * Central calling point for Bus.post() calls
+     * @param event BusEvent class to post to static Bus object
+     */
+    public static void postEvent(BusEvent event)
+    {
+        BUS.post(event);
+    }
+
+    /**
+     * Central calling point for Bus.register() calls
+     * @param object
+     */
+    public static void register(Object object) {
+        BUS.register(object);
+    }
+
+    /**
+     * Central calling point for Bus.unregister() calls
+     * @param object
+     */
+    public static void unregister(Object object) {
+        BUS.unregister(object);
+    }
 
   private BusProvider() {
     // No instances.

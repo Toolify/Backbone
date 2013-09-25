@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Square, Inc.
+ * Copyright (C) BrandroidTools
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package me.toolify.backbone.bus.events;
 
-public class BookmarkOpenEvent {
+public class BookmarkOpenEvent extends BusEvent {
 	public final String path;
 
 	public BookmarkOpenEvent(String path) {

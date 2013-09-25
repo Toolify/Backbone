@@ -26,17 +26,9 @@
             android:layout_weight="1"
             android:animateFirstView="true">
 
-        <!-- The breadcrumb layout (breadcrumb + configuration buttom) -->
+        <!-- The breadcrumb layout -->
         <include layout="@layout/navigation_view_customtitle_breadcrumb"/>
 
-        <!-- The configuration layout (sort, layout, other options, ...) -->
-        <include layout="@layout/navigation_view_customtitle_configuration"/>
-
     </me.toolify.backbone.ui.widgets.NavigationCustomTitleView>
-
-    <LinearLayout
-            android:id="@+id/navigation_title_landscape_holder"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
 
 </LinearLayout>

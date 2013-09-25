@@ -18,6 +18,7 @@
 package me.toolify.backbone.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,14 +26,21 @@ import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
 import me.toolify.backbone.adapters.BookmarksAdapter;
@@ -42,7 +50,6 @@ import me.toolify.backbone.bus.events.BookmarkOpenEvent;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
 import me.toolify.backbone.model.Bookmark;
 import me.toolify.backbone.model.Bookmark.BOOKMARK_TYPE;
-import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.preferences.AccessMode;
 import me.toolify.backbone.preferences.Bookmarks;
 import me.toolify.backbone.preferences.FileManagerSettings;
@@ -53,11 +60,10 @@ import me.toolify.backbone.ui.dialogs.InitialDirectoryDialog;
 import me.toolify.backbone.ui.widgets.FlingerListView;
 import me.toolify.backbone.ui.widgets.FlingerListView.OnItemFlingerListener;
 import me.toolify.backbone.ui.widgets.FlingerListView.OnItemFlingerResponder;
-import me.toolify.backbone.util.*;
-import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.toolify.backbone.util.DialogHelper;
+import me.toolify.backbone.util.ExceptionUtil;
+import me.toolify.backbone.util.StorageHelper;
+import me.toolify.backbone.util.XmlUtils;
 
 /**
  * An fragment for showing bookmarks and links.
@@ -203,13 +209,13 @@ public class BookmarksFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        BusProvider.getInstance().register(this);
+        BusProvider.register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BusProvider.getInstance().unregister(this);
+        BusProvider.unregister(this);
     }
 
     /**
@@ -310,7 +316,7 @@ public class BookmarksFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bookmark bookmark = ((BookmarksAdapter)parent.getAdapter()).getItem(position);
-        BusProvider.getInstance().post(new BookmarkOpenEvent(bookmark.mPath));
+        BusProvider.postEvent(new BookmarkOpenEvent(bookmark.mPath));
     }
 
     /**

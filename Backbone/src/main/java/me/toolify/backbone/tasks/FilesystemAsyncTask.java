@@ -19,12 +19,14 @@ package me.toolify.backbone.tasks;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
+
+import me.toolify.backbone.bus.BusProvider;
+import me.toolify.backbone.bus.events.FilesystemStatusUpdateEvent;
 import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.ThemeManager.Theme;
+import me.toolify.backbone.ui.widgets.BreadcrumbView;
 import me.toolify.backbone.util.MountPointHelper;
 
 /**
@@ -41,11 +43,7 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
     /**
      * @hide
      */
-    final ImageView mMountPointInfo;
-    /**
-     * @hide
-     */
-    final View mDiskUsageInfo;
+    final BreadcrumbView mBreadcrumbView;
     /**
      * @hide
      */
@@ -61,17 +59,14 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
      * Constructor of <code>FilesystemAsyncTask</code>.
      *
      * @param context The current context
-     * @param mountPointInfo The mount point info view
-     * @param diskUsageInfo The disk usage anchor
+     * @param breadcrumbView The breadcrumbView calling this task
      * @param freeDiskSpaceWarningLevel The free disk space warning level
      */
     public FilesystemAsyncTask(
-            Context context, ImageView mountPointInfo,
-            View diskUsageInfo, int freeDiskSpaceWarningLevel) {
+            Context context, BreadcrumbView breadcrumbView, int freeDiskSpaceWarningLevel) {
         super();
         this.mContext = context;
-        this.mMountPointInfo = mountPointInfo;
-        this.mDiskUsageInfo = diskUsageInfo;
+        this.mBreadcrumbView = breadcrumbView;
         this.mFreeDiskSpaceWarningLevel = freeDiskSpaceWarningLevel;
         this.mRunning = false;
     }
@@ -106,15 +101,12 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
             if (isCancelled()) {
                 return Boolean.TRUE;
             }
-            this.mMountPointInfo.post(new Runnable() {
+            this.mBreadcrumbView.post(new Runnable() {
                 @Override
                 public void run() {
-                    Theme theme = ThemeManager.getCurrentTheme(FilesystemAsyncTask.this.mContext);
-                    theme.setImageDrawable(
-                            FilesystemAsyncTask.this.mContext,
-                            FilesystemAsyncTask.this.mMountPointInfo,
-                            "filesystem_warning_drawable"); //$NON-NLS-1$
-                    FilesystemAsyncTask.this.mMountPointInfo.setTag(null);
+                    BusProvider.postEvent(new FilesystemStatusUpdateEvent(
+                            FilesystemStatusUpdateEvent.INDICATOR_WARNING));
+                    FilesystemAsyncTask.this.mBreadcrumbView.setMountPointInfo(null);
                 }
             });
         } else {
@@ -122,19 +114,15 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
             if (isCancelled()) {
                 return Boolean.TRUE;
             }
-            this.mMountPointInfo.post(new Runnable() {
+            this.mBreadcrumbView.post(new Runnable() {
                 @Override
                 public void run() {
-                   String resource =
+                   int eventType =
                             MountPointHelper.isReadOnly(mp)
-                            ? "filesystem_locked_drawable" //$NON-NLS-1$
-                            : "filesystem_unlocked_drawable"; //$NON-NLS-1$
-                    Theme theme = ThemeManager.getCurrentTheme(FilesystemAsyncTask.this.mContext);
-                    theme.setImageDrawable(
-                            FilesystemAsyncTask.this.mContext,
-                            FilesystemAsyncTask.this.mMountPointInfo,
-                            resource);
-                    FilesystemAsyncTask.this.mMountPointInfo.setTag(mp);
+                            ? FilesystemStatusUpdateEvent.INDICATOR_LOCKED
+                            : FilesystemStatusUpdateEvent.INDICATOR_UNLOCKED;
+                    BusProvider.postEvent(new FilesystemStatusUpdateEvent(eventType));
+                    FilesystemAsyncTask.this.mBreadcrumbView.setMountPointInfo(mp);
                 }
             });
 
@@ -142,12 +130,12 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
             if (isCancelled()) {
                 return Boolean.TRUE;
             }
-            this.mDiskUsageInfo.post(new Runnable() {
+            this.mBreadcrumbView.post(new Runnable() {
                 @Override
                 public void run() {
                     DiskUsage du = null;
                     try {
-                         du = MountPointHelper.getMountPointDiskUsage(mp);
+                        du = MountPointHelper.getMountPointDiskUsage(mp);
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to retrieve disk usage information", e); //$NON-NLS-1$
                         du = new DiskUsage(
@@ -157,13 +145,14 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
                     if (du != null && du.getTotal() != 0) {
                         usage = (int)(du.getUsed() * 100 / du.getTotal());
                         //FilesystemAsyncTask.this.fileSystemInfo.setProgress(usage);  ** CM progress bar removed
-                        FilesystemAsyncTask.this.mDiskUsageInfo.setTag(du);
+                        FilesystemAsyncTask.this.mBreadcrumbView.setDiskUsageInfo(du);
                     } else {
                         usage = du == null ? 0 : 100;
                         //FilesystemAsyncTask.this.fileSystemInfo.setProgress(usage); ** CM progress bar removed
-                        FilesystemAsyncTask.this.mDiskUsageInfo.setTag(null);
+                        FilesystemAsyncTask.this.mBreadcrumbView.setDiskUsageInfo(null);
                     }
 
+                    //TODO point this at another view in the action bar, now that diskusage is gone
                     // Advise about diskusage (>=mFreeDiskSpaceWarningLevel) with other color
                     Theme theme = ThemeManager.getCurrentTheme(FilesystemAsyncTask.this.mContext);
                     int filter =

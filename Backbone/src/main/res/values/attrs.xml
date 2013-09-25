@@ -74,6 +74,12 @@
         <attr name="actionIconSearchSettings" format="reference"/>
         <attr name="actionIconSave" format="reference"/>
         <attr name="actionIconChecksum" format="reference"/>
+        <attr name="actionIconSortMode" format="reference"/>
+        <attr name="actionIconLayoutMode" format="reference"/>
+        <attr name="actionIconViewOptions" format="reference"/>
+        <attr name="actionIconLockOpen" format="reference"/>
+        <attr name="actionIconLockClosed" format="reference"/>
+        <attr name="actionIconWarning" format="reference"/>
 
         <attr name="indicatorIconFolder" format="reference"/>
         <attr name="indicatorIconFile" format="reference"/>

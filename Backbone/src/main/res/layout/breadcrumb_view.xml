@@ -19,37 +19,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <me.toolify.backbone.ui.widgets.ButtonItem
-            android:id="@+id/ab_filesystem_info"
-            style="@style/breadcrumb_actionbar_buttom"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/actionbar_button_filesystem_cd"
-            android:onClick="onActionBarItemClick"
-            android:src="@drawable/ic_holo_dark_fs_warning"
-            android:visibility="invisible"/>
-
-    <ProgressBar
-            android:id="@+id/breadcrumb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignBottom="@id/ab_filesystem_info"
-            android:layout_alignLeft="@id/ab_filesystem_info"
-            android:layout_alignRight="@id/ab_filesystem_info"
-            android:layout_alignTop="@id/ab_filesystem_info"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/default_margin"
-            android:indeterminate="true"
-            android:indeterminateBehavior="repeat"
-            android:indeterminateOnly="true"
-            android:visibility="invisible"/>
-
     <HorizontalScrollView
             android:id="@+id/breadcrumb_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/ab_filesystem_info"
             android:scrollbars="none">
 
         <LinearLayout

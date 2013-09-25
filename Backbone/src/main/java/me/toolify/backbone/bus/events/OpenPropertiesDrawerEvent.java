@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 BrandroidTools
+ * Copyright (C) BrandroidTools
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,25 @@
 
 package me.toolify.backbone.bus.events;
 
-public class BookmarkDeleteEvent extends BusEvent {
-	public final String path;
+import me.toolify.backbone.model.FileSystemObject;
 
-	public BookmarkDeleteEvent(String path) {
-		this.path = path;
+public class OpenPropertiesDrawerEvent extends BusEvent {
+	public final Object item;
+
+	public OpenPropertiesDrawerEvent(Object item) {
+		this.item = item;
 	}
 
 	@Override
 	public String toString() {
+        String path = String.valueOf(item);
+        if (item instanceof FileSystemObject) {
+            path = ((FileSystemObject)item).getFullPath();
+        }
 		return new StringBuilder("(")
-			.append("bus event: delete bookmark ")
+			.append("bus event: open properties on file \"")
 			.append(path)
-			.append(")")
+            .append("\")")
 			.toString();
 	}
 }

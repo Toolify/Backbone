@@ -26,6 +26,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,13 +39,26 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.ListPopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import me.toolify.backbone.R;
 import me.toolify.backbone.adapters.CheckableListAdapter;
 import me.toolify.backbone.adapters.CheckableListAdapter.CheckableItem;
+import me.toolify.backbone.bus.BusProvider;
+import me.toolify.backbone.bus.events.FilesystemStatusUpdateEvent;
 import me.toolify.backbone.console.ConsoleBuilder;
 import me.toolify.backbone.fragments.NavigationFragment;
+import me.toolify.backbone.fragments.NavigationFragment.OnDirectoryChangedListener;
+import me.toolify.backbone.fragments.NavigationFragment.OnFilePickedListener;
 import me.toolify.backbone.model.FileSystemObject;
 import me.toolify.backbone.preferences.DisplayRestrictions;
 import me.toolify.backbone.preferences.FileManagerSettings;
@@ -54,19 +68,11 @@ import me.toolify.backbone.ui.ThemeManager.Theme;
 import me.toolify.backbone.ui.widgets.Breadcrumb;
 import me.toolify.backbone.ui.widgets.BreadcrumbItem;
 import me.toolify.backbone.ui.widgets.ButtonItem;
-import me.toolify.backbone.fragments.NavigationFragment.OnDirectoryChangedListener;
-import me.toolify.backbone.fragments.NavigationFragment.OnFilePickedListener;
 import me.toolify.backbone.util.DialogHelper;
 import me.toolify.backbone.util.ExceptionUtil;
 import me.toolify.backbone.util.FileHelper;
 import me.toolify.backbone.util.MimeTypeHelper;
 import me.toolify.backbone.util.StorageHelper;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The activity for allow to use a {@link FragmentActivity} like, to pick a file from other
@@ -121,6 +127,8 @@ public class PickerActivity extends AbstractNavigationActivity
      */
     NavigationFragment mNavigationFragment;
     private View mRootView;
+    private ButtonItem mFilesystemInfo;
+    private ProgressBar mFilesystemInfoRefreshing;
 
     /**
      * {@inheritDoc}
@@ -161,6 +169,25 @@ public class PickerActivity extends AbstractNavigationActivity
 
         //All destroy. Continue
         super.onDestroy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Always unregister when an object no longer should be on the bus.
+        BusProvider.unregister(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusProvider.register(this);
     }
 
     /**
@@ -291,8 +318,10 @@ public class PickerActivity extends AbstractNavigationActivity
         DialogHelper.delegateDialogShow(this, this.mDialog);
 
         // Set content description of storage volume button
-        ButtonItem fs = (ButtonItem)this.mRootView.findViewById(R.id.ab_filesystem_info);
-        fs.setContentDescription(getString(R.string.actionbar_button_storage_cd));
+        mFilesystemInfo = (ButtonItem)this.mRootView.findViewById(R.id.button_filesystem_info);
+        mFilesystemInfo.setContentDescription(getString(R.string.actionbar_button_storage_cd));
+        mFilesystemInfoRefreshing = (ProgressBar)this.mRootView.findViewById(
+                R.id.button_filesystem_info_refreshing);
 
         final File initialDir = getInitialDirectoryFromIntent(getIntent());
         final String rootDirectory;
@@ -509,6 +538,84 @@ public class PickerActivity extends AbstractNavigationActivity
     }
 
     /**
+     * Called by various pieces of code responsible for updating file listing or breadcrumb data.
+     * This is an Otto event designed to de-couple this activity and various asyncTasks responsible
+     * for gathering and sending file info.
+     */
+    @Subscribe
+    public void onFilesystemStatusUpdate(FilesystemStatusUpdateEvent event) {
+        setFilesystemStatusDrawable(event.status);
+    }
+
+    private void setFilesystemStatusDrawable(int fileSystemstatus){
+
+        TypedArray a = getTheme().obtainStyledAttributes(R.styleable.FileManager);
+
+        switch (fileSystemstatus) {
+
+            case FilesystemStatusUpdateEvent.INDICATOR_UNLOCKED:
+                if (mFilesystemInfo != null) {
+                    mFilesystemInfo.setImageResource(
+                            a.getResourceId(R.styleable.FileManager_actionIconLockOpen,
+                                    R.drawable.ic_action_holo_dark_lock_open));
+                    setFilesystemInfoProgressState(false);
+                }
+                break;
+
+            case FilesystemStatusUpdateEvent.INDICATOR_LOCKED:
+                if (mFilesystemInfo != null) {
+                    mFilesystemInfo.setImageResource(
+                            a.getResourceId(R.styleable.FileManager_actionIconLockClosed,
+                                    R.drawable.ic_action_holo_dark_lock_closed));
+                    setFilesystemInfoProgressState(false);
+                }
+                break;
+
+            case FilesystemStatusUpdateEvent.INDICATOR_WARNING:
+                if (mFilesystemInfo != null) {
+                    mFilesystemInfo.setImageResource(
+                            a.getResourceId(R.styleable.FileManager_actionIconWarning,
+                                    R.drawable.ic_action_holo_dark_warning));
+                    setFilesystemInfoProgressState(false);
+                }
+                break;
+
+            case FilesystemStatusUpdateEvent.INDICATOR_REFRESHING:
+                if (mFilesystemInfo != null) {
+                    setFilesystemInfoProgressState(true);
+                }
+                break;
+
+            case FilesystemStatusUpdateEvent.INDICATOR_STOP_REFRESHING:
+                if (mFilesystemInfo != null) {
+                    setFilesystemInfoProgressState(false);
+                }
+                break;
+        }
+
+        a.recycle();
+    }
+
+    /**
+     * This function switches an action item between its normal icon and an indeterminate progress
+     * circle
+     * @param refreshing value is true if the action item should show the progress bar
+     */
+    public void setFilesystemInfoProgressState(final boolean refreshing) {
+        if (mFilesystemInfo != null) {
+
+            if (refreshing) {
+                mFilesystemInfo.setVisibility(View.INVISIBLE);
+                mFilesystemInfoRefreshing.setVisibility(View.VISIBLE);
+            } else {
+                mFilesystemInfo.setVisibility(View.VISIBLE);
+                mFilesystemInfoRefreshing.setVisibility(View.INVISIBLE);
+            }
+
+        }
+    }
+
+    /**
      * Method invoked when an action item is clicked.
      *
      * @param view The button pushed
@@ -518,7 +625,7 @@ public class PickerActivity extends AbstractNavigationActivity
             //######################
             //Breadcrumb Actions
             //######################
-            case R.id.ab_filesystem_info:
+            case R.id.button_filesystem_info:
                 //Show a popup with the storage volumes to select
                 showStorageVolumesPopUp(view);
                 break;

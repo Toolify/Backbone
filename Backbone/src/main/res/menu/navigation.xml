@@ -18,13 +18,23 @@
 
     <!-- Actions -->
     <item
-            android:id="@+id/mnu_search"
+            android:id="@+id/mnu_actions_show_filesystem_info"
+            android:icon="?attr/actionIconLockOpen"
+            android:showAsAction="always"
+            android:title="@string/actionbar_button_filesystem_cd"/>
+    <item
+            android:id="@+id/mnu_actions_paste_selection"
+            android:icon="?attr/actionIconPasteSelection"
+            android:showAsAction="always"
+            android:title="@string/actions_menu_paste_selection"/>
+    <item
+            android:id="@+id/mnu_actions_search"
             android:showAsAction="ifRoom"
             android:icon="@drawable/ic_action_holo_dark_search"
             android:title="@string/menu_search"/>
     <item
-            android:id="@+id/mnu_history"
-            android:showAsAction="ifRoom"
+            android:id="@+id/mnu_actions_history"
+            android:showAsAction="never"
             android:icon="@drawable/ic_action_holo_dark_history"
             android:title="@string/menu_history"/>
     <item
@@ -35,12 +45,12 @@
     <item
             android:id="@+id/mnu_actions_refresh"
             android:icon="?attr/actionIconRefresh"
-            android:showAsAction="ifRoom"
+            android:showAsAction="never"
             android:title="@string/actions_menu_refresh"/>
     <item
             android:id="@+id/mnu_actions_new_file"
             android:icon="?attr/actionIconNewFile"
-            android:showAsAction="ifRoom"
+            android:showAsAction="never"
             android:title="@string/actions_menu_new_file"/>
     <item
             android:id="@+id/mnu_actions_add_to_bookmarks"
@@ -48,10 +58,72 @@
             android:showAsAction="ifRoom"
             android:title="@string/actions_menu_add_to_bookmarks"/>
     <item
-            android:id="@+id/mnu_actions_paste_selection"
-            android:icon="?attr/actionIconPasteSelection"
-            android:showAsAction="ifRoom"
-            android:title="@string/actions_menu_paste_selection"/>
+            android:id="@+id/mnu_actions_sort_mode"
+            android:icon="?attr/actionIconSortMode"
+            android:showAsAction="never"
+            android:title="@string/actionbar_button_sort_mode_cd">
+            <menu>
+                <group android:checkableBehavior="all">
+                    <item
+                            android:id="@+id/mnu_actions_sort_by_name_asc"
+                            android:title="@string/sort_by_name_asc"/>
+                    <item
+                            android:id="@+id/mnu_actions_sort_by_name_desc"
+                            android:title="@string/sort_by_name_desc"/>
+                    <item
+                            android:id="@+id/mnu_actions_sort_by_date_asc"
+                            android:title="@string/sort_by_date_asc"/>
+                    <item
+                            android:id="@+id/mnu_actions_sort_by_date_desc"
+                            android:title="@string/sort_by_date_desc"/>
+                </group>
+            </menu>
+    </item>
+    <item
+            android:id="@+id/mnu_actions_layout_mode"
+            android:icon="?attr/actionIconLayoutMode"
+            android:showAsAction="never"
+            android:title="@string/actionbar_button_layout_mode_cd">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                        android:id="@+id/mnu_actions_layout_icons"
+                        android:title="@string/layout_icons"/>
+                <item
+                        android:id="@+id/mnu_actions_layout_simple"
+                        android:title="@string/layout_simple"/>
+                <item
+                        android:id="@+id/mnu_actions_layout_details"
+                        android:title="@string/layout_details" />
+            </group>
+        </menu>
+    </item>
+    <item
+            android:id="@+id/mnu_actions_view_options"
+            android:icon="?attr/actionIconViewOptions"
+            android:showAsAction="never"
+            android:title="@string/actionbar_button_other_view_options_cd">
+        <menu>
+            <group android:checkableBehavior="all">
+                <item
+                        android:id="@+id/mnu_actions_show_dirs_first"
+                        android:title="@string/cm_filemanager_show_dirs_first"
+                        android:checkable="true" />
+                <item
+                        android:id="@+id/mnu_actions_show_hidden"
+                        android:title="@string/cm_filemanager_show_hidden"
+                        android:checkable="true" />
+                <item
+                        android:id="@+id/mnu_actions_show_system"
+                        android:title="@string/cm_filemanager_show_system"
+                        android:checkable="true" />
+                <item
+                        android:id="@+id/mnu_actions_show_symlinks"
+                        android:title="@string/cm_filemanager_show_symlinks"
+                        android:checkable="true" />
+            </group>
+        </menu>
+    </item>
 
     <!-- Overflow actions -->
     <item

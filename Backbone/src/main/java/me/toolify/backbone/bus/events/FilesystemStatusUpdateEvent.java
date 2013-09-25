@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 BrandroidTools
+ * Copyright (C) BrandroidTools
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,25 @@
 
 package me.toolify.backbone.bus.events;
 
-public class BookmarkDeleteEvent extends BusEvent {
-	public final String path;
+public class FilesystemStatusUpdateEvent extends BusEvent {
+	public final int status;
 
-	public BookmarkDeleteEvent(String path) {
-		this.path = path;
+    public static final int INDICATOR_LOCKED = 0;
+    public static final int INDICATOR_UNLOCKED = 1;
+    public static final int INDICATOR_WARNING = 2;
+    public static final int INDICATOR_REFRESHING = 3;
+    public static final int INDICATOR_STOP_REFRESHING = 4;
+
+	public FilesystemStatusUpdateEvent(int status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return new StringBuilder("(")
-			.append("bus event: delete bookmark ")
-			.append(path)
+			.append("bus event: filesystem info status update")
+            .append(" - status code: ")
+			.append(Integer.toString(status))
 			.append(")")
 			.toString();
 	}

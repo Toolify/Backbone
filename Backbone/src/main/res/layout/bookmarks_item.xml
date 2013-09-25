@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/bookmarks_item_separator"
-        style="@style/navigation_list_separator"
+        style="@style/bookmark_drawer_list_separator"
         android:text="@null"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,7 +61,7 @@
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
                     android:singleLine="true"
-                    android:textAppearance="@style/menu_drawer_primary_text_appearance"
+                    android:textAppearance="@style/bookmarks_drawer_primary_text_appearance"
                     android:text="@null"/>
 
             <TextView
@@ -73,7 +73,7 @@
                     android:layout_marginBottom="@dimen/default_margin"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:singleLine="true"
-                    android:textAppearance="@style/menu_drawer_secondary_text_appearance"
+                    android:textAppearance="@style/bookmarks_drawer_secondary_text_appearance"
                     android:text="@null"/>
         </RelativeLayout>
 

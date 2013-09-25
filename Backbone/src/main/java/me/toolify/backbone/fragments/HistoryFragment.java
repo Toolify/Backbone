@@ -85,7 +85,7 @@ public class HistoryFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onActivityCreated(Bundle state) {
         if (DEBUG) {
-            Log.d(TAG, "BookmarksFragment.onActivityCreated"); //$NON-NLS-1$
+            Log.d(TAG, "HistoryFragment.onActivityCreated"); //$NON-NLS-1$
         }
 
         mActivity = getActivity();

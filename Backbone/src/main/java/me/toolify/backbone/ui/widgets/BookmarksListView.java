@@ -29,6 +29,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
 import me.toolify.backbone.adapters.BookmarksAdapter;
@@ -37,7 +43,6 @@ import me.toolify.backbone.bus.events.BookmarkDeleteEvent;
 import me.toolify.backbone.bus.events.BookmarkOpenEvent;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
 import me.toolify.backbone.model.Bookmark;
-import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.preferences.AccessMode;
 import me.toolify.backbone.preferences.Bookmarks;
 import me.toolify.backbone.preferences.FileManagerSettings;
@@ -46,13 +51,8 @@ import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.dialogs.InitialDirectoryDialog;
 import me.toolify.backbone.util.DialogHelper;
 import me.toolify.backbone.util.ExceptionUtil;
-import me.toolify.backbone.util.MountPointHelper;
 import me.toolify.backbone.util.StorageHelper;
 import me.toolify.backbone.util.XmlUtils;
-import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A list view for showing bookmarks and links.  Used in the main activity's navigation drawer
@@ -185,7 +185,7 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bookmark bookmark = mAdapter.getItem(position);
-        BusProvider.getInstance().post(new BookmarkOpenEvent(bookmark.mPath));
+        BusProvider.postEvent(new BookmarkOpenEvent(bookmark.mPath));
     }
 
     /**

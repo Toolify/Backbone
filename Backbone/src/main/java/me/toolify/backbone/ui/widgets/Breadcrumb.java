@@ -16,6 +16,8 @@
 
 package me.toolify.backbone.ui.widgets;
 
+import android.view.MenuItem;
+
 import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.MountPoint;
 
@@ -77,11 +79,25 @@ public interface Breadcrumb {
     MountPoint getMountPointInfo();
 
     /**
+     * Method that sets the active {@link MountPoint} reference.
+     *
+     * @param mountPointInfo The active {@link MountPoint}
+     */
+    void setMountPointInfo(MountPoint mountPointInfo);
+
+    /**
      * Method that returns the active {@link DiskUsage} reference.
      *
      * @return DiskUsage The active {@link DiskUsage}
      */
     DiskUsage getDiskUsageInfo();
+
+    /**
+     * Method that sets the active {@link DiskUsage} reference.
+     *
+     * @param diskUsageInfo The active {@link DiskUsage}
+     */
+    void setDiskUsageInfo(DiskUsage diskUsageInfo);
 
     /**
      * Method that applies the current theme to the breadcrumb

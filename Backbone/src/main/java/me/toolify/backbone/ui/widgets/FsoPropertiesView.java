@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2013 BrandroidTools
  * Copyright (C) 2012 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -83,7 +84,7 @@ public class FsoPropertiesView extends RelativeLayout
     implements OnClickListener, OnCheckedChangeListener, OnItemSelectedListener,
     AsyncResultListener {
 
-    private static final String TAG = "FsoPropertiesDialog"; //$NON-NLS-1$
+    private static final String TAG = "FsoPropertiesView"; //$NON-NLS-1$
 
     private static final String OWNER_TYPE = "owner"; //$NON-NLS-1$
     private static final String GROUP_TYPE = "group"; //$NON-NLS-1$
@@ -100,16 +101,16 @@ public class FsoPropertiesView extends RelativeLayout
      * @hide
      */
     boolean mHasChanged;
+    /**
+     * @hide
+     */
+    boolean mPauseSpinner;
 
     /**
      * @hide
      */
     Context mContext;
     private View mContentView;
-    private View mInfoViewTab;
-    private View mPermissionsViewTab;
-    private View mInfoView;
-    private View mPermissionsView;
     /**
      * @hide
      */
@@ -153,8 +154,6 @@ public class FsoPropertiesView extends RelativeLayout
      */
     boolean mDrawingFolderUsage;
 
-    private DialogInterface.OnDismissListener mOnDismissListener;
-
     public FsoPropertiesView(Context context) {
         super(context);
         init(context);
@@ -182,7 +181,7 @@ public class FsoPropertiesView extends RelativeLayout
         this.mContext = context;
 
         //Inflate the view
-        this.mContentView = (View)inflate(getContext(), R.layout.fso_properties_dialog, null);
+        this.mContentView = inflate(getContext(), R.layout.fso_properties_drawer, null);
         addView(mContentView);
 
         // Apply current theme
@@ -243,16 +242,6 @@ public class FsoPropertiesView extends RelativeLayout
      * @param contentView The content view
      */
     private void fillData(View contentView) {
-        //Get the tab views
-        this.mInfoViewTab = contentView.findViewById(R.id.fso_properties_dialog_tab_info);
-        this.mPermissionsViewTab =
-                contentView.findViewById(R.id.fso_properties_dialog_tab_permissions);
-        this.mInfoView = contentView.findViewById(R.id.fso_tab_info);
-        this.mPermissionsView = contentView.findViewById(R.id.fso_tab_permissions);
-
-        //Register the listeners
-        this.mInfoViewTab.setOnClickListener(this);
-        this.mPermissionsViewTab.setOnClickListener(this);
 
         //Gets text views
         TextView tvName = (TextView)contentView.findViewById(R.id.fso_properties_name);
@@ -276,8 +265,7 @@ public class FsoPropertiesView extends RelativeLayout
         this.mSpnGroup = (Spinner)contentView.findViewById(R.id.fso_properties_group);
         this.mInfoMsgView = (TextView)contentView.findViewById(R.id.fso_info_msg);
 
-        //Fill the text views
-        //- Info
+        //Fill the text views for the info section
         tvName.setText(this.mFso.getName());
         if (FileHelper.isRootDirectory(this.mFso)) {
             tvParent.setText("-"); //$NON-NLS-1$
@@ -315,7 +303,7 @@ public class FsoPropertiesView extends RelativeLayout
         tvLastChangedTime.setText(
                 FileHelper.formatFileTime(this.mContext, this.mFso.getLastChangedTime()));
 
-        //- Permissions
+        //Fill the text views, spinners and checkboxes for the permissions section
         String loadingMsg = this.mContext.getString(R.string.loading_message);
         setSpinnerMsg(this.mContext, FsoPropertiesView.this.mSpnOwner, loadingMsg);
         setSpinnerMsg(this.mContext, FsoPropertiesView.this.mSpnGroup, loadingMsg);
@@ -324,7 +312,7 @@ public class FsoPropertiesView extends RelativeLayout
         // Load owners and groups AIDs in background
         loadAIDs();
 
-        // Load owners and groups AIDs in background
+        // Compute folder usage if this fso is a folder
         if (FileHelper.isDirectory(this.mFso)) {
             vContatinsRow.setVisibility(View.VISIBLE);
             if (this.mComputeFolderStatistics) {
@@ -372,8 +360,9 @@ public class FsoPropertiesView extends RelativeLayout
             this.mChkNoMedia.setOnCheckedChangeListener(this);
         }
 
-        //Change the tab
-        onClick(this.mInfoViewTab);
+        this.mInfoMsgView.setVisibility(
+                this.mHasPrivileged || !this.mIsAdvancedMode ? View.GONE : View.VISIBLE);
+
         this.mIgnoreCheckEvents = false;
     }
 
@@ -381,6 +370,8 @@ public class FsoPropertiesView extends RelativeLayout
      * Method that loads the AIDs in background
      */
     private void loadAIDs() {
+        mPauseSpinner = true;
+
         // Load owners and groups AIDs in background
         AsyncTask<Void, Void, SparseArray<AID>> aidsTask =
                         new AsyncTask<Void, Void, SparseArray<AID>>() {
@@ -429,6 +420,13 @@ public class FsoPropertiesView extends RelativeLayout
                     setSpinnerData(
                             FsoPropertiesView.this.mContext,
                             FsoPropertiesView.this.mSpnGroup, data, groupPosition);
+                    // Spinner population has finished, so we can allow spinner onItemselected calls
+                    // to fire now
+                    mPauseSpinner = false;
+
+                    // Adjust the size of the spinners to match the parent view width
+                    adjustSpinnerSize(FsoPropertiesView.this.mSpnOwner);
+                    adjustSpinnerSize(FsoPropertiesView.this.mSpnGroup);
                 }
             }
         };
@@ -464,43 +462,6 @@ public class FsoPropertiesView extends RelativeLayout
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fso_properties_dialog_tab_info:
-                if (!this.mInfoViewTab.isSelected()) {
-                    this.mInfoViewTab.setSelected(true);
-                    ((TextView)this.mInfoViewTab).setTextAppearance(
-                            this.mContext, R.style.primary_text_appearance);
-                    this.mPermissionsViewTab.setSelected(false);
-                    ((TextView)this.mPermissionsViewTab).setTextAppearance(
-                            this.mContext, R.style.secondary_text_appearance);
-                    this.mInfoView.setVisibility(View.VISIBLE);
-                    this.mPermissionsView.setVisibility(View.GONE);
-
-                    // Apply the them
-                    applyTabTheme();
-                }
-                break;
-
-            case R.id.fso_properties_dialog_tab_permissions:
-                if (!this.mPermissionsViewTab.isSelected()) {
-                    this.mInfoViewTab.setSelected(false);
-                    ((TextView)this.mInfoViewTab).setTextAppearance(
-                            this.mContext, R.style.secondary_text_appearance);
-                    this.mPermissionsViewTab.setSelected(true);
-                    ((TextView)this.mPermissionsViewTab).setTextAppearance(
-                            this.mContext, R.style.primary_text_appearance);
-                    this.mInfoView.setVisibility(View.GONE);
-                    this.mPermissionsView.setVisibility(View.VISIBLE);
-
-                    // Apply the them
-                    applyTabTheme();
-
-                    // Adjust the size of the spinners
-                    adjustSpinnerSize(this.mSpnOwner);
-                    adjustSpinnerSize(this.mSpnGroup);
-                }
-                this.mInfoMsgView.setVisibility(
-                        this.mHasPrivileged || !this.mIsAdvancedMode ? View.GONE : View.VISIBLE);
-                break;
 
             case R.id.fso_info_msg:
                 //Change the console
@@ -666,112 +627,116 @@ public class FsoPropertiesView extends RelativeLayout
         Group group = null;
         String msg = null;
 
-        try {
-            // Apply theme
-            Theme theme = ThemeManager.getCurrentTheme(this.mContext);
-            theme.setTextColor(
-                    this.mContext, ((TextView) parent.getChildAt(0)), "text_color"); //$NON-NLS-1$
+        // We don't want the initial onItemSelected call to trigger while the spinners are still
+        // loading, so this is explicitly disabled until we get the go ahead from loadAIDs()
+        if(!mPauseSpinner) {
+            try {
+//                // Apply theme
+//                Theme theme = ThemeManager.getCurrentTheme(this.mContext);
+//                theme.setTextColor(
+//                        this.mContext, ((TextView) parent.getChildAt(0)), "text_color"); //$NON-NLS-1$
 
-            String row = parent.getItemAtPosition(position).toString();
-            int uid = Integer.parseInt(row.substring(0, row.indexOf(AID_SEPARATOR)));
-            String name = row.substring(row.indexOf(AID_SEPARATOR) + 3);
+                String row = parent.getItemAtPosition(position).toString();
+                int uid = Integer.parseInt(row.substring(0, row.indexOf(AID_SEPARATOR)));
+                String name = row.substring(row.indexOf(AID_SEPARATOR) + 3);
 
-            // Check which spinner was changed
-            switch (parent.getId()) {
-                case R.id.fso_properties_owner:
-                    //Owner
-                    user = new User(uid, name);
-                    group = this.mFso.getGroup();
-                    msg = this.mContext.getString(
-                            R.string.fso_properties_failed_to_change_owner_msg);
-                    break;
-                case R.id.fso_properties_group:
-                    //Group
-                    user = this.mFso.getUser();
-                    group = new Group(uid, name);
-                    msg = this.mContext.getString(
-                            R.string.fso_properties_failed_to_change_group_msg);
-                    break;
+                // Check which spinner was changed
+                switch (parent.getId()) {
+                    case R.id.fso_properties_owner:
+                        //Owner
+                        user = new User(uid, name);
+                        group = this.mFso.getGroup();
+                        msg = this.mContext.getString(
+                                R.string.fso_properties_failed_to_change_owner_msg);
+                        break;
+                    case R.id.fso_properties_group:
+                        //Group
+                        user = this.mFso.getUser();
+                        group = new Group(uid, name);
+                        msg = this.mContext.getString(
+                                R.string.fso_properties_failed_to_change_group_msg);
+                        break;
 
-                default:
-                    break;
-            }
-        } catch (Exception ex) {
-            // Capture the exception
-            ExceptionUtil.translateException(this.mContext, ex);
+                    default:
+                        break;
+                }
+            } catch (Exception ex) {
+                // Capture the exception
+                ExceptionUtil.translateException(this.mContext, ex);
 
-            // Exit from dialog. The dialog may have inconsistency
-            //this.mDialog.dismiss();
-            //TODO: Make the parent activity close its drawer instead of
-            return;
-        }
-
-        // Has changed?
-        if (this.mFso.getUser().compareTo(user) == 0 &&
-             this.mFso.getGroup().compareTo(group) == 0) {
-            return;
-        }
-
-        // Cancel the folder usage command
-        cancelFolderUsageCommand();
-
-        // Change the owner and group of the fso
-        try {
-            if (!CommandHelper.changeOwner(
-                    this.mContext, this.mFso.getFullPath(), user, group, null)) {
-                // Show the warning message
-                setMsg(msg);
-
-                // Update the information of owner and group
-                updateSpinnerFromAid(this.mSpnOwner, this.mFso.getUser());
-                updateSpinnerFromAid(this.mSpnGroup, this.mFso.getGroup());
+                // Exit from dialog. The dialog may have inconsistency
+                //this.mDialog.dismiss();
+                //TODO: Make the parent activity close its drawer instead of
                 return;
             }
 
-            //Change the fso reference
-            this.mFso.setUser(user);
-            this.mFso.setGroup(group);
-            this.mHasChanged = true;
-            setMsg(null);
+            // Has changed?
+            if (this.mFso.getUser().compareTo(user) == 0 &&
+                 this.mFso.getGroup().compareTo(group) == 0) {
+                return;
+            }
 
-        } catch (Exception ex) {
-            // Capture the exception and show warning message
-            final String txtMsg = msg;
-            ExceptionUtil.translateException(
-                    this.mContext, ex, true, true, new ExceptionUtil.OnRelaunchCommandResult() {
-                @Override
-                public void onSuccess() {
-                    // Hide the message
-                    setMsg(null);
-                }
+            // Cancel the folder usage command
+            cancelFolderUsageCommand();
 
-                @Override
-                public void onCancelled() {
-                    // Update the information of owner and group
-                    updateSpinnerFromAid(
-                            FsoPropertiesView.this.mSpnOwner,
-                            FsoPropertiesView.this.mFso.getUser());
-                    updateSpinnerFromAid(
-                            FsoPropertiesView.this.mSpnGroup,
-                            FsoPropertiesView.this.mFso.getGroup());
-                    setMsg(null);
-                }
-
-                @Override
-                public void onFailed(Throwable cause) {
-                    setMsg(txtMsg);
+            // Change the owner and group of the fso
+            try {
+                if (!CommandHelper.changeOwner(
+                        this.mContext, this.mFso.getFullPath(), user, group, null)) {
+                    // Show the warning message
+                    setMsg(msg);
 
                     // Update the information of owner and group
-                    updateSpinnerFromAid(
-                            FsoPropertiesView.this.mSpnOwner,
-                            FsoPropertiesView.this.mFso.getUser());
-                    updateSpinnerFromAid(
-                            FsoPropertiesView.this.mSpnGroup,
-                            FsoPropertiesView.this.mFso.getGroup());
+                    updateSpinnerFromAid(this.mSpnOwner, this.mFso.getUser());
+                    updateSpinnerFromAid(this.mSpnGroup, this.mFso.getGroup());
                     return;
                 }
-            });
 
+                //Change the fso reference
+                this.mFso.setUser(user);
+                this.mFso.setGroup(group);
+                this.mHasChanged = true;
+                setMsg(null);
+
+            } catch (Exception ex) {
+                // Capture the exception and show warning message
+                final String txtMsg = msg;
+                ExceptionUtil.translateException(
+                        this.mContext, ex, true, true, new ExceptionUtil.OnRelaunchCommandResult() {
+                    @Override
+                    public void onSuccess() {
+                        // Hide the message
+                        setMsg(null);
+                    }
+
+                    @Override
+                    public void onCancelled() {
+                        // Update the information of owner and group
+                        updateSpinnerFromAid(
+                                FsoPropertiesView.this.mSpnOwner,
+                                FsoPropertiesView.this.mFso.getUser());
+                        updateSpinnerFromAid(
+                                FsoPropertiesView.this.mSpnGroup,
+                                FsoPropertiesView.this.mFso.getGroup());
+                        setMsg(null);
+                    }
+
+                    @Override
+                    public void onFailed(Throwable cause) {
+                        setMsg(txtMsg);
+
+                        // Update the information of owner and group
+                        updateSpinnerFromAid(
+                                FsoPropertiesView.this.mSpnOwner,
+                                FsoPropertiesView.this.mFso.getUser());
+                        updateSpinnerFromAid(
+                                FsoPropertiesView.this.mSpnGroup,
+                                FsoPropertiesView.this.mFso.getGroup());
+                        return;
+                    }
+                });
+
+            }
         }
     }
 
@@ -1151,19 +1116,36 @@ public class FsoPropertiesView extends RelativeLayout
      * @param spinner The spinner
      */
     private void adjustSpinnerSize(final Spinner spinner) {
-        final View v = this.mContentView.findViewById(R.id.fso_properties_dialog_tabhost);
+        final View rootView = this.mContentView.findViewById(R.id.fso_properties);
         spinner.post(new Runnable() {
             @Override
             public void run() {
                 // Align with the last checkbox of the column
-                int vW = v.getMeasuredWidth();
-                int[] cbSpn = new int[2];
-                spinner.getLocationInWindow(cbSpn);
+                int vW = rootView.getMeasuredWidth();
+                int viewOffset = (int) getRelativeX(spinner, rootView);
 
                 // Set the width
-                spinner.getLayoutParams().width = vW - cbSpn[0];
+                spinner.getLayoutParams().width = vW - viewOffset -
+                        FsoPropertiesView.this.mContext.getResources().
+                                getDimensionPixelSize(R.dimen.default_margin);
             }
         });
+    }
+
+    /**
+     * Method that determines the total horizontal distance between the left side of the specified
+     * root or parent view and the left side of the specified child view.
+     *
+     * @param childView the child view to obtain a relative X position for
+     * @param rootView the parent view whose left edge should be measured against
+     * @return the X coordinate position of the child view relative to the specified parent view
+     * (in pixels)
+     */
+    public float getRelativeX(View childView, View rootView) {
+        if (childView.getParent() == rootView)
+            return childView.getX();
+        else
+            return childView.getX() + getRelativeX((View)childView.getParent(), rootView);
     }
 
     /**
@@ -1173,92 +1155,80 @@ public class FsoPropertiesView extends RelativeLayout
         Theme theme = ThemeManager.getCurrentTheme(this.mContext);
         theme.setBackgroundDrawable(
                 this.mContext, this.mContentView, "background_drawable"); //$NON-NLS-1$
-        applyTabTheme();
-        View v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider1);
-        theme.setBackgroundColor(this.mContext, v, "horizontal_divider_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider2);
-        theme.setBackgroundColor(this.mContext, v, "vertical_divider_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider3);
-        theme.setBackgroundColor(this.mContext, v, "vertical_divider_color"); //$NON-NLS-1$
+        View v = null;
+//        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider1);
+//        theme.setBackgroundColor(this.mContext, v, "horizontal_divider_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider2);
+//        theme.setBackgroundColor(this.mContext, v, "vertical_divider_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_divider3);
+//        theme.setBackgroundColor(this.mContext, v, "vertical_divider_color"); //$NON-NLS-1$
 
-        v = this.mContentView.findViewById(R.id.fso_properties_name_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_name);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_parent_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_parent);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_type_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_type);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_category_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_category);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_link_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_link);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_size_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_size);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_contains_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_contains);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_accessed_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_accessed);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_modified_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_modified);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_changed_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_last_changed);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_include_in_media_scan_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-
-        v = this.mContentView.findViewById(R.id.fso_properties_owner_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_group_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_special_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_read_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_write_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_execute_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_owner_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_group_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_permissions_others_label);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_info_msg);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        ((TextView)v).setCompoundDrawablesWithIntrinsicBounds(
-                theme.getDrawable(this.mContext, "filesystem_warning_drawable"), //$NON-NLS-1$
-                null, null, null);
-    }
-
-    /**
-     * Method that applies the current theme to the tab host
-     */
-    private void applyTabTheme() {
-        // Apply the theme
-        Theme theme = ThemeManager.getCurrentTheme(this.mContext);
-        View v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_info);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
-        v = this.mContentView.findViewById(R.id.fso_properties_dialog_tab_permissions);
-        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_name_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_name);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_parent_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_parent);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_type_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_type);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_category_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_category);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_link_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_link);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_size_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_size);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_contains_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_contains);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_accessed_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_accessed);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_modified_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_modified);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_changed_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_last_changed);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_include_in_media_scan_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//
+//        v = this.mContentView.findViewById(R.id.fso_properties_owner_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_group_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_special_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_read_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_write_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_execute_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_owner_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_group_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_properties_permissions_others_label);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        v = this.mContentView.findViewById(R.id.fso_info_msg);
+//        theme.setTextColor(this.mContext, (TextView)v, "text_color"); //$NON-NLS-1$
+//        ((TextView)v).setCompoundDrawablesWithIntrinsicBounds(
+//                theme.getDrawable(this.mContext, "filesystem_warning_drawable"), //$NON-NLS-1$
+//                null, null, null);
     }
 
     /**

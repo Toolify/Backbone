@@ -18,6 +18,9 @@
     <!-- The Nav Drawer width -->
     <dimen name="nav_drawer_width">300dp</dimen>
 
+    <!-- The Properties Drawer (right) width. Full width on large-port -->
+    <dimen name="properties_drawer_width">360dp</dimen>
+
     <!-- The primary text size -->
     <dimen name="title_text_size">18sp</dimen>
     <!-- The primary text size -->
@@ -30,10 +33,14 @@
     <dimen name="console_text_size">12sp</dimen>
     <!-- The hex editor text size -->
     <dimen name="hexeditor_text_size">12sp</dimen>
-    <!-- The drawer primary text size -->
-    <dimen name="menu_drawer_primary_text_size">18sp</dimen>
-    <!-- The drawer secondary text size -->
-    <dimen name="menu_drawer_secondary_text_size">12sp</dimen>
+    <!-- The bookmark drawer primary text size -->
+    <dimen name="bookmark_drawer_primary_text_size">18sp</dimen>
+    <!-- The bookmark drawer secondary text size -->
+    <dimen name="bookmark_drawer_secondary_text_size">12sp</dimen>
+    <!-- The properties drawer label text size -->
+    <dimen name="properties_drawer_label_text_size">12sp</dimen>
+    <!-- The properties drawer primary text size -->
+    <dimen name="properties_drawer_primary_text_size">12sp</dimen>
 
     <!-- The default row height -->
     <dimen name="default_row_height">48dp</dimen>

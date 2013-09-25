@@ -117,8 +117,18 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <!-- The text appearance for menu drawer list separators -->
-    <style name="navigation_list_separator">
+    <!-- The text appearance for primary navigation item (file) information -->
+    <style name="navigation_item_primary_text_appearance" parent="primary_text_appearance">
+
+    </style>
+    <!-- The text appearance for secondary navigation item (file) information -->
+    <style name="navigation_item_secondary_text_appearance" parent="secondary_text_appearance">
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- The text appearance for bookmark drawer list separators -->
+    <style name="bookmark_drawer_list_separator">
         <item name="android:background">@drawable/list_section_divider_holo_dark</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
@@ -129,30 +139,50 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <!-- The text appearance for primary menu drawer information -->
-    <style name="navigation_item_primary_text_appearance" parent="primary_text_appearance">
 
-    </style>
-    <!-- The text appearance for secondary menu drawer information -->
-    <style name="navigation_item_secondary_text_appearance" parent="secondary_text_appearance">
-        <item name="android:textColor">?android:textColorSecondary</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <!-- The text appearance for primary menu drawer information -->
-    <style name="menu_drawer_primary_text_appearance">
-        <item name="android:textSize">@dimen/menu_drawer_primary_text_size</item>
+    <!-- The text appearance for primary bookmarks drawer information -->
+    <style name="bookmarks_drawer_primary_text_appearance">
+        <item name="android:textSize">@dimen/bookmark_drawer_primary_text_size</item>
         <item name="android:textColor">?android:textColorPrimaryInverse</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
-    <!-- The text appearance for secondary menu drawer information -->
-    <style name="menu_drawer_secondary_text_appearance">
-        <item name="android:textSize">@dimen/menu_drawer_secondary_text_size</item>
+    <!-- The text appearance for secondary bookmarks drawer information -->
+    <style name="bookmarks_drawer_secondary_text_appearance">
+        <item name="android:textSize">@dimen/bookmark_drawer_secondary_text_size</item>
         <item name="android:textColor">?android:textColorSecondaryInverse</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <!-- The text appearance for properties drawer list separators -->
+    <style name="properties_drawer_list_separator">
+        <item name="android:background">@drawable/list_section_divider_holo_light</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- The text appearance for primary bookmarks drawer information -->
+    <style name="properties_drawer_label_text_appearance">
+        <item name="android:textSize">@dimen/properties_drawer_label_text_size</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!-- The text appearance for secondary bookmarks drawer information -->
+    <style name="properties_drawer_primary_text_appearance">
+        <item name="android:textSize">@dimen/properties_drawer_primary_text_size</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!-- The text appearance for hexeditor -->
     <style name="hexeditor_text_appearance">
         <item name="android:textSize">@dimen/hexeditor_text_size</item>
@@ -184,8 +214,8 @@
         <item name="android:minWidth">@dimen/breadcrumb_item_min_size</item>
     </style>
 
-    <!-- Breadcrumb ActionBar Buttom -->
-    <style name="breadcrumb_actionbar_buttom">
+    <!-- Breadcrumb ActionBar Button -->
+    <style name="breadcrumb_actionbar_button">
         <item name="android:paddingLeft">@dimen/extra_margin</item>
         <item name="android:paddingRight">@dimen/default_margin</item>
     </style>

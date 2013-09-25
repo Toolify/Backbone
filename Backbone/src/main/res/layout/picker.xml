@@ -23,12 +23,38 @@
         android:orientation="vertical">
 
     <!-- Breadcrumb -->
-    <me.toolify.backbone.ui.widgets.BreadcrumbView
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/dark_grey">
+
+        <me.toolify.backbone.ui.widgets.ButtonItem
+            android:id="@+id/button_filesystem_info"
+            style="@style/breadcrumb_actionbar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/actionbar_button_filesystem_cd"
+            android:onClick="onActionBarItemClick"
+            android:src="@drawable/ic_action_holo_dark_warning" />
+
+        <ProgressBar
+            android:id="@+id/button_filesystem_info_refreshing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:visibility="invisible" />
+
+        <me.toolify.backbone.ui.widgets.BreadcrumbView
             android:id="@+id/breadcrumb_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/default_row_height"
-            android:layout_marginLeft="@dimen/extra_large_margin"
+            android:layout_toRightOf="@+id/button_filesystem_info"
             android:layout_marginRight="@dimen/extra_large_margin"/>
+
+    </RelativeLayout>
 
     <include layout="@layout/vertical_divider"/>
 

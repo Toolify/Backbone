@@ -26,7 +26,15 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import me.toolify.backbone.R;
+import me.toolify.backbone.bus.BusProvider;
+import me.toolify.backbone.bus.events.FilesystemStatusUpdateEvent;
 import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.tasks.FilesystemAsyncTask;
@@ -34,11 +42,6 @@ import me.toolify.backbone.ui.ThemeManager;
 import me.toolify.backbone.ui.ThemeManager.Theme;
 import me.toolify.backbone.util.FileHelper;
 import me.toolify.backbone.util.StorageHelper;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A view that holds a navigation breadcrumb pattern.
@@ -53,15 +56,11 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
     /**
      * @hide
      */
-    ImageView mFilesystemInfo;
+    private MountPoint mMountPointInfo;
     /**
      * @hide
      */
-    View mDiskUsageInfo;
-    /**
-     * @hide
-     */
-    View mLoading;
+    private DiskUsage mDiskUsageInfo;
     private FilesystemAsyncTask mFilesystemAsyncTask;
 
     private int mFreeDiskSpaceWarningLevel = 95;
@@ -121,15 +120,11 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
         //Recovery all views
         this.mScrollView = (HorizontalScrollView)findViewById(R.id.breadcrumb_scrollview);
         this.mBreadcrumbBar = (ViewGroup)findViewById(R.id.breadcrumb);
-        this.mFilesystemInfo = (ImageView)findViewById(R.id.ab_filesystem_info);
-        this.mDiskUsageInfo = (View)findViewById(R.id.breadcrumb_scrollview);
-        this.mLoading = findViewById(R.id.breadcrumb_loading);
 
         // Change the image of filesystem (this is not called after a changeBreadcrumbPath call,
         // so if need to be theme previously to protect from errors)
-        Theme theme = ThemeManager.getCurrentTheme(getContext());
-        theme.setImageDrawable(
-                getContext(), this.mFilesystemInfo, "filesystem_warning_drawable"); //$NON-NLS-1$
+        BusProvider.postEvent(new FilesystemStatusUpdateEvent(
+                FilesystemStatusUpdateEvent.INDICATOR_WARNING));
     }
 
     /**
@@ -165,8 +160,8 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
         this.post(new Runnable() {
             @Override
             public void run() {
-                BreadcrumbView.this.mFilesystemInfo.setVisibility(View.INVISIBLE);
-                BreadcrumbView.this.mLoading.setVisibility(View.VISIBLE);
+                BusProvider.postEvent(new FilesystemStatusUpdateEvent(
+                        FilesystemStatusUpdateEvent.INDICATOR_REFRESHING));
             }
         });
     }
@@ -180,8 +175,8 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
         this.post(new Runnable() {
             @Override
             public void run() {
-                BreadcrumbView.this.mLoading.setVisibility(View.INVISIBLE);
-                BreadcrumbView.this.mFilesystemInfo.setVisibility(View.VISIBLE);
+                BusProvider.postEvent(new FilesystemStatusUpdateEvent(
+                        FilesystemStatusUpdateEvent.INDICATOR_STOP_REFRESHING));
             }
         });
     }
@@ -244,16 +239,13 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
      */
     @Override
     public synchronized void updateMountPointInfo() {
-      //Cancel the current execution (if any) and launch again
+        //Cancel the current execution (if any) and launch again
         if (this.mFilesystemAsyncTask != null && this.mFilesystemAsyncTask.isRunning()) {
            this.mFilesystemAsyncTask.cancel(true);
         }
-        final ImageView filesystemInfo = (ImageView)findViewById(R.id.ab_filesystem_info);
-        final View diskUsageInfo = findViewById(R.id.breadcrumb_scrollview);
         this.mFilesystemAsyncTask =
                 new FilesystemAsyncTask(
-                        getContext(), filesystemInfo,
-                        diskUsageInfo, this.mFreeDiskSpaceWarningLevel);
+                        getContext(), this, this.mFreeDiskSpaceWarningLevel);
         this.mFilesystemAsyncTask.execute(this.mCurrentPath);
     }
 
@@ -320,10 +312,15 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
      */
     @Override
     public MountPoint getMountPointInfo() {
-        if (this.mFilesystemInfo != null) {
-            return (MountPoint)this.mFilesystemInfo.getTag();
-        }
-        return null;
+        return this.mMountPointInfo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMountPointInfo(MountPoint mountPointInfo) {
+        this.mMountPointInfo = mountPointInfo;
     }
 
     /**
@@ -331,10 +328,15 @@ public class BreadcrumbView extends RelativeLayout implements Breadcrumb, OnClic
      */
     @Override
     public DiskUsage getDiskUsageInfo() {
-        if (this.mDiskUsageInfo != null) {
-            return (DiskUsage)this.mDiskUsageInfo.getTag();
-        }
-        return null;
+        return this.mDiskUsageInfo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDiskUsageInfo(DiskUsage diskUsageInfo) {
+        this.mDiskUsageInfo = diskUsageInfo;
     }
 
     /**

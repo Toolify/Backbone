@@ -24,9 +24,7 @@ import android.view.InflateException;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ShareActionProvider;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
 import me.toolify.backbone.bus.BusProvider;
 import me.toolify.backbone.bus.events.BookmarkRefreshEvent;
-import me.toolify.backbone.bus.events.OpenPropertiesDrawerEvent;
+import me.toolify.backbone.bus.events.ClosePropertiesDrawerEvent;
 import me.toolify.backbone.listeners.OnCopyMoveListener;
 import me.toolify.backbone.listeners.OnRequestRefreshListener;
 import me.toolify.backbone.listeners.OnSelectionListener;
@@ -54,40 +52,29 @@ import me.toolify.backbone.util.FileHelper;
 import me.toolify.backbone.util.MimeTypeHelper;
 import me.toolify.backbone.util.StorageHelper;
 
-public class SelectionModeCallback implements ActionMode.Callback {
-    private MenuItem mActionMoveSelection;
-    private MenuItem mActionDeleteSelection;
-    private MenuItem mActionCompressSelection;
+public class PropertiesModeCallback implements ActionMode.Callback {
+
     private MenuItem mActionCreateLinkGlobal;
-    private MenuItem mActionSendSelection;
-    private MenuItem mActionProperties;
     private MenuItem mActionOpen;
     private MenuItem mActionOpenWith;
     private MenuItem mActionDelete;
     private MenuItem mActionRename;
     private MenuItem mActionCompress;
     private MenuItem mActionExtract;
-    private MenuItem mActionCreateCopy;
     private MenuItem mActionCreateLink;
     private MenuItem mActionExecute;
     private MenuItem mActionSend;
     private MenuItem mActionAddBookmark;
     private MenuItem mActionAddShortcut;
     private MenuItem mActionChecksum;
-    private MenuItem mActionOpenParentFolder;
     private ShareActionProvider mShareActionProvider;
-
-    private TextView mFileCount;
-    private TextView mFolderCount;
 
     private boolean pasteReady = false;
 
     boolean mClosedByUser = true;
     private Activity mActivity;
-    private ActionMode mSelectionMode;
+    private ActionMode mPropertiesMode;
     private Boolean mGlobal;
-    private Boolean mMultiSelection;
-    private final Boolean mSearch;
     private final Boolean mChRooted;
 
     /**
@@ -109,11 +96,11 @@ public class SelectionModeCallback implements ActionMode.Callback {
      * Constructor for <code>SelectionModeCallback</code>.
      *
      * @param activity The current Activity context
-     * @param search If the call is from search activity
+     * @param fso The FileSystemObject to present options for
      */
-    public SelectionModeCallback (Activity activity, Boolean search) {
+    public PropertiesModeCallback(Activity activity, FileSystemObject fso) {
         this.mActivity = activity;
-        this.mSearch = search;
+        this.mFso = fso;
         this.mChRooted = FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
     }
 
@@ -149,23 +136,12 @@ public class SelectionModeCallback implements ActionMode.Callback {
      */
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mSelectionMode = mode;
+        mPropertiesMode = mode;
 
         MenuInflater inflater = mActivity.getMenuInflater();
-        inflater.inflate(R.menu.actionmode, menu);
+        inflater.inflate(R.menu.properties_actionmode, menu);
 
-        View customTitle = mActivity.getLayoutInflater().inflate(R.layout.navigation_action_mode, null, false);
-        mFileCount = (TextView)customTitle.findViewById(R.id.file_count);
-        mFolderCount = (TextView)customTitle.findViewById(R.id.folder_count);
-        mode.setCustomView(customTitle);
-
-        mActionCreateCopy = menu.findItem(R.id.mnu_actions_copy);
-        mActionMoveSelection = menu.findItem(R.id.mnu_actions_move);
-        mActionDeleteSelection = menu.findItem(R.id.mnu_actions_delete_selection);
-        mActionCompressSelection = menu.findItem(R.id.mnu_actions_compress_selection);
         mActionCreateLinkGlobal = menu.findItem(R.id.mnu_actions_create_link_global);
-        mActionSendSelection = menu.findItem(R.id.mnu_actions_send_selection);
-        mActionProperties = menu.findItem(R.id.mnu_actions_properties);
         mActionOpen = menu.findItem(R.id.mnu_actions_open);
         mActionOpenWith = menu.findItem(R.id.mnu_actions_open_with);
         mActionDelete = menu.findItem(R.id.mnu_actions_delete);
@@ -179,10 +155,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
         mActionAddShortcut = menu.findItem(R.id.mnu_actions_add_shortcut);
         mActionChecksum = menu.findItem(R.id.mnu_actions_compute_checksum);
 
-        // Set file with share history to the provider and set the share intent.
-//        mShareActionProvider = (ShareActionProvider) mShare.getActionProvider();
-//        mShareActionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
-
         return true;
     }
 
@@ -191,83 +163,24 @@ public class SelectionModeCallback implements ActionMode.Callback {
      */
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-        int folders = 0;
-        int files = 0;
-        String folderCount;
-        String fileCount;
-
-        // Get selection
-        List<FileSystemObject> selection = null;
-        if (this.mOnSelectionListener != null) {
-            selection = this.mOnSelectionListener.onRequestSelectedFiles();
-        }
-
-        // Count selection
-        for (FileSystemObject fso : selection) {
-            if (FileHelper.isDirectory(fso)) {
-                folders++;
-            } else {
-                files++;
-            }
-        }
-
-        // Display selection counts in action mode
-        folderCount = Integer.toString(folders);
-        fileCount = Integer.toString(files);
-        mFolderCount.setText(folderCount);
-        mFileCount.setText(fileCount);
 
         //TODO: Figure out how to change/fix the mActionCreateLinkGlobal flag
         this.mGlobal = false;
 
         // Reset action item visibility
-        mActionMoveSelection.setVisible(true);
-        mActionDeleteSelection.setVisible(true);
-        mActionCompressSelection.setVisible(true);
         mActionCreateLinkGlobal.setVisible(true);
-        mActionSendSelection.setVisible(true);
-        mActionProperties.setVisible(true);
         mActionOpen.setVisible(true);
         mActionOpenWith.setVisible(true);
         mActionDelete.setVisible(true);
         mActionRename.setVisible(true);
         mActionCompress.setVisible(true);
         mActionExtract.setVisible(true);
-        mActionCreateCopy.setVisible(true);
         mActionCreateLink.setVisible(true);
         mActionExecute.setVisible(true);
         mActionSend.setVisible(true);
         mActionAddBookmark.setVisible(true);
         mActionAddShortcut.setVisible(true);
-
-        // Determine the need for single file (not global) and multiple selection (global) operations
-        if (selection.size() == 1) {
-            this.mFso = selection.get(0);
-            this.mMultiSelection = false;
-
-            // Hide multi target actions when only one item is selected
-            mActionDeleteSelection.setVisible(false);
-            mActionCompressSelection.setVisible(false);
-            mActionSendSelection.setVisible(false);
-        } else {
-            this.mMultiSelection = true;
-
-            // Hide single target actions when multiple items are selected
-            mActionProperties.setVisible(false);
-            mActionOpen.setVisible(false);
-            mActionOpenWith.setVisible(false);
-            mActionDelete.setVisible(false);
-            mActionRename.setVisible(false);
-            mActionCompress.setVisible(false);
-            mActionExtract.setVisible(false);
-            mActionCreateLink.setVisible(false);
-            mActionExecute.setVisible(false);
-            mActionSend.setVisible(false);
-            mActionAddBookmark.setVisible(false);
-            mActionAddShortcut.setVisible(false);
-            mActionCreateLinkGlobal.setVisible(false);
-            mActionChecksum.setVisible(false);
-        }
+        mActionChecksum.setVisible(true);
 
         /*
          * Single file mode
@@ -308,14 +221,7 @@ public class SelectionModeCallback implements ActionMode.Callback {
          * Remove the following actions if we are dealing with a multi-fso selection
          */
 
-        //- Create link
-        if (this.mGlobal  && selection != null) {
-            // Create link (not allow in storage volume)
-            FileSystemObject fso = selection.get(0);
-            if (StorageHelper.isPathInStorageVolume(fso.getFullPath())) {
-                mActionCreateLink.setVisible(false);
-            }
-        } else if (!this.mGlobal) {
+        if (!this.mGlobal) {
             // Create link (not allow in storage volume)
             if (StorageHelper.isPathInStorageVolume(this.mFso.getFullPath())) {
                 mActionCreateLink.setVisible(false);
@@ -323,20 +229,8 @@ public class SelectionModeCallback implements ActionMode.Callback {
         }
 
         // Hide extract (uncompress/unzip) action for non-supported files
-        if (!this.mMultiSelection && !FileHelper.isSupportedUncompressedFile(this.mFso)) {
+        if (!FileHelper.isSupportedUncompressedFile(this.mFso)) {
             mActionExtract.setVisible(false);
-        }
-
-        // Send multiple (only regular files)
-        boolean areAllFiles = true;
-        for (FileSystemObject fso : selection) {
-            if (FileHelper.isDirectory(fso)) {
-                areAllFiles = false;
-                break;
-            }
-        }
-        if (!areAllFiles) {
-            mActionSendSelection.setVisible(false);
         }
 
         // Hide actions that can't be present when running in unprivileged mode)
@@ -351,7 +245,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
             // library that will add more size to the ending apk.
             // For now, will maintain without implementation. Maybe, in the future.
             mActionCompress.setVisible(false);
-            mActionCompressSelection.setVisible(false);
             mActionExtract.setVisible(false);
         }
         return true;
@@ -367,33 +260,20 @@ public class SelectionModeCallback implements ActionMode.Callback {
 
             //- Rename
             case R.id.mnu_actions_rename:
-                if (this.mOnSelectionListener != null) {
-                    showFsoInputNameDialog(menuItem, this.mFso, false);
-                    finish();
-                    return true;
-                }
-                break;
+                showFsoInputNameDialog(menuItem, this.mFso, false);
+                finish();
+                return true;
 
             //- Create link
             case R.id.mnu_actions_create_link:
-                if (this.mOnSelectionListener != null) {
-                    showFsoInputNameDialog(menuItem, this.mFso, true);
-                    finish();
-                    return true;
-                }
-                break;
+                showFsoInputNameDialog(menuItem, this.mFso, true);
+                finish();
+                return true;
+
             case R.id.mnu_actions_create_link_global:
-                if (this.mOnSelectionListener != null) {
-                    // The selection must be only 1 item
-                    List<FileSystemObject> selection =
-                            this.mOnSelectionListener.onRequestSelectedFiles();
-                    if (selection != null && selection.size() == 1) {
-                        showFsoInputNameDialog(menuItem, selection.get(0), true);
-                    }
-                    finish();
-                    return true;
-                }
-                break;
+                showFsoInputNameDialog(menuItem, this.mFso, true);
+                finish();
+                return true;
 
             //- Delete
             case R.id.mnu_actions_delete:
@@ -404,13 +284,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
                         this.mOnRequestRefreshListener,
                         null);
                 finish();
-                break;
-
-            //- Refresh
-            case R.id.mnu_actions_refresh:
-                if (this.mOnRequestRefreshListener != null) {
-                    this.mOnRequestRefreshListener.onRequestRefresh(null, false); //Refresh all
-                }
                 break;
 
             //- Open
@@ -438,20 +311,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
                         this.mActivity, this.mFso, null, null);
                 finish();
                 break;
-            case R.id.mnu_actions_send_selection:
-                if (this.mOnSelectionListener != null) {
-                    List<FileSystemObject> selection =
-                            this.mOnSelectionListener.onRequestSelectedFiles();
-                    if (selection.size() == 1) {
-                        IntentsActionPolicy.sendFileSystemObject(
-                                this.mActivity, selection.get(0), null, null);
-                    } else {
-                        IntentsActionPolicy.sendMultipleFileSystemObject(
-                                this.mActivity, selection, null, null);
-                    }
-                    finish();
-                }
-                break;
 
             //- Create copy
             case R.id.mnu_actions_copy:
@@ -474,21 +333,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
                     CopyMoveActionPolicy.createMoveFileSystemObject(
                             selection,
                             this.onCopyMoveListener);
-                    finish();
-                }
-                break;
-
-            // Delete selection
-            case R.id.mnu_actions_delete_selection:
-                if (this.mOnSelectionListener != null) {
-                    List<FileSystemObject> selection =
-                            this.mOnSelectionListener.onRequestSelectedFiles();
-                    DeleteActionPolicy.removeFileSystemObjects(
-                            this.mActivity,
-                            selection,
-                            this.mOnSelectionListener,
-                            this.mOnRequestRefreshListener,
-                            null);
                     finish();
                 }
                 break;
@@ -517,15 +361,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
                     finish();
                 }
                 break;
-            case R.id.mnu_actions_compress_selection:
-                if (this.mOnSelectionListener != null) {
-                    CompressActionPolicy.compress(
-                            this.mActivity,
-                            this.mOnSelectionListener,
-                            this.mOnRequestRefreshListener);
-                    finish();
-                }
-                break;
 
             //- Add to bookmarks
             case R.id.mnu_actions_add_to_bookmarks:
@@ -536,12 +371,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
             //- Add shortcut
             case R.id.mnu_actions_add_shortcut:
                 IntentsActionPolicy.createShortcut(this.mActivity, this.mFso);
-                break;
-
-            //- Properties
-            case R.id.mnu_actions_properties:
-            case R.id.mnu_actions_properties_current_folder:
-                BusProvider.postEvent(new OpenPropertiesDrawerEvent(this.mFso));
                 break;
 
             //- Navigate to parent
@@ -561,27 +390,24 @@ public class SelectionModeCallback implements ActionMode.Callback {
      */
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        // Clear this before onDeselectAll() to prevent onDeselectAll() from
-        // trying to close the
-        // contextual mode again.
-        mSelectionMode = null;
-        mOnSelectionListener.onDeselectAll();
+        mPropertiesMode = null;
+        BusProvider.postEvent(new ClosePropertiesDrawerEvent());
     }
 
     public void finish() {
-        mSelectionMode.finish();
+        mPropertiesMode.finish();
     }
 
     public void setClosedByUser(boolean closedByUser) {
         this.mClosedByUser = closedByUser;
     }
 
-    public boolean inSelectionMode() {
-        return mSelectionMode != null;
+    public boolean inPropertiesActionMode() {
+        return mPropertiesMode != null;
     }
 
     public void refresh() {
-        mSelectionMode.invalidate();
+        mPropertiesMode.invalidate();
     }
 
     /**
@@ -611,26 +437,26 @@ public class SelectionModeCallback implements ActionMode.Callback {
                     switch (menuItem.getItemId()) {
                         case R.id.mnu_actions_rename:
                             // Rename the fso
-                            if (SelectionModeCallback.this.mOnSelectionListener != null) {
+                            if (PropertiesModeCallback.this.mOnSelectionListener != null) {
                                 CopyMoveActionPolicy.renameFileSystemObject(
-                                        SelectionModeCallback.this.mActivity,
+                                        PropertiesModeCallback.this.mActivity,
                                         inputNameDialog.mFso,
                                         name,
-                                        SelectionModeCallback.this.mOnSelectionListener,
-                                        SelectionModeCallback.this.mOnRequestRefreshListener);
+                                        PropertiesModeCallback.this.mOnSelectionListener,
+                                        PropertiesModeCallback.this.mOnRequestRefreshListener);
                             }
                             break;
 
                         case R.id.mnu_actions_create_link:
                         case R.id.mnu_actions_create_link_global:
                             // Create a link to the fso
-                            if (SelectionModeCallback.this.mOnSelectionListener != null) {
+                            if (PropertiesModeCallback.this.mOnSelectionListener != null) {
                                 NewActionPolicy.createSymlink(
-                                        SelectionModeCallback.this.mActivity,
+                                        PropertiesModeCallback.this.mActivity,
                                         inputNameDialog.mFso,
                                         name,
-                                        SelectionModeCallback.this.mOnSelectionListener,
-                                        SelectionModeCallback.this.mOnRequestRefreshListener);
+                                        PropertiesModeCallback.this.mOnSelectionListener,
+                                        PropertiesModeCallback.this.mOnRequestRefreshListener);
                             }
                             break;
 

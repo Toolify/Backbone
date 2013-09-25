@@ -19,20 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <me.toolify.backbone.ui.widgets.ButtonItem
-            android:id="@+id/ab_configuration"
-            style="@style/breadcrumb_actionbar_buttom"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@null"
-            android:onClick="onActionBarItemClick"
-            android:src="@drawable/ic_holo_light_expander_open"/>
-
     <me.toolify.backbone.ui.widgets.BreadcrumbView
             android:id="@+id/breadcrumb_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/ab_configuration"/>
+            android:layout_height="match_parent"/>
 
 </RelativeLayout>
