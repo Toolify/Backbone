@@ -33,6 +33,7 @@ proguard-project.txt
 #Gradle
 build/
 .gradle
+gradle.properties
 
 #Other
 .DS_Store

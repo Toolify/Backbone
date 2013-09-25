@@ -15,9 +15,7 @@
  -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="me.toolify.backbone"
-  android:versionCode="1"
-  android:versionName="0.0.0.1">
+  package="me.toolify.backbone">
 
   <original-package android:name="me.toolify.backbone" />
 
@@ -41,16 +39,6 @@
     <meta-data
       android:name="android.app.default_searchable"
       android:value=".activities.NavigationActivity" />
-
-    <provider
-      android:name=".providers.RecentSearchesContentProvider"
-      android:authorities="me.toolify.backbone.providers.recentsearches"
-      android:exported="false" />
-
-    <provider
-      android:name=".providers.BookmarksContentProvider"
-      android:authorities="me.toolify.backbone.providers.bookmarks"
-      android:exported="false" />
 
     <activity
       android:name=".activities.NavigationActivity"

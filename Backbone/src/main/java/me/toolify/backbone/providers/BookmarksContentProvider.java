@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
+import me.toolify.backbone.BuildConfig;
 import me.toolify.backbone.model.Bookmark;
 import me.toolify.backbone.preferences.BookmarksDatabaseHelper;
 
@@ -48,8 +49,7 @@ public class BookmarksContentProvider extends ContentProvider  {
     /**
      * The authority string name.
      */
-    public static final String AUTHORITY =
-            "me.toolify.backbone.providers.bookmarks"; //$NON-NLS-1$
+    public static final String AUTHORITY = BuildConfig.BOOKMARKS_PROVIDER_AUTHORITY;
 
     private static final UriMatcher sURLMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 

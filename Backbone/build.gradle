@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.0'
+        classpath 'com.android.tools.build:gradle:0.5.+'
     }
 }
 apply plugin: 'android'
@@ -18,14 +18,95 @@ android {
     compileSdkVersion 17
     buildToolsVersion "17.0.0"
 
+    final SEARCHES_PROVIDER_DEBUG = "me.toolify.backbone.debug.providers.recentsearches"
+    final SEARCHES_PROVIDER_RELEASE = "me.toolify.backbone.providers.recentsearches"
+    final SEARCHES_PROVIDER_ALPHA = "me.toolify.backbone.alpha.providers.recentsearches"
+
+    final BOOKMARKS_PROVIDER_DEBUG = "me.toolify.backbone.debug.providers.bookmarks"
+    final BOOKMARKS_PROVIDER_RELEASE = "me.toolify.backbone.providers.bookmarks"
+    final BOOKMARKS_PROVIDER_ALPHA = "me.toolify.backbone.alpha.providers.bookmarks"
+
     defaultConfig {
+        packageName "me.toolify.backbone"
+        versionCode 1
+        versionName "0.0.0.1"
         minSdkVersion 14
         targetSdkVersion 17
+    }
+
+    signingConfigs {
+        release
+    }
+
+    buildTypes {
+        debug {
+            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_DEBUG + "\";" +
+                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_DEBUG + "\";"
+            packageNameSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
+        release {
+            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_RELEASE + "\";" +
+                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_RELEASE + "\";"
+            signingConfig signingConfigs.release
+        }
+
+        releaseAlpha.initWith(buildTypes.release) // base alpha buildType on release buildType
+        releaseAlpha {
+            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_ALPHA + "\";" +
+                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_ALPHA + "\";"
+            packageNameSuffix ".alpha"
+            versionNameSuffix "-alpha"
+        }
+    }
+
+    // Plug in private keystore credentials if they exist
+    //  Note: A private gradle.properties file at the root of the project contains the properties
+    //  referenced below.  Building the Debug variant will work without the file, but release and
+    //  releaseAlpha will not until the properties file and its referenced keystore file are present
+    if (project.hasProperty('storeFile') && project.hasProperty('storePassword')
+            && project.hasProperty('keyAlias') && project.hasProperty('keyPassword')) {
+
+        if (project.hasProperty('storeFile')) {
+            signingConfigs.release.storeFile = file(storeFile)
+        }
+
+        if (project.hasProperty('storePassword')) {
+            signingConfigs.release.storePassword = storePassword
+        }
+
+        if (project.hasProperty('keyAlias')) {
+            signingConfigs.release.keyAlias = keyAlias
+        }
+
+        if (project.hasProperty('keyPassword')) {
+            signingConfigs.release.keyPassword = keyPassword
+        }
     }
 
     sourceSets {
         main {
             resources.srcDirs = ['libs/color-picker-view/src','libs/android-syntax-highlight/src','themes/src']
+        }
+
+        // Merge in build type specific resources
+        debug {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/debug/res']
+        }
+
+        release {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/release/res']
+        }
+
+        releaseAlpha {
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/alpha/res']
         }
     }
 }

@@ -18,6 +18,8 @@ package me.toolify.backbone.providers;
 
 import android.content.SearchRecentSuggestionsProvider;
 
+import me.toolify.backbone.BuildConfig;
+
 /**
  * A content provider for manage the user search history.
  */
@@ -26,8 +28,7 @@ public class RecentSearchesContentProvider extends SearchRecentSuggestionsProvid
     /**
      * The authority string name.
      */
-    public static final String AUTHORITY =
-            "me.toolify.backbone.providers.recentsearches"; //$NON-NLS-1$
+    public static final String AUTHORITY = BuildConfig.SEARCHES_PROVIDER_AUTHORITY;
 
     /**
      * The provider mode.

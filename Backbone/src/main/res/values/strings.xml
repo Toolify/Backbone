@@ -17,8 +17,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
            xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- The name of the application -->
-    <string name="app_name">Backbone</string>
     <!-- The description of the application -->
     <string name="app_description">A 4.0+ file manager.</string>
 

@@ -101,7 +101,11 @@ public final class ThemeManager {
             mDefaultTheme = new Theme();
             String themeSettings = (String)FileManagerSettings.SETTINGS_THEME.getDefaultValue();
             mDefaultTheme.mPackage =
-                    themeSettings.substring(0, themeSettings.indexOf(":")); //$NON-NLS-1$
+                    ctx.getPackageName();
+                    /* TODO: Review this hack, perhaps when this crazy theme engine gets stripped
+                    out.  Gradle package renaming was breaking the line below, so since we only use
+                    one in-house theme now, lets just dynamically load the context package */
+                    //themeSettings.substring(0, themeSettings.indexOf(":")); //$NON-NLS-1$
             mDefaultTheme.mId =
                     themeSettings.substring(themeSettings.indexOf(":") + 1); //$NON-NLS-1$
             mDefaultTheme.mName = ctx.getString(R.string.theme_default_name);
