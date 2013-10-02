@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
-           xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Файли</string>
     <string name="app_description">Файловий менеджер CyanogenMod</string>
@@ -34,9 +34,7 @@ limitations under the License.
     <string name="select">Вибрати</string>
 
     <string name="root_directory_name"><![CDATA[<Корінь>]]></string>
-    <string name="search_result_name">Пошук:
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_result_name">Пошук: <xliff:g id="terms">%1$s</xliff:g></string>
 
     <string name="loading_message">Завантаження\u2026</string>
     <string name="cancelled_message">Відмінено</string>
@@ -51,24 +49,16 @@ limitations under the License.
     <string name="confirm_deletion">Підтвердіть видалення</string>
 
     <string name="msgs_change_to_prompt_access_mode_title">Підтвердити переключення</string>
-    <string name="msgs_change_to_prompt_access_mode_msg">Неможливо запустити з Root правами. Переключитися в безпечний
-        режим.\n\nЗастосувати?
-    </string>
+    <string name="msgs_change_to_prompt_access_mode_msg">Неможливо запустити з Root правами. Переключитися в безпечний режим.\n\nЗастосувати?</string>
 
     <string name="msgs_cant_create_console">Не вдається отримати необхідні привілеї</string>
-    <string name="msgs_privileged_console_alloc_failed">Неможливо запустити з Root правами. Переключення в безпечний
-        режим
-    </string>
+    <string name="msgs_privileged_console_alloc_failed">Неможливо запустити з Root правами. Переключення в безпечний режим</string>
     <string name="msgs_settings_save_failure">Налаштування не може бути застосоване або збережене</string>
-    <string name="msgs_settings_invalid_initial_directory">Початкова папка "<xliff:g id="initial_dir">%1$s</xliff:g>"
-        недоступна. Перехід в кореневу папку
-    </string>
+    <string name="msgs_settings_invalid_initial_directory">Початкова папка "<xliff:g id="initial_dir">%1$s</xliff:g>" недоступна. Перехід в кореневу папку</string>
 
     <string name="msgs_success">Операція пройшла успішно</string>
     <string name="msgs_unknown">Було виявлено помилки. Операція завершилась невдало</string>
-    <string name="msgs_insufficient_permissions">Ця операція вимагає підвищених привілеїв. Спробуйте змінити
-        Root-режим
-    </string>
+    <string name="msgs_insufficient_permissions">Ця операція вимагає підвищених привілеїв. Спробуйте змінити Root-режим</string>
     <string name="msgs_file_not_found">Файл або папка не знайдені</string>
     <string name="msgs_command_not_found">Операції команди не були знайдені або мають невірне значення</string>
     <string name="msgs_io_failed">Помилка читання/запису</string>
@@ -76,15 +66,10 @@ limitations under the License.
     <string name="msgs_operation_failure">Операція невдала</string>
     <string name="msgs_console_alloc_failure">Виникла внутрішня помилка</string>
     <string name="msgs_operation_can_not_be_cancelled">Операція не може бути відмінена</string>
-    <string name="msgs_read_only_filesystem">Файлова система доступна тільки для читання. Спробуйте змонтувати файлову
-        систему для читання/запису
-    </string>
+    <string name="msgs_read_only_filesystem">Файлова система доступна тільки для читання. Спробуйте змонтувати файлову систему для читання/запису</string>
     <string name="msgs_illegal_argument">Неприпустимий аргумент. Виклик не вдався</string>
-    <string name="msgs_unresolved_inconsistencies">Операція не допускається, оскільки це створить невідповідності
-    </string>
-    <string name="msgs_operation_not_allowed_in_current_directory">Операція не допускається в поточній папці. \n\nПапка
-        призначення не може бути вкладеною папкою джерела або самим джерелом.
-    </string>
+    <string name="msgs_unresolved_inconsistencies">Операція не допускається, оскільки це створить невідповідності</string>
+    <string name="msgs_operation_not_allowed_in_current_directory">Операція не допускається в поточній папці. \n\nПапка призначення не може бути вкладеною папкою джерела або самим джерелом.</string>
 
     <string name="msgs_push_again_to_exit">Натисніть ще раз для виходу</string>
 
@@ -94,9 +79,7 @@ limitations under the License.
 
     <string name="msgs_action_association_failed">Прив’язка додатка до дії не вдалася</string>
 
-    <string name="advise_insufficient_permissions">Операція вимагає підвищених привілеїв.\n\nВи хочете змінити режим
-        Root-доступу?
-    </string>
+    <string name="advise_insufficient_permissions">Операція вимагає підвищених привілеїв.\n\nВи хочете змінити режим Root-доступу?</string>
 
 
     <string name="parent_dir">Домашня папка</string>
@@ -133,13 +116,8 @@ limitations under the License.
     <string name="filesystem_info_warning_title">Немає інформації</string>
     <string name="filesystem_info_warning_msg">Немає доступної інформації про файлову систему</string>
     <string name="filesystem_info_cant_be_mounted_msg">Файлова система не може бути змонтована / розмонтована</string>
-    <string name="filesystem_info_mount_not_allowed_msg">Монтування файлової системи неможливо в безпечному режимі.
-        Натисніть для зміни режиму Root-доступу
-    </string>
-    <string name="filesystem_info_mount_failed_msg">Не вдалося змонтувати файлову систему. Деякі файлові системи, такі
-        як SD-карти, не можуть бути змонтовані / розмонтовані, тому що вони мають вбудовану файлову систему тільки для
-        читання
-    </string>
+    <string name="filesystem_info_mount_not_allowed_msg">Монтування файлової системи неможливо в безпечному режимі. Натисніть для зміни режиму Root-доступу</string>
+    <string name="filesystem_info_mount_failed_msg">Не вдалося змонтувати файлову систему. Деякі файлові системи, такі як SD-карти, не можуть бути змонтовані / розмонтовані, тому що вони мають вбудовану файлову систему тільки для читання</string>
     <string name="filesystem_info_dialog_title">Інформація про файлову систему</string>
     <string name="filesystem_info_dialog_tab_info">Інформація</string>
     <string name="filesystem_info_dialog_tab_disk_usage">Диск</string>
@@ -154,18 +132,10 @@ limitations under the License.
     <string name="filesystem_info_dialog_free_disk_usage">Вільно:</string>
 
 
-    <string name="fso_properties_permissions_not_allowed_msg">Зміна дозволів неможлива в безпечному режимі. Натисніть
-        для зміни режиму Root-доступу
-    </string>
-    <string name="fso_properties_failed_to_change_owner_msg">Зміна власника не вдалося.\n\nЗ міркувань безпеки, деякі
-        файлові системи, такі як SD-карти, не дозволяють змінювати власника
-    </string>
-    <string name="fso_properties_failed_to_change_group_msg">Зміна групи не вдалася.\n\nЗ міркувань безпеки, деякі
-        файлові системи, такі як SD-карти, не дозволяють змінювати власника
-    </string>
-    <string name="fso_properties_failed_to_change_permission_msg">Зміна дозволів не вдалася.\n\nЗ міркувань безпеки,
-        деякі файлові системи, такі як SD-карти, не дозволяють змінювати власника
-    </string>
+    <string name="fso_properties_permissions_not_allowed_msg">Зміна дозволів неможлива в безпечному режимі. Натисніть для зміни режиму Root-доступу</string>
+    <string name="fso_properties_failed_to_change_owner_msg">Зміна власника не вдалося.\n\nЗ міркувань безпеки, деякі файлові системи, такі як SD-карти, не дозволяють змінювати власника</string>
+    <string name="fso_properties_failed_to_change_group_msg">Зміна групи не вдалася.\n\nЗ міркувань безпеки, деякі файлові системи, такі як SD-карти, не дозволяють змінювати власника</string>
+    <string name="fso_properties_failed_to_change_permission_msg">Зміна дозволів не вдалася.\n\nЗ міркувань безпеки, деякі файлові системи, такі як SD-карти, не дозволяють змінювати власника</string>
     <string name="fso_properties_dialog_title">Властивості</string>
     <string name="fso_properties_dialog_tab_info">Інформація</string>
     <string name="fso_properties_dialog_tab_permissions">Дозволи</string>
@@ -188,9 +158,7 @@ limitations under the License.
     <string name="fso_delete_nomedia_dir_title">Видалити папку .nomedia</string>
     <string name="fso_delete_nomedia_dir_body">Ця папка містить папку .nomedia .\n\nВидали її разом зі змістом?</string>
     <string name="fso_delete_nomedia_non_empty_title">Видалити файл .nomedia</string>
-    <string name="fso_delete_nomedia_non_empty_body">Ця папка містить не пустий файл .nomedia.\n\nВи хочете її
-        видалити?
-    </string>
+    <string name="fso_delete_nomedia_non_empty_body">Ця папка містить не пустий файл .nomedia.\n\nВи хочете її видалити?</string>
 
     <string name="history">Історія</string>
     <string name="msgs_history_empty">Історія пуста</string>
@@ -202,25 +170,14 @@ limitations under the License.
     <string name="search_error_msg">Під час пошуку виникла помилка. Нічого не знайдено</string>
     <string name="search_no_results_msg">Нічого не знайдено</string>
     <plurals name="search_found_items">
-        <item quantity="zero">No items found</item>
-        <item quantity="one">1 item found</item>
-        <item quantity="other">
-            <xliff:g id="count">%d</xliff:g>
-            items found
-        </item>
+    <item quantity="zero">No items found</item>
+    <item quantity="one">1 item found</item>
+    <item quantity="other"><xliff:g id="count">%d</xliff:g> items found</item>
     </plurals>
-    <string name="search_found_items_in_directory">
-        <xliff:g id="items">%1$s</xliff:g>
-        в
-        <xliff:g id="path">%2$s</xliff:g>
-    </string>
-    <string name="search_terms"><![CDATA[<b>Умови:</b>]]>
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_found_items_in_directory"><xliff:g id="items">%1$s</xliff:g> в <xliff:g id="path">%2$s</xliff:g></string>
+    <string name="search_terms"><![CDATA[<b>Умови:</b>]]> <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="search_few_characters_title">Підтвердіть пошук</string>
-    <string name="search_few_characters_msg">Деякі умови пошуку мають дуже мало символів. Операція може бути дуже
-        затратна по часу і системних ресурсах.\n\nВи дійсно бажаєте продовжити?
-    </string>
+    <string name="search_few_characters_msg">Деякі умови пошуку мають дуже мало символів. Операція може бути дуже затратна по часу і системних ресурсах.\n\nВи дійсно бажаєте продовжити?</string>
     <string name="searching">Будь ласка зачекайте\u2026</string>
     <string name="searching_action_label">Триває пошук\u2026</string>
 
@@ -260,47 +217,23 @@ limitations under the License.
     <string name="menu_word_wrap">Перенесення слів</string>
     <string name="menu_syntax_highlight">Підсвітка синтаксису</string>
 
-    <string name="create_copy_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - копія
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
-    <string name="create_new_compress_file_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - новий
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
+    <string name="create_copy_regexp"><xliff:g id="name">%1$s</xliff:g> - копія <xliff:g id="extension">%2$s</xliff:g></string>
+    <string name="create_new_compress_file_regexp"><xliff:g id="name">%1$s</xliff:g> - новий <xliff:g id="extension">%2$s</xliff:g></string>
 
     <string name="waiting_dialog_msg">Виконання операції\u2026</string>
     <string name="waiting_dialog_copying_title">Копіюваня\u2026</string>
-    <string name="waiting_dialog_copying_msg"><![CDATA[<b>З</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>В</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_copying_msg"><![CDATA[<b>З</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>В</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_moving_title">Переміщення\u2026</string>
-    <string name="waiting_dialog_moving_msg"><![CDATA[<b>З</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>В</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_moving_msg"><![CDATA[<b>З</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>В</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_deleting_title">Видалення\u2026</string>
-    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Файл</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Файл</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_extracting_title">Видобування\u2026</string>
-    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Файл</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Файл</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_compressing_title">Стиснення\u2026</string>
-    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Файл</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Файл</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_analizing_msg"><![CDATA[<b>Аналізu2026</b>]]></string>
-    <string name="msgs_extracting_success">Видобування успішно завершено. Дані видобуті до
-        <xliff:g id="destination">%1$s</xliff:g>
-    </string>
-    <string name="msgs_compressing_success">Стиснення успішно завершено. Дані стиснуті до
-        <xliff:g id="destination">%1$s</xliff:g>
-    </string>
+    <string name="msgs_extracting_success">Видобування успішно завершено. Дані видобуті до <xliff:g id="destination">%1$s</xliff:g></string>
+    <string name="msgs_compressing_success">Стиснення успішно завершено. Дані стиснуті до <xliff:g id="destination">%1$s</xliff:g></string>
 
     <string name="actions_dialog_title">Дії</string>
     <string name="actions_menu_properties_current_folder">Властивості</string>
@@ -336,11 +269,8 @@ limitations under the License.
 
     <string name="input_name_dialog_label">Ім`я:</string>
     <string name="input_name_dialog_message_empty_name">Ім`я не може бути пустим</string>
-    <string name="input_name_dialog_message_invalid_path_name">Неприпустиме ім’я. Не можна використовувати символи: \'
-        <xliff:g id="invalid_characters">%1$s</xliff:g>\'
-    </string>
-    <string name="input_name_dialog_message_invalid_name">Неприпустиме ім’я. Імена \'.\' і \'..\' не дозволяються
-    </string>
+    <string name="input_name_dialog_message_invalid_path_name">Неприпустиме ім’я. Не можна використовувати символи: \'<xliff:g id="invalid_characters">%1$s</xliff:g>\'</string>
+    <string name="input_name_dialog_message_invalid_name">Неприпустиме ім’я. Імена \'.\' і \'..\' не дозволяються</string>
     <string name="input_name_dialog_message_name_exists">Таке ім’я вже існує</string>
 
     <string name="associations_dialog_title">Асоціації</string>
@@ -356,10 +286,7 @@ limitations under the License.
     <string name="execution_console_script_name_label">Скрипт:</string>
     <string name="execution_console_script_execution_time_label">Час:</string>
     <string name="execution_console_script_exitcode_label">Код завершення:</string>
-    <string name="execution_console_script_execution_time_text">
-        <xliff:g id="seconds">%1$s</xliff:g>
-        сек.
-    </string>
+    <string name="execution_console_script_execution_time_text"><xliff:g id="seconds">%1$s</xliff:g> сек.</string>
 
     <string name="compute_checksum_title">Обчислити контрольну суму</string>
     <string name="compute_checksum_filename_label">Файл:</string>
@@ -368,41 +295,6 @@ limitations under the License.
     <string name="mime_folder">Папка</string>
     <string name="mime_symlink">Посилання</string>
     <string name="mime_unknown">Невідомо</string>
-
-    <string name="selection_one_folder">
-        <xliff:g id="folders">%1$s</xliff:g>
-        папка виділена
-    </string>
-    <string name="selection_other_folders">
-        <xliff:g id="folders">%1$s</xliff:g>
-        папки(-ок) виділено
-    </string>
-    <string name="selection_one_file">
-        <xliff:g id="files">%1$s</xliff:g>
-        файл виділений
-    </string>
-    <string name="selection_other_files">
-        <xliff:g id="files">%1$s</xliff:g>
-        файлів(-и) виділено
-    </string>
-    <string name="selection_other_folders_one_file">
-        <xliff:g id="folders">%1$s</xliff:g>
-        папки(-ок,-а) і
-        <xliff:g id="files">%2$s</xliff:g>
-        файл виділений
-    </string>
-    <string name="selection_one_folder_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        папка і
-        <xliff:g id="file2">%2$s</xliff:g>
-        файлів(-и) виділено
-    </string>
-    <string name="selection_other_folders_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        папки(-ок,-а) і
-        <xliff:g id="files">%2$s</xliff:g>
-        файлів(-и) виділено
-    </string>
 
     <string name="category_system">СИСТЕМА</string>
     <string name="category_app">ДОДАТОК</string>
@@ -432,41 +324,25 @@ limitations under the License.
     <string name="pref_editor">Налаштування редактора</string>
     <string name="pref_themes">Теми</string>
     <string name="pref_about">Про програму</string>
-    <string name="pref_about_summary">Файловий менеджер v<xliff:g id="version">%1$s</xliff:g>\nCopyright u00A9 2013 The
-        CyanogenMod Project
-    </string>
+    <string name="pref_about_summary">Файловий менеджер v<xliff:g id="version">%1$s</xliff:g>\nCopyright u00A9 2013 The CyanogenMod Project</string>
 
     <string name="pref_general_behaviour_category">Основні</string>
     <string name="pref_case_sensitive_sort">Враховувати регістр</string>
-    <string name="pref_case_sensitive_sort_summary">Враховувати регістр при навігації чи сортуванні пошукових
-        результатів
-    </string>
+    <string name="pref_case_sensitive_sort_summary">Враховувати регістр при навігації чи сортуванні пошукових результатів</string>
     <string name="pref_disk_usage_warning_level">Попереджати про пам’ять</string>
-    <string name="pref_disk_usage_warning_level_summary" formatted="false">Показувати різнокольорові індикатори
-        дискового простору, коли вони досягають
-        <xliff:g id="level">%1$s</xliff:g>
-        відсотків вільного місця
-    </string>
+    <string name="pref_disk_usage_warning_level_summary" formatted="false">Показувати різнокольорові індикатори дискового простору, коли вони досягають <xliff:g id="level">%1$s</xliff:g> відсотків вільного місця</string>
     <string name="pref_compute_folder_statistics">Розрахунок статистики по папках</string>
-    <string name="pref_compute_folder_statistics_on">Увага! Розрахунок статистики по папках займе тривалий час і буде
-        потрібна значна кількість системних ресурсів
-    </string>
+    <string name="pref_compute_folder_statistics_on">Увага! Розрахунок статистики по папках займе тривалий час і буде потрібна значна кількість системних ресурсів</string>
     <string name="pref_use_flinger">Використовувати жести</string>
     <string name="pref_use_flinger_summary">Використовуйте жест справа наліво для видалення файлів або папок</string>
     <string name="pref_general_advanced_settings_category">Разширені налаштування</string>
     <string name="pref_access_mode">Режим доступу</string>
     <string name="pref_access_mode_safe">Безпечний режим</string>
-    <string name="pref_access_mode_safe_summary">Безпечний режим\n\nДодаток працює без Root-привілеїв і має доступ
-        тільки до файлової системи накопичувачів (SD-карти або USB)
-    </string>
+    <string name="pref_access_mode_safe_summary">Безпечний режим\n\nДодаток працює без Root-привілеїв і має доступ тільки до файлової системи накопичувачів (SD-карти або USB)</string>
     <string name="pref_access_mode_prompt">Режим запиту</string>
-    <string name="pref_access_mode_prompt_summary">Режим запиту\n\nДодаток працює з Root-привілеями, але буде виводити
-        запит на дозвіл виконання операцій з системою
-    </string>
+    <string name="pref_access_mode_prompt_summary">Режим запиту\n\nДодаток працює з Root-привілеями, але буде виводити запит на дозвіл виконання операцій з системою</string>
     <string name="pref_access_mode_root">Режим Root</string>
-    <string name="pref_access_mode_root_summary">Режим Root\n\nУвага! Цей режим може вивести ваш пристрій з ладу. Всі
-        дії в цьому режимі виконуються на ваш страх і ризик
-    </string>
+    <string name="pref_access_mode_root_summary">Режим Root\n\nУвага! Цей режим може вивести ваш пристрій з ладу. Всі дії в цьому режимі виконуються на ваш страх і ризик</string>
     <string name="pref_search_results_category">Результати</string>
     <string name="pref_show_relevance_widget">Показувати актуальність</string>
     <string name="pref_highlight_terms">Виділяти умови пошуку</string>
@@ -476,8 +352,7 @@ limitations under the License.
     <string name="pref_sort_search_results_mode_relevance">По актуальності</string>
     <string name="pref_search_privacity_category">Конфіденційності</string>
     <string name="pref_save_search_terms">Зберегти умови пошуку</string>
-    <string name="pref_save_search_terms_on">Умови пошуку будуть збережені для подальшого використання як підказки
-    </string>
+    <string name="pref_save_search_terms_on">Умови пошуку будуть збережені для подальшого використання як підказки</string>
     <string name="pref_save_search_terms_off">Умови пошуку не будуть зберігатися</string>
     <string name="pref_remove_saved_search_terms">Видалити збережені умови пошуку</string>
     <string name="pref_remove_saved_search_terms_summary">Натисніть для видалення всіх збережених умов пошуку</string>
@@ -490,15 +365,11 @@ limitations under the License.
     <string name="pref_hexdump_desc">При відкритті двійкового файлу показувати шістнадцятковий дамп</string>
     <string name="pref_editor_syntax_highlight_category">Підсвітка синтаксису</string>
     <string name="pref_syntax_highlight">Підсвітка синтаксису</string>
-    <string name="pref_syntax_highlight_desc">Підсвічувати синтаксис файлу в редакторі (лише при наявному обробникові
-        синтаксису для даного типу)
-    </string>
+    <string name="pref_syntax_highlight_desc">Підсвічувати синтаксис файлу в редакторі (лише при наявному обробникові синтаксису для даного типу)</string>
     <string name="pref_syntax_highlight_color_scheme">Кольорова тема</string>
-    <string name="pref_syntax_highlight_color_scheme_desc">Натисніть для вибору кольрової схеми підсвітки синтаксису
-    </string>
+    <string name="pref_syntax_highlight_color_scheme_desc">Натисніть для вибору кольрової схеми підсвітки синтаксису</string>
     <string name="pref_syntax_sh_use_theme_default">Використовувати типову тему</string>
-    <string name="pref_syntax_sh_use_theme_default_desc">Використовувати типову підсвітку синтаксису з поточної теми
-    </string>
+    <string name="pref_syntax_sh_use_theme_default_desc">Використовувати типову підсвітку синтаксису з поточної теми</string>
     <string name="pref_editor_sh_item_category">Пункти</string>
     <string name="pref_themes_selection_category">Теми</string>
     <string name="pref_themes_set_theme">Застосувати</string>
@@ -526,18 +397,11 @@ limitations under the License.
     <string name="ash_quoted_string">Цитований рядок</string>
     <string name="ash_variable">Змінна</string>
 
-    <string name="security_warning_extract">Увага!\n\nВидобування архіва з відносними або абсолютними шляхами може
-        пошкодити пристрій шляхом перезапису системних файлів.\n\nВи дісно бажаєте продовжити?
-    </string>
+    <string name="security_warning_extract">Увага!\n\nВидобування архіва з відносними або абсолютними шляхами може пошкодити пристрій шляхом перезапису системних файлів.\n\nВи дісно бажаєте продовжити?</string>
 
     <string name="changelog_title">Список змін</string>
 
     <string name="welcome_title">Ласкаво просимо!</string>
-    <string name="welcome_msg">Ласкаво просимо до файлового менеджера CyanogenMod.\n\n Цей застосунок допоможе вам
-        отримати доступ до файлової системи і виконувати операції, які можуть вивести з ладу ваш пристрій. Для
-        запобігання цього, він запуститься в безпечному режимі з мінімальними привілеями. \n\n Ви можете отримати доступ
-        до розширених функцій з повними правами в налаштуваннях. Це ваша відповідальність. Переконайтеся, щоб ваші дії
-        не зашкодили файловій системі.\n\nКоманда CyanogenMod\n
-    </string>
+    <string name="welcome_msg">Ласкаво просимо до файлового менеджера CyanogenMod.\n\n Цей застосунок допоможе вам отримати доступ до файлової системи і виконувати операції, які можуть вивести з ладу ваш пристрій. Для запобігання цього, він запуститься в безпечному режимі з мінімальними привілеями. \n\n Ви можете отримати доступ до розширених функцій з повними правами в налаштуваннях. Це ваша відповідальність. Переконайтеся, щоб ваші дії не зашкодили файловій системі.\n\nКоманда CyanogenMod\n</string>
 
 </resources>

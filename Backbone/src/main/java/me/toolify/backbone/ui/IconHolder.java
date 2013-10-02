@@ -29,35 +29,42 @@ import java.util.Map;
  */
 public class IconHolder {
 
-    private final Map<String, Drawable> mIcons;
+    private final Map<String, Drawable> mIcons;     // Themes based
+    private final Context mContext;
 
     /**
      * Constructor of <code>IconHolder</code>.
+     *
      */
-    public IconHolder() {
+    public IconHolder(Context context) {
         super();
+        this.mContext = context;
         this.mIcons = new HashMap<String, Drawable>();
     }
 
     /**
-     * Method that loads, cache and returns a drawable reference
-     * of a icon.
+     * Method that returns a drawable reference of a icon.
      *
-     * @param context The current context
      * @param resid The resource identifier
      * @return Drawable The drawable icon reference
      */
-    public Drawable getDrawable(Context context, final String resid) {
+    public Drawable getDrawable(final String resid) {
         //Check if the icon exists in the cache
         if (this.mIcons.containsKey(resid)) {
             return this.mIcons.get(resid);
         }
 
         //Load the drawable, cache and returns reference
-        Theme theme = ThemeManager.getCurrentTheme(context);
-        Drawable dw = theme.getDrawable(context, resid);
+        Theme theme = ThemeManager.getCurrentTheme(mContext);
+        Drawable dw = theme.getDrawable(mContext, resid);
         this.mIcons.put(resid, dw);
         return dw;
     }
 
+    /**
+     * Free any resources used by this instance
+     */
+    public void cleanup() {
+        this.mIcons.clear();
+    }
 }

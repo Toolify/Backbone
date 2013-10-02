@@ -47,6 +47,7 @@ public class GeneralPreferenceFragment extends TitlePreferenceFragment {
     private ListPreference mFiletimeFormatMode;
     private ListPreference mFreeDiskSpaceWarningLevel;
     private CheckBoxPreference mComputeFolderStatistics;
+    private CheckBoxPreference mDisplayThumbs;
 //    private CheckBoxPreference mUseFlinger;
     private ListPreference mAccessMode;
     private CheckBoxPreference mDebugTraces;
@@ -181,6 +182,18 @@ public class GeneralPreferenceFragment extends TitlePreferenceFragment {
                 (CheckBoxPreference)findPreference(
                         FileManagerSettings.SETTINGS_COMPUTE_FOLDER_STATISTICS.getId());
         this.mComputeFolderStatistics.setOnPreferenceChangeListener(this.mOnChangeListener);
+
+        // Display thumbs
+        this.mDisplayThumbs =
+                (CheckBoxPreference)findPreference(
+                        FileManagerSettings.SETTINGS_DISPLAY_THUMBS.getId());
+        Boolean defaultBooleanValue = ((Boolean)FileManagerSettings.
+                SETTINGS_DISPLAY_THUMBS.getDefaultValue());
+        Boolean booleanValue = Preferences.getSharedPreferences().getBoolean(
+                FileManagerSettings.SETTINGS_DISPLAY_THUMBS.getId(),
+                defaultBooleanValue);
+        this.mOnChangeListener.onPreferenceChange(this.mDisplayThumbs, booleanValue);
+        this.mDisplayThumbs.setOnPreferenceChangeListener(this.mOnChangeListener);
 
         // Use flinger
 //        this.mUseFlinger =

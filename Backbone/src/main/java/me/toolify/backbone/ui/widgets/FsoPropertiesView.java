@@ -1078,16 +1078,16 @@ public class FsoPropertiesView extends RelativeLayout
 
             // Compute folders and files string
             String folders = res.getQuantityString(
-                                        R.plurals.fso_properties_dialog_folders,
-                                        this.mFolderUsage.getNumberOfFolders(),
-                                        Integer.valueOf(this.mFolderUsage.getNumberOfFolders()));
+                    R.plurals.n_folders,
+                    this.mFolderUsage.getNumberOfFolders(),
+                    Integer.valueOf(this.mFolderUsage.getNumberOfFolders()));
             String files = res.getQuantityString(
-                                        R.plurals.fso_properties_dialog_files,
-                                        this.mFolderUsage.getNumberOfFiles(),
-                                        Integer.valueOf(this.mFolderUsage.getNumberOfFiles()));
+                    R.plurals.n_files,
+                    this.mFolderUsage.getNumberOfFiles(),
+                    Integer.valueOf(this.mFolderUsage.getNumberOfFiles()));
             final String contains = res.getString(
-                                        R.string.fso_properties_dialog_folder_items,
-                                        folders, files);
+                    R.string.fso_properties_dialog_folder_items,
+                    folders, files);
 
             // Update the dialog
             ((Activity)this.mContext).runOnUiThread(new Runnable() {

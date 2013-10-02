@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012 The CyanogenMod Project
+<!-- Copyright (C) 2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,10 +12,8 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-           xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">G. de Arquivos</string>
     <string name="app_description">Um gerenciador de arquivos por CyanogenMod</string>
     <string name="device_blockdevice">Bloquear dispositivo</string>
@@ -27,9 +25,7 @@
     <string name="all">Todos</string>
     <string name="overwrite">Sobrescrever</string>
     <string name="root_directory_name"><![CDATA[<Pasta raiz>]]></string>
-    <string name="search_result_name">Buscar:
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_result_name">Buscar: <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="loading_message">Carregando\u2026</string>
     <string name="cancelled_message">Cancelado</string>
     <string name="error_message">Erro</string>
@@ -39,46 +35,30 @@
     <string name="confirm_overwrite">Confirmar sobrescrita</string>
     <string name="confirm_deletion">Confirmar remoção</string>
     <string name="msgs_change_to_prompt_access_mode_title">Confirmar troca</string>
-    <string name="msgs_change_to_prompt_access_mode_msg">Não foi possível rodar em modo de Acesso Root. Alterando para o
-        modo Seguro.\n\nAplicar esta mudança?
-    </string>
+    <string name="msgs_change_to_prompt_access_mode_msg">Não foi possível rodar em modo de Acesso Root. Alterando para o modo Seguro.\n\nAplicar esta mudança?</string>
     <string name="msgs_cant_create_console">Não foi possível ganhar os privilégios necessarios para funcionar</string>
-    <string name="msgs_privileged_console_alloc_failed">Não foi possível rodar em modo de Acesso Root. Alterando para o
-        modo Seguro.
-    </string>
+    <string name="msgs_privileged_console_alloc_failed">Não foi possível rodar em modo de Acesso Root. Alterando para o modo Seguro.</string>
     <string name="msgs_settings_save_failure">A configuração não pode ser aplicada ou gravada</string>
-    <string name="msgs_settings_invalid_initial_directory">A pasta inicial "<xliff:g id="initial_dir">%1$s</xliff:g>" é
-        inválida. Alterando para a pasta raiz.
-    </string>
+    <string name="msgs_settings_invalid_initial_directory">A pasta inicial "<xliff:g id="initial_dir">%1$s</xliff:g>" é inválida. Alterando para a pasta raiz.</string>
     <string name="msgs_success">A operação foi completada com sucesso</string>
     <string name="msgs_unknown">Um erro foi detectado. A operação não foi bem sucedida</string>
-    <string name="msgs_insufficient_permissions">A operação requer permissões de superusuário. Tente trocar para modo de
-        Acesso Root
-    </string>
+    <string name="msgs_insufficient_permissions">A operação requer permissões de superusuário. Tente trocar para modo de Acesso Root</string>
     <string name="msgs_file_not_found">O arquivo ou pasta não foi encontrado</string>
-    <string name="msgs_command_not_found">O comando da operação não foi encontrado ou tem uma definição inválida
-    </string>
+    <string name="msgs_command_not_found">O comando da operação não foi encontrado ou tem uma definição inválida</string>
     <string name="msgs_io_failed">Falha na leitura/escrita</string>
     <string name="msgs_operation_timeout">Esgotou o tempo limite da operação</string>
     <string name="msgs_operation_failure">A operação falhou</string>
     <string name="msgs_console_alloc_failure">Ocorreu um erro interno</string>
     <string name="msgs_operation_can_not_be_cancelled">A operação não pode ser cancelada</string>
-    <string name="msgs_read_only_filesystem">O sistema de arquivos é leitura somente. Tente montar o sistema de arquivos
-        como leitura-escrita antes de tentar a operação
-    </string>
+    <string name="msgs_read_only_filesystem">O sistema de arquivos é leitura somente. Tente montar o sistema de arquivos como leitura-escrita antes de tentar a operação</string>
     <string name="msgs_illegal_argument">Argumento ilegal. Falha na chamada</string>
-    <string name="msgs_unresolved_inconsistencies">A operação não é permitida pois ela pode criar inconsistências
-    </string>
-    <string name="msgs_operation_not_allowed_in_current_directory">A operação não é permitida na pasta atual.\n\nPasta
-        de destino não pode ser subpasta da origem ou ser igual à origem.
-    </string>
+    <string name="msgs_unresolved_inconsistencies">A operação não é permitida pois ela pode criar inconsistências</string>
+    <string name="msgs_operation_not_allowed_in_current_directory">A operação não é permitida na pasta atual.\n\nPasta de destino não pode ser subpasta da origem ou ser igual à origem.</string>
     <string name="msgs_push_again_to_exit">Pressione novamente para sair</string>
     <string name="msgs_not_registered_app">Não há aplicação registrada para abrir o tipo de arquivo selecionado</string>
     <string name="msgs_overwrite_files">Alguns dos arquivos já existem na pasta de destino.\n\nSobrescrever?</string>
     <string name="msgs_action_association_failed">Falha ao associar a ação à aplicação</string>
-    <string name="advise_insufficient_permissions">A operação requer privilégios elevados.\n\nVocê deseja trocar para o
-        modo de Acesso Root?
-    </string>
+    <string name="advise_insufficient_permissions">A operação requer privilégios elevados.\n\nVocê deseja trocar para o modo de Acesso Root?</string>
     <string name="parent_dir">Pasta superior</string>
     <string name="external_storage">Armazenamento externo</string>
     <string name="usb_storage">Armazenamento USB</string>
@@ -108,13 +88,8 @@
     <string name="filesystem_info_warning_title">Sem informação</string>
     <string name="filesystem_info_warning_msg">Não há informação disponível para o sistema de arquivo</string>
     <string name="filesystem_info_cant_be_mounted_msg">O sistema de arquivo não pode ser montado/desmontado</string>
-    <string name="filesystem_info_mount_not_allowed_msg">Operações de montagem do sistema de arquivo não é permitida no
-        modo Seguro. Pressione para trocar para o modo de Acesso Root
-    </string>
-    <string name="filesystem_info_mount_failed_msg">Falha ao montar o sistema de arquivo. Alguns sistemas de arquivos,
-        como cartões SD, não podem ser montados/desmontados porque eles estão como sistemas de arquivo de somente
-        leitura
-    </string>
+    <string name="filesystem_info_mount_not_allowed_msg">Operações de montagem do sistema de arquivo não é permitida no modo Seguro. Pressione para trocar para o modo de Acesso Root</string>
+    <string name="filesystem_info_mount_failed_msg">Falha ao montar o sistema de arquivo. Alguns sistemas de arquivos, como cartões SD, não podem ser montados/desmontados porque eles estão como sistemas de arquivo de somente leitura</string>
     <string name="filesystem_info_dialog_title">Informação do sistema de arquivo</string>
     <string name="filesystem_info_dialog_tab_info">Informação</string>
     <string name="filesystem_info_dialog_tab_disk_usage">Uso de disco</string>
@@ -127,18 +102,10 @@
     <string name="filesystem_info_dialog_total_disk_usage">Total:</string>
     <string name="filesystem_info_dialog_used_disk_usage">Usado:</string>
     <string name="filesystem_info_dialog_free_disk_usage">Disponível:</string>
-    <string name="fso_properties_permissions_not_allowed_msg">Operações de permissões não são permitidas em modo Seguro.
-        Pressione para trocar para modo de Acesso Root
-    </string>
-    <string name="fso_properties_failed_to_change_owner_msg">Falha ao trocar o proprietário.\n\nPor razões de segurança,
-        alguns sistemas de arquivos, como cartões SD, não permitem a troca de proprietário
-    </string>
-    <string name="fso_properties_failed_to_change_group_msg">Falha ao trocar o grupo.\n\n Por razões de segurança,
-        alguns sistemas de arquivos, como cartões SD, não permitem a troca de grupo
-    </string>
-    <string name="fso_properties_failed_to_change_permission_msg">A operação de troca de permissões falhou.\n\nPor
-        razões de segurança, alguns sistemas de arquivos, como cartões SD, não permitem a troca de permissões
-    </string>
+    <string name="fso_properties_permissions_not_allowed_msg">Operações de permissões não são permitidas em modo Seguro. Pressione para trocar para modo de Acesso Root</string>
+    <string name="fso_properties_failed_to_change_owner_msg">Falha ao trocar o proprietário.\n\nPor razões de segurança, alguns sistemas de arquivos, como cartões SD, não permitem a troca de proprietário</string>
+    <string name="fso_properties_failed_to_change_group_msg">Falha ao trocar o grupo.\n\n Por razões de segurança, alguns sistemas de arquivos, como cartões SD, não permitem a troca de grupo</string>
+    <string name="fso_properties_failed_to_change_permission_msg">A operação de troca de permissões falhou.\n\nPor razões de segurança, alguns sistemas de arquivos, como cartões SD, não permitem a troca de permissões</string>
     <string name="fso_properties_dialog_title">Propriedades</string>
     <string name="fso_properties_dialog_tab_info">Informação</string>
     <string name="fso_properties_dialog_tab_permissions">Permissões</string>
@@ -152,24 +119,6 @@
     <string name="fso_properties_dialog_owner">Proprietário:</string>
     <string name="fso_properties_dialog_group">Grupo:</string>
     <string name="fso_properties_dialog_others">Outros:</string>
-
-    <plurals name="fso_properties_dialog_folders">
-        <item quantity="zero">0 pastas</item>
-        <item quantity="one">1 pasta</item>
-        <item quantity="other">
-            <xliff:g id="folders">%1$d</xliff:g>
-            pastas
-        </item>
-    </plurals>
-    <plurals name="fso_properties_dialog_files">
-        <item quantity="zero">0 arquivos</item>
-        <item quantity="one">1 arquivos</item>
-        <item quantity="other">
-            <xliff:g id="files">%1$d</xliff:g>
-            arquivos
-        </item>
-    </plurals>
-
     <string name="history">Histórico</string>
     <string name="msgs_history_empty">Histórico está vazio</string>
     <string name="msgs_history_unknown">Histórico desconhecido</string>
@@ -178,28 +127,10 @@
     <string name="search_voice_hint">Fale para buscar</string>
     <string name="search_error_msg">Um erro ocorreu enquanto buscando. Nenhum resultado encontrado</string>
     <string name="search_no_results_msg">Nenhum resultado encontrado</string>
-
-    <plurals name="search_found_items">
-        <item quantity="zero">Nenhum ítem encontrado</item>
-        <item quantity="one">1 ítem encontrado</item>
-        <item quantity="other">
-            <xliff:g id="count">%d</xliff:g>
-            ítems encontrados
-        </item>
-    </plurals>
-
-    <string name="search_found_items_in_directory">
-        <xliff:g id="items">%1$s</xliff:g>
-        em
-        <xliff:g id="path">%2$s</xliff:g>
-    </string>
-    <string name="search_terms"><![CDATA[<b>Termos:</b>]]>
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_found_items_in_directory"><xliff:g id="items">%1$s</xliff:g> em <xliff:g id="path">%2$s</xliff:g></string>
+    <string name="search_terms"><![CDATA[<b>Termos:</b>]]> <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="search_few_characters_title">Confirmar busca</string>
-    <string name="search_few_characters_msg">Alguns termos de busca tem um número pequeno de caracteres. A operação pode
-        demorar muito tempo e custar recursos de sistema.\n\nVocê deseja proceguir?
-    </string>
+    <string name="search_few_characters_msg">Alguns termos de busca tem um número pequeno de caracteres. A operação pode demorar muito tempo e custar recursos de sistema.\n\nVocê deseja proceguir?</string>
     <string name="searching">Favor aguarde\u2036</string>
     <string name="searching_action_label">Busca em andamento</string>
     <string name="picker_title">Escolha um arquivo</string>
@@ -227,48 +158,22 @@
     <string name="menu_search">Buscar</string>
     <string name="menu_settings">Configurações</string>
     <string name="menu_clear_history">Limpar histórico</string>
-    <string name="create_copy_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - cópia
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
-    <string name="create_new_compress_file_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - novo
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
+    <string name="create_copy_regexp"><xliff:g id="name">%1$s</xliff:g> - cópia<xliff:g id="extension">%2$s</xliff:g></string>
+    <string name="create_new_compress_file_regexp"><xliff:g id="name">%1$s</xliff:g> - novo<xliff:g id="extension">%2$s</xliff:g></string>
     <string name="waiting_dialog_msg">Executando a operação\u2026</string>
     <string name="waiting_dialog_copying_title">Copiando\u2026</string>
-    <string name="waiting_dialog_copying_msg"><![CDATA[<b>De</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>Para</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_copying_msg"><![CDATA[<b>De</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>Para</b>]]><xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_moving_title">Movendo\u2026</string>
-    <string name="waiting_dialog_moving_msg"><![CDATA[<b>De</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>Para</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_moving_msg"><![CDATA[<b>De</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>Para</b>]]><xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_deleting_title">Excluindo\u2026</string>
-    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Arquivo</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Arquivo</b>]]><xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_extracting_title">Extraindo\u2026</string>
-    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Arquivo</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Arquivo</b>]]><xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_compressing_title">Comprimindo\u2026</string>
-    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Arquivo</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Arquivo</b>]]><xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_analizing_msg"><![CDATA[<b>Analizando\u2026</b>]]></string>
-    <string name="msgs_extracting_success">O processo de extração foi completado com sucesso. Os dados foram extraídos
-        para
-        <xliff:g id="destination">%1$s</xliff:g>
-    </string>
-    <string name="msgs_compressing_success">O processo de compressão foi completado com sucesso. Os dados foram
-        comprimidos para
-        <xliff:g id="destination">%1$s</xliff:g>
-    </string>
+    <string name="msgs_extracting_success">O processo de extração foi completado com sucesso. Os dados foram extraídos para <xliff:g id="destination">%1$s</xliff:g></string>
+    <string name="msgs_compressing_success">O processo de compressão foi completado com sucesso. Os dados foram comprimidos para <xliff:g id="destination">%1$s</xliff:g></string>
     <string name="actions_dialog_title">Ações</string>
     <string name="actions_menu_properties_current_folder">Propriedades</string>
     <string name="actions_menu_refresh">Atualizar</string>
@@ -291,7 +196,7 @@
     <string name="actions_menu_extract">Extrair</string>
     <string name="actions_menu_delete">Excluir</string>
     <string name="actions_menu_rename">Renomear</string>
-    <string name="actions_menu_copy">Criar cópia</string>
+    <string name="actions_menu_create_copy">Criar cópia</string>
     <string name="actions_menu_properties">Propriedades</string>
     <string name="actions_menu_add_to_bookmarks">Adicionar aos favoritos</string>
     <string name="actions_menu_add_shortcut">Adicionar atalho</string>
@@ -299,11 +204,8 @@
     <string name="actions_ask_undone_operation_msg">Esta ação não pode ser desfeita. Você deseja continuar?</string>
     <string name="input_name_dialog_label">Nome:</string>
     <string name="input_name_dialog_message_empty_name">O nome não pode estar vazio</string>
-    <string name="input_name_dialog_message_invalid_path_name">Nome inválido. Os caracteres \'<xliff:g
-            id="invalid_characters">%1$s</xliff:g>\' não são permitidos.
-    </string>
-    <string name="input_name_dialog_message_invalid_name">Nome inválido. Os nomes \'.\' e \'..\' não são permitidos.
-    </string>
+    <string name="input_name_dialog_message_invalid_path_name">Nome inválido. Os caracteres \'<xliff:g id="invalid_characters">%1$s</xliff:g>\' não são permitidos.</string>
+    <string name="input_name_dialog_message_invalid_name">Nome inválido. Os nomes \'.\' e \'..\' não são permitidos.</string>
     <string name="input_name_dialog_message_name_exists">O nome já existe</string>
     <string name="associations_dialog_title">Associações</string>
     <string name="associations_dialog_remember">Lembrar seleção</string>
@@ -316,47 +218,10 @@
     <string name="execution_console_script_name_label">Script:</string>
     <string name="execution_console_script_execution_time_label">Tempo:</string>
     <string name="execution_console_script_exitcode_label">Código de saída:</string>
-    <string name="execution_console_script_execution_time_text">
-        <xliff:g id="seconds">%1$s</xliff:g>
-        segundos
-    </string>
+    <string name="execution_console_script_execution_time_text"><xliff:g id="seconds">%1$s</xliff:g> segundos</string>
     <string name="mime_folder">Pasta</string>
     <string name="mime_symlink">Link simbólico</string>
     <string name="mime_unknown">Desconhecido</string>
-    <string name="selection_one_folder">
-        <xliff:g id="folders">%1$s</xliff:g>
-        pasta selecionada
-    </string>
-    <string name="selection_other_folders">
-        <xliff:g id="folders">%1$s</xliff:g>
-        pastas selecionadas
-    </string>
-    <string name="selection_one_file">
-        <xliff:g id="files">%1$s</xliff:g>
-        arquivo selecionado
-    </string>
-    <string name="selection_other_files">
-        <xliff:g id="files">%1$s</xliff:g>
-        arquivos selecionados
-    </string>
-    <string name="selection_other_folders_one_file">
-        <xliff:g id="folders">%1$s</xliff:g>
-        pastas e
-        <xliff:g id="files">%2$s</xliff:g>
-        arquivo selecionados
-    </string>
-    <string name="selection_one_folder_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        pasta e
-        <xliff:g id="file2">%2$s</xliff:g>
-        arquivos selecionados
-    </string>
-    <string name="selection_other_folders_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        pastas e
-        <xliff:g id="files">%2$s</xliff:g>
-        arquivos selecionados
-    </string>
     <string name="category_system">SISTEMA</string>
     <string name="category_app">APLICATIVO</string>
     <string name="category_binary">BINÁRIO</string>
@@ -380,42 +245,24 @@
     <string name="pref_general">Configurações gerais</string>
     <string name="pref_search">Opções de busca</string>
     <string name="pref_about">Sobre</string>
-    <string name="pref_about_summary">Gerenciador de Arquivos v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9
-        2013 The CyanogenMod Project
-    </string>
+    <string name="pref_about_summary">Gerenciador de Arquivos v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9 2013 The CyanogenMod Project</string>
     <string name="pref_general_behaviour_category">Geral</string>
     <string name="pref_case_sensitive_sort">Maiúsculas/minúsculas</string>
-    <string name="pref_case_sensitive_sort_summary">Considerar maiúsculas/minúsculas quando navegando ou ordenando
-        resultados de buscas
-    </string>
+    <string name="pref_case_sensitive_sort_summary">Considerar maiúsculas/minúsculas quando navegando ou ordenando resultados de buscas</string>
     <string name="pref_disk_usage_warning_level">Aviso sobre o uso do disco</string>
-    <string name="pref_disk_usage_warning_level_summary" formatted="false">Exibir uma cor diferente nos widgets de uso
-        de disco quando chegar a
-        <xliff:g id="level">%1$s</xliff:g>
-        porcento de espaço disponível
-    </string>
+    <string name="pref_disk_usage_warning_level_summary" formatted="false">Exibir uma cor diferente nos widgets de uso de disco quando chegar a <xliff:g id="level">%1$s</xliff:g> porcento de espaço disponível</string>
     <string name="pref_compute_folder_statistics">Gerar estatísticas da pasta</string>
-    <string name="pref_compute_folder_statistics_on">Aviso! A computação das estatísticas da pasta gasta tempo e
-        recursos do sistema
-    </string>
+    <string name="pref_compute_folder_statistics_on">Aviso! A computação das estatísticas da pasta gasta tempo e recursos do sistema</string>
     <string name="pref_use_flinger">Usar gestos</string>
-    <string name="pref_use_flinger_summary">Usar detecção de gestos de delizar para esquerda e direita para excluir
-        arquivos e pastas
-    </string>
+    <string name="pref_use_flinger_summary">Usar detecção de gestos de delizar para esquerda e direita para excluir arquivos e pastas</string>
     <string name="pref_general_advanced_settings_category">Avançado</string>
     <string name="pref_access_mode">Modo de acesso</string>
     <string name="pref_access_mode_safe">Modo de seguro</string>
-    <string name="pref_access_mode_safe_summary">Modo seguro\n\nO aplicativo está rodando sem privilégios, e somente os
-        sistemas de arquivos que são acessíveis são os volumes: Cartões SD e USB
-    </string>
+    <string name="pref_access_mode_safe_summary">Modo seguro\n\nO aplicativo está rodando sem privilégios, e somente os sistemas de arquivos que são acessíveis são os volumes: Cartões SD e USB</string>
     <string name="pref_access_mode_prompt">Modo de usuário</string>
-    <string name="pref_access_mode_prompt_summary">Modo de usuário\n\nO aplicativo está rodando com total acesso ao
-        sistema de arquivo mas irá perguntar por permissão antes de executar algum ação que requer previlégios
-    </string>
+    <string name="pref_access_mode_prompt_summary">Modo de usuário\n\nO aplicativo está rodando com total acesso ao sistema de arquivo mas irá perguntar por permissão antes de executar algum ação que requer previlégios</string>
     <string name="pref_access_mode_root">Modo de acesso root</string>
-    <string name="pref_access_mode_root_summary">Modo de Acesso Root\n\nAviso! Este modo permite operações que pode
-        danificar seu dispositivo. É de sua responsabilidade garantir que uma operação é segura
-    </string>
+    <string name="pref_access_mode_root_summary">Modo de Acesso Root\n\nAviso! Este modo permite operações que pode danificar seu dispositivo. É de sua responsabilidade garantir que uma operação é segura</string>
     <string name="pref_search_results_category">Resultados</string>
     <string name="pref_show_relevance_widget">Exibir widget de relevância</string>
     <string name="pref_highlight_terms">Realçar termos de busca</string>
@@ -425,25 +272,16 @@
     <string name="pref_sort_search_results_mode_relevance">Por relevância</string>
     <string name="pref_search_privacity_category">Privacidade</string>
     <string name="pref_save_search_terms">Salvar termos de busca</string>
-    <string name="pref_save_search_terms_on">Os termos de busca serão salvos e usados como sugestões em buscas futuras
-    </string>
+    <string name="pref_save_search_terms_on">Os termos de busca serão salvos e usados como sugestões em buscas futuras</string>
     <string name="pref_save_search_terms_off">Termos de busca não serão salvos</string>
     <string name="pref_remove_saved_search_terms">Remover termos de busca salvos</string>
-    <string name="pref_remove_saved_search_terms_summary">Pressione para remover todos os termos de busca salvos
-    </string>
+    <string name="pref_remove_saved_search_terms_summary">Pressione para remover todos os termos de busca salvos</string>
     <string name="pref_remove_saved_search_terms_msg">Todos os termos de busca foram removidos</string>
     <string name="pref_debug_traces">Registrar informações de depuração</string>
-    <string name="security_warning_extract">Aviso!\n\nO dispositivo pode ser danificado se, ao extrair arquivos com
-        caminhos relativos ou absolutos, arquivos de sistema forem sobrescritos.\n\nVocê deseja continuar?
-    </string>
+    <string name="security_warning_extract">Aviso!\n\nO dispositivo pode ser danificado se, ao extrair arquivos com caminhos relativos ou absolutos, arquivos de sistema forem sobrescritos.\n\nVocê deseja continuar?</string>
     <string name="changelog_title">Registro de mudanças</string>
     <string name="welcome_title">Bem vindo</string>
-    <string name="welcome_msg">Bem vindo ao gerenciador de arquivos CyanogenMod.\n\nEste aplicativo permite você a
-        explorar o sistema de arquivos e fazer operações que podem danificar seu dispositivo. Para prevenir danos, o
-        aplicativo irá iniciar em modo seguro e com poucos privilégios.\n\nVocê pode acessar o modo avançado, com todos
-        os privilégios através das Configurações. É sua responsabilidade de garantir que uma operação não danifique seu
-        sistema.\n\nThe CyanogenMod Team.\n
-    </string>
+    <string name="welcome_msg">Bem vindo ao gerenciador de arquivos CyanogenMod.\n\nEste aplicativo permite você a explorar o sistema de arquivos e fazer operações que podem danificar seu dispositivo. Para prevenir danos, o aplicativo irá iniciar em modo seguro e com poucos privilégios.\n\nVocê pode acessar o modo avançado, com todos os privilégios através das Configurações. É sua responsabilidade de garantir que uma operação não danifique seu sistema.\n\nThe CyanogenMod Team.\n</string>
     <string name="themes_author">CyanogenMod</string>
     <string name="pref_themes">Temas</string>
     <string name="pref_themes_selection_category">Temas</string>
@@ -460,13 +298,9 @@
     <string name="fso_failed_to_allow_media_scan">Falha ao permitir varredura de mídia</string>
     <string name="fso_failed_to_prevent_media_scan">Falha ao prevenir varredura de mídia</string>
     <string name="fso_delete_nomedia_dir_title">Remover diretório .nomedia</string>
-    <string name="fso_delete_nomedia_dir_body">Este diretório contém um diretório .nomedia.\n\nVocê deseja removê-lo e
-        todo seu conteúdo?
-    </string>
+    <string name="fso_delete_nomedia_dir_body">Este diretório contém um diretório .nomedia.\n\nVocê deseja removê-lo e todo seu conteúdo?</string>
     <string name="fso_delete_nomedia_non_empty_title">Remover arquivo .nomedia</string>
-    <string name="fso_delete_nomedia_non_empty_body">Este diretório contém um arquivo .nomedia não vazio.\n\nVocê deseja
-        removê-lo?
-    </string>
+    <string name="fso_delete_nomedia_non_empty_body">Este diretório contém um arquivo .nomedia não vazio.\n\nVocê deseja removê-lo?</string>
     <string name="actions_menu_send_selection">Enviar seleção</string>
     <string name="select">Selecionar</string>
     <string name="directory_picker_title">Escolha um diretório</string>
@@ -487,18 +321,12 @@
     <string name="pref_no_suggestions">Sem sugestões</string>
     <string name="pref_no_suggestions_desc">Não exibir sugestões do dicionário ao editar um arquivo</string>
     <string name="pref_hexdump">Gerar hex de arq. binários</string>
-    <string name="pref_hexdump_desc">Ao abrir um arquivo binário, gerar hexadecimal do arquivo e abrí-lo no visualizador
-        hexadecimal.
-    </string>
+    <string name="pref_hexdump_desc">Ao abrir um arquivo binário, gerar hexadecimal do arquivo e abrí-lo no visualizador hexadecimal.</string>
     <string name="pref_editor_syntax_highlight_category">Destacar sintaxe</string>
     <string name="pref_syntax_highlight">Destacar sintaxe</string>
-    <string name="pref_syntax_highlight_desc">Destacar a sintaxe do arquivo exibido no editor (somente quando um
-        analizador de sintaxe estiver disponível para o tipo de arquivo)
-    </string>
+    <string name="pref_syntax_highlight_desc">Destacar a sintaxe do arquivo exibido no editor (somente quando um analizador de sintaxe estiver disponível para o tipo de arquivo)</string>
     <string name="pref_syntax_highlight_color_scheme">Esquema de cor</string>
-    <string name="pref_syntax_highlight_color_scheme_desc">Pressione para selecionar o esquema de cor do destaque de
-        sintaxe
-    </string>
+    <string name="pref_syntax_highlight_color_scheme_desc">Pressione para selecionar o esquema de cor do destaque de sintaxe</string>
     <string name="pref_syntax_sh_use_theme_default">Usar tema padrão</string>
     <string name="pref_syntax_sh_use_theme_default_desc">Usar o destaque de sintaxe padrão para o tema atual</string>
     <string name="pref_editor_sh_item_category">Ítens</string>
@@ -520,4 +348,14 @@
     <string name="filetime_format_mode_MMddyyyy_HHmmss">mm/dd/aaaa hh:mm:ss</string>
     <string name="filetime_format_mode_yyyyMMdd_HHmmss">aaaa-mm-dd hh:mm:ss</string>
     <string name="pref_filetime_format_mode">Formato data/hora</string>
+    <string name="size_bytes">B</string>
+    <string name="size_kilobytes">kB</string>
+    <string name="size_megabytes">MB</string>
+    <string name="size_gigabytes">GB</string>
+    <string name="datetime_format_order">%1$s %2$s</string>
+    <string name="mount_point_readonly">RO</string>
+    <string name="mount_point_readwrite">RW</string>
+    <string name="selection_folders_and_files"><xliff:g id="folders">%1$s</xliff:g> e <xliff:g id="files">%2$s</xliff:g> selecionados.</string>
+    <string name="pref_display_thumbs">Previsualização</string>
+    <string name="pref_display_thumbs_summary">Exibir uma imagem de previsualização para aplicativos, arquivos de música, fotos e vídeos.</string>
 </resources>

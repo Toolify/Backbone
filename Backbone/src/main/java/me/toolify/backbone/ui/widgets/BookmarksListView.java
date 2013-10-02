@@ -161,7 +161,6 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
                 if (result.booleanValue()) {
                     mAdapter.clear();
                     mAdapter.addAll(this.mBookmarks);
-                    mAdapter.notifyDataSetChanged();
                     BookmarksListView.this.setSelection(0);
 
                 } else {
@@ -221,7 +220,6 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
                 return;
             }
             mAdapter.remove(bookmark);
-            mAdapter.notifyDataSetChanged();
             return;
         }
     }

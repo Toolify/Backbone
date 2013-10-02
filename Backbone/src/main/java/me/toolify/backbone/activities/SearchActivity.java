@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The CyanogenMod Project
+ * Copyright (C) 2012-2013 The CyanogenMod Project
  * Copyright (C) 2013 BrandroidTools
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,11 @@ import android.provider.SearchRecentSuggestions;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -611,7 +615,10 @@ public class SearchActivity extends Activity
             }
         }
 
-        // Set the listview
+        //Set the listview
+        if (this.mSearchListView.getAdapter() != null) {
+            ((SearchResultAdapter)this.mSearchListView.getAdapter()).dispose();
+        }
         this.mResultList = new ArrayList<FileSystemObject>();
         SearchResultAdapter adapter =
                 new SearchResultAdapter(this,
@@ -782,7 +789,6 @@ public class SearchActivity extends Activity
     void removeAll() {
         SearchResultAdapter adapter = (SearchResultAdapter)this.mSearchListView.getAdapter();
         adapter.clear();
-        adapter.notifyDataSetChanged();
         this.mSearchListView.setSelection(0);
         toggleResults(false, true);
     }
@@ -983,7 +989,7 @@ public class SearchActivity extends Activity
     @Override
     public void onNavigateTo(Object o) {
         if (o instanceof FileSystemObject) {
-            back(false, (FileSystemObject)o, true);
+            back(false, (FileSystemObject) o, true);
         }
     }
 
@@ -1027,7 +1033,7 @@ public class SearchActivity extends Activity
                     @Override
                     public void onSuccess() {
                         if (navigateTo(fFso, intent)) {
-                            finish();
+                            exit();
                         }
                     }
                     @Override
@@ -1052,8 +1058,18 @@ public class SearchActivity extends Activity
 
         // End this activity
         if (finish) {
-            finish();
+            exit();
         }
+    }
+
+    /**
+     * Method invoked when the activity needs to exit
+     */
+    private void exit() {
+        if (this.mSearchListView.getAdapter() != null) {
+            ((SearchResultAdapter)this.mSearchListView.getAdapter()).dispose();
+        }
+        finish();
     }
 
     /**

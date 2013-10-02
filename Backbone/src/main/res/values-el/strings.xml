@@ -16,6 +16,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Διαχείριση αρχείων</string>
     <string name="app_description">Διαχείριση αρχείων του CyanogenMod</string>
+    <string name="size_bytes">B</string>
+    <string name="size_kilobytes">kB</string>
+    <string name="size_megabytes">MB</string>
+    <string name="size_gigabytes">GB</string>
     <string name="datetime_format_order">%1$s %2$s</string>
     <string name="device_blockdevice">Συσκευή μπλοκ</string>
     <string name="device_characterdevice">Συσκευή χαρακτήρων</string>
@@ -29,9 +33,7 @@
     <string name="overwrite">Αντικατάσταση</string>
     <string name="select">Επιλογή</string>
     <string name="root_directory_name"><![CDATA[<Ριζικός φάκελος>]]></string>
-    <string name="search_result_name">Αναζήτηση:
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_result_name">Αναζήτηση: <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="loading_message">Φόρτωση\u2026</string>
     <string name="cancelled_message">Ακυρώθηκε.</string>
     <string name="error_message">Σφάλμα.</string>
@@ -43,24 +45,14 @@
     <string name="confirm_overwrite">Επιβεβαίωση αντικατάστασης</string>
     <string name="confirm_deletion">Επιβεβαίωση διαγραφής</string>
     <string name="msgs_change_to_prompt_access_mode_title">Επιβεβαίωση αλλαγής</string>
-    <string name="msgs_change_to_prompt_access_mode_msg">Δεν είναι δυνατή η πρόσβαση Root. Αλλαγή σε κατάσταση Ασφαλούς
-        Λειτουργίας. \n\nΕφαρμoγή αλλαγής;
-    </string>
-    <string name="msgs_cant_create_console">Δεν είναι δυνατή η απόκτήση των απαιτούμενων δικαιωμάτων για να λειτουργήσει
-        η εφαρμογή.
-    </string>
-    <string name="msgs_privileged_console_alloc_failed">Δεν είναι δυνατή η πρόσβαση Root. Αλλαγή σε κατάσταση Ασφαλούς
-        Λειτουργίας.
-    </string>
+    <string name="msgs_change_to_prompt_access_mode_msg">Δεν είναι δυνατή η πρόσβαση Root. Αλλαγή σε κατάσταση Ασφαλούς Λειτουργίας. \n\nΕφαρμoγή αλλαγής;</string>
+    <string name="msgs_cant_create_console">Δεν είναι δυνατή η απόκτήση των απαιτούμενων δικαιωμάτων για να λειτουργήσει η εφαρμογή.</string>
+    <string name="msgs_privileged_console_alloc_failed">Δεν είναι δυνατή η πρόσβαση Root. Αλλαγή σε κατάσταση Ασφαλούς Λειτουργίας.</string>
     <string name="msgs_settings_save_failure">Η ρύθμιση δεν μπορεί να εφαρμοστεί ή να αποθηκευθεί.</string>
-    <string name="msgs_settings_invalid_initial_directory">Ο αρχικός φάκελος \"<xliff:g id="initial_dir">%1$s</xliff:g>
-        \" δεν είναι έγκυρος. Αλλαγή στο ριζικό φάκελο.
-    </string>
+    <string name="msgs_settings_invalid_initial_directory">Ο αρχικός φάκελος \"<xliff:g id="initial_dir">%1$s</xliff:g>\" δεν είναι έγκυρος. Αλλαγή στο ριζικό φάκελο.</string>
     <string name="msgs_success">Η λειτουργία ολοκληρώθηκε με επιτυχία.</string>
     <string name="msgs_unknown">Ένα σφάλμα εντοπίστηκε. Η λειτουργία ήταν ανεπιτυχής.</string>
-    <string name="msgs_insufficient_permissions">Αυτή η λειτουργία απαιτεί αυξημένα δικαιώματα. Προσπαθήστε να αλλάξετε
-        σε λειτουργία πρόσβασης Root.
-    </string>
+    <string name="msgs_insufficient_permissions">Αυτή η λειτουργία απαιτεί αυξημένα δικαιώματα. Προσπαθήστε να αλλάξετε σε λειτουργία πρόσβασης Root.</string>
     <string name="msgs_file_not_found">Το αρχείο ή ο φάκελος δεν βρέθηκε.</string>
     <string name="msgs_command_not_found">Η εντολή δεν βρέθηκε ή δεν έχει οριστεί σωστά.</string>
     <string name="msgs_io_failed">Αποτυχία ανάγνωσης/εγγραφής.</string>
@@ -68,26 +60,15 @@
     <string name="msgs_operation_failure">Αποτυχία λειτουργίας.</string>
     <string name="msgs_console_alloc_failure">Παρουσιάστηκε ένα εσωτερικό σφάλμα.</string>
     <string name="msgs_operation_can_not_be_cancelled">Η λειτουργία δεν μπορεί να ακυρωθεί.</string>
-    <string name="msgs_read_only_filesystem">Το σύστημα αρχείων είναι μόνο για ανάγνωση. Προσπαθήστε να προσαρτήσετε το
-        σύστημα αρχείων για ανάγνωση/εγγραφή πριν εκτελέσετε τη λειτουργία.
-    </string>
+    <string name="msgs_read_only_filesystem">Το σύστημα αρχείων είναι μόνο για ανάγνωση. Προσπαθήστε να προσαρτήσετε το σύστημα αρχείων για ανάγνωση/εγγραφή πριν εκτελέσετε τη λειτουργία.</string>
     <string name="msgs_illegal_argument">Μη έγκυρο επιχείρημα. Αποτυχία επίκλησης λειτουργίας.</string>
-    <string name="msgs_unresolved_inconsistencies">Η λειτουργία δεν επιτρέπεται, διότι θα δημιουργούσε προβλήματα
-        ασυνέπειας.
-    </string>
-    <string name="msgs_operation_not_allowed_in_current_directory">Η λειτουργία δεν επιτρέπεται στον τρέχοντα
-        φάκελο.\n\nΟ φάκελος προορισμού δεν μπορεί να είναι υποφάκελος του αρχικού ή ο ίδιος ο αρχικός.
-    </string>
+    <string name="msgs_unresolved_inconsistencies">Η λειτουργία δεν επιτρέπεται, διότι θα δημιουργούσε προβλήματα ασυνέπειας.</string>
+    <string name="msgs_operation_not_allowed_in_current_directory">Η λειτουργία δεν επιτρέπεται στον τρέχοντα φάκελο.\n\nΟ φάκελος προορισμού δεν μπορεί να είναι υποφάκελος του αρχικού ή ο ίδιος ο αρχικός.</string>
     <string name="msgs_push_again_to_exit">Πιέστε ξανά για έξοδο.</string>
-    <string name="msgs_not_registered_app">Δεν υπάρχει καμία εφαρμογή για να χειριστεί τον τύπο του αρχείου που έχετε
-        επιλέξει.
-    </string>
-    <string name="msgs_overwrite_files">Μερικά από τα αρχεία υπάρχουν ήδη στο φάκελο προορισμού.\n\nΑντικατάσταση;
-    </string>
+    <string name="msgs_not_registered_app">Δεν υπάρχει καμία εφαρμογή για να χειριστεί τον τύπο του αρχείου που έχετε επιλέξει.</string>
+    <string name="msgs_overwrite_files">Μερικά από τα αρχεία υπάρχουν ήδη στο φάκελο προορισμού.\n\nΑντικατάσταση;</string>
     <string name="msgs_action_association_failed">Η συσχέτιση της ενέργειας με την εφαρμογή απέτυχε.</string>
-    <string name="advise_insufficient_permissions">Αυτή η λειτουργία απαιτεί αυξημένα δικαιώματα.\n\nΑλλαγή σε
-        λειτουργία πρόσβασης Root;
-    </string>
+    <string name="advise_insufficient_permissions">Αυτή η λειτουργία απαιτεί αυξημένα δικαιώματα.\n\nΑλλαγή σε λειτουργία πρόσβασης Root;</string>
     <string name="parent_dir">Γονικός φάκελος</string>
     <string name="external_storage">Εξωτερικός αποθ. χώρος</string>
     <string name="usb_storage">Αποθ. χώρος USB</string>
@@ -116,15 +97,9 @@
     <string name="cm_filemanager_show_symlinks">Εμφάνιση symlink</string>
     <string name="filesystem_info_warning_title">Καμία πληροφορία</string>
     <string name="filesystem_info_warning_msg">Δεν υπάρχουν διαθέσιμες πληροφορίες για το σύστημα αρχείων.</string>
-    <string name="filesystem_info_cant_be_mounted_msg">Το σύστημα αρχείων δεν μπορεί να προσαρτηθεί/αποπροσαρτηθεί.
-    </string>
-    <string name="filesystem_info_mount_not_allowed_msg">Η προσάρτηση του συστήματος αρχείων δεν επιτρέπεται στην Ασφαλή
-        Λειτουργία. Πιέστε για αλλαγή σε λειτουργία πρόσβασης Root.
-    </string>
-    <string name="filesystem_info_mount_failed_msg">Η προσάρτηση του συστήματος αρχείων απέτυχε. Μερικά συστήματα
-        αρχείων, όπως οι κάρτες SD, δεν μπορούν να προσαρτηθούν/αποπροσαρτηθούν επειδή έχουν ενσωματωθεί ως συστήματα
-        αρχείων μόνο για ανάγνωση.
-    </string>
+    <string name="filesystem_info_cant_be_mounted_msg">Το σύστημα αρχείων δεν μπορεί να προσαρτηθεί/αποπροσαρτηθεί.</string>
+    <string name="filesystem_info_mount_not_allowed_msg">Η προσάρτηση του συστήματος αρχείων δεν επιτρέπεται στην Ασφαλή Λειτουργία. Πιέστε για αλλαγή σε λειτουργία πρόσβασης Root.</string>
+    <string name="filesystem_info_mount_failed_msg">Η προσάρτηση του συστήματος αρχείων απέτυχε. Μερικά συστήματα αρχείων, όπως οι κάρτες SD, δεν μπορούν να προσαρτηθούν/αποπροσαρτηθούν επειδή έχουν ενσωματωθεί ως συστήματα αρχείων μόνο για ανάγνωση.</string>
     <string name="filesystem_info_dialog_title">Πληροφορίες συστήματος αρχείων</string>
     <string name="filesystem_info_dialog_tab_info">Πληροφορίες</string>
     <string name="filesystem_info_dialog_tab_disk_usage">Χρήση δίσκου</string>
@@ -137,18 +112,10 @@
     <string name="filesystem_info_dialog_total_disk_usage">Συνολικά:</string>
     <string name="filesystem_info_dialog_used_disk_usage">Σε χρήση:</string>
     <string name="filesystem_info_dialog_free_disk_usage">Ελεύθερα:</string>
-    <string name="fso_properties_permissions_not_allowed_msg">Η αλλαγή δικαιωμάτων δεν επιτρέπεται στην Ασφαλή
-        Λειτουργία. Πιέστε για αλλαγή σε λειτουργία πρόσβασης Root.
-    </string>
-    <string name="fso_properties_failed_to_change_owner_msg">Η αλλαγή ιδιοκτήτη απέτυχε.\n\nΓια λόγους ασφαλείας, μερικά
-        συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή ιδιοκτήτη.
-    </string>
-    <string name="fso_properties_failed_to_change_group_msg">Η αλλαγή γκρουπ απέτυχε.\n\nΓια λόγους ασφαλείας, μερικά
-        συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή γκρουπ.
-    </string>
-    <string name="fso_properties_failed_to_change_permission_msg">Η αλλαγή δικαιωμάτων απέτυχε.\n\nΓια λόγους ασφαλείας,
-        μερικά συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή δικαιωμάτων.
-    </string>
+    <string name="fso_properties_permissions_not_allowed_msg">Η αλλαγή δικαιωμάτων δεν επιτρέπεται στην Ασφαλή Λειτουργία. Πιέστε για αλλαγή σε λειτουργία πρόσβασης Root.</string>
+    <string name="fso_properties_failed_to_change_owner_msg">Η αλλαγή ιδιοκτήτη απέτυχε.\n\nΓια λόγους ασφαλείας, μερικά συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή ιδιοκτήτη.</string>
+    <string name="fso_properties_failed_to_change_group_msg">Η αλλαγή γκρουπ απέτυχε.\n\nΓια λόγους ασφαλείας, μερικά συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή γκρουπ.</string>
+    <string name="fso_properties_failed_to_change_permission_msg">Η αλλαγή δικαιωμάτων απέτυχε.\n\nΓια λόγους ασφαλείας, μερικά συστήματα αρχείων, όπως οι κάρτες SD, δεν επιτρέπουν την αλλαγή δικαιωμάτων.</string>
     <string name="fso_properties_dialog_title">Ιδιότητες</string>
     <string name="fso_properties_dialog_tab_info">Πληροφορίες</string>
     <string name="fso_properties_dialog_tab_permissions">Δικαιώματα</string>
@@ -165,33 +132,13 @@
     <string name="fso_properties_dialog_owner">Ιδιοκτήτης:</string>
     <string name="fso_properties_dialog_group">Γκρουπ:</string>
     <string name="fso_properties_dialog_others">Άλλοι:</string>
-    <plurals name="fso_properties_dialog_folders">
-        <item quantity="zero">0 φάκελοι</item>
-        <item quantity="one">1 φάκελος</item>
-        <item quantity="other">
-            <xliff:g id="folders">%1$d</xliff:g>
-            φάκελοι
-        </item>
-    </plurals>
-    <plurals name="fso_properties_dialog_files">
-        <item quantity="zero">0 αρχεία</item>
-        <item quantity="one">1 αρχείο</item>
-        <item quantity="other">
-            <xliff:g id="files">%1$d</xliff:g>
-            αρχεία
-        </item>
-    </plurals>
     <string name="fso_properties_dialog_include_in_media_scan">Παράλειψη σάρωσης μέσων:</string>
     <string name="fso_failed_to_allow_media_scan">Το πρόγραμμα απέτυχε να επιτρέψει τη σάρωση μέσων</string>
     <string name="fso_failed_to_prevent_media_scan">Το πρόγραμμα απέτυχε να αποτρέψει τη σάρωση μέσων</string>
     <string name="fso_delete_nomedia_dir_title">Διαγραφή καταλόγου .nomedia</string>
-    <string name="fso_delete_nomedia_dir_body">Αυτός ο κατάλογος περιέχει έναν κατάλογο .nomedia.\n\nΘέλετε να τον
-        διαγράψετε μαζί με όλα τα περιεχόμενά του;
-    </string>
+    <string name="fso_delete_nomedia_dir_body">Αυτός ο κατάλογος περιέχει έναν κατάλογο .nomedia.\n\nΘέλετε να τον διαγράψετε μαζί με όλα τα περιεχόμενά του;</string>
     <string name="fso_delete_nomedia_non_empty_title">Διαγραφή αρχείου .nomedia</string>
-    <string name="fso_delete_nomedia_non_empty_body">Αυτός ο κατάλογος περιέχει ένα αρχείο .nomedia που περιέχει
-        δεδομένα.\n\nΘέλετε να το διαγράψετε;
-    </string>
+    <string name="fso_delete_nomedia_non_empty_body">Αυτός ο κατάλογος περιέχει ένα αρχείο .nomedia που περιέχει δεδομένα.\n\nΘέλετε να το διαγράψετε;</string>
     <string name="history">Ιστορικό</string>
     <string name="msgs_history_empty">Το ιστορικό είναι άδειο.</string>
     <string name="msgs_history_unknown">Άγνωστο στοιχείο ιστορικού.</string>
@@ -200,26 +147,10 @@
     <string name="search_voice_hint">Μιλήστε για αναζήτηση</string>
     <string name="search_error_msg">Ένα σφάλμα προέκυψε κατά την αναζήτηση. Δεν βρέθηκαν αποτέλεσματα.</string>
     <string name="search_no_results_msg">Δέν βρέθηκαν αποτελέσματα.</string>
-    <plurals name="search_found_items">
-        <item quantity="zero">Δέν βρέθηκαν αντικείμενα</item>
-        <item quantity="one">Βρέθηκε 1 αντικείμενο</item>
-        <item quantity="other">Βρέθηκαν
-            <xliff:g id="count">%d</xliff:g>
-            αντικείμενα
-        </item>
-    </plurals>
-    <string name="search_found_items_in_directory">
-        <xliff:g id="items">%1$s</xliff:g>
-        στο
-        <xliff:g id="path">%2$s</xliff:g>
-    </string>
-    <string name="search_terms"><![CDATA[<b>Όροι:</b>]]>
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_found_items_in_directory"><xliff:g id="items">%1$s</xliff:g> στο <xliff:g id="path">%2$s</xliff:g></string>
+    <string name="search_terms"><![CDATA[<b>Όροι:</b>]]> <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="search_few_characters_title">Επιβεβαίωση αναζήτησης</string>
-    <string name="search_few_characters_msg">Μερικοί από τους όρους αναζήτησης έχουν μικρό αριθμό χαρακτήρων. Η
-        λειτουργία μπορεί να είναι πολύ δαπανηρή σε χρόνο και σε πόρους του συστήματος. \n\nΘέλετε να συνεχίσετε;
-    </string>
+    <string name="search_few_characters_msg">Μερικοί από τους όρους αναζήτησης έχουν μικρό αριθμό χαρακτήρων. Η λειτουργία μπορεί να είναι πολύ δαπανηρή σε χρόνο και σε πόρους του συστήματος. \n\nΘέλετε να συνεχίσετε;</string>
     <string name="searching">Παρακαλώ περιμένετε\u2026</string>
     <string name="searching_action_label">Αναζήτηση σε εξέλιξη</string>
     <string name="picker_title">Επιλέξτε ένα αρχείο</string>
@@ -253,46 +184,22 @@
     <string name="menu_no_suggestions">Απενεργοποίηση προτάσεων</string>
     <string name="menu_word_wrap">Αναδίπλωση λέξεων</string>
     <string name="menu_syntax_highlight">Επισήμανση σύνταξης</string>
-    <string name="create_copy_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - αντίγραφο
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
-    <string name="create_new_compress_file_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - νέο
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
+    <string name="create_copy_regexp"><xliff:g id="name">%1$s</xliff:g> - αντίγραφο<xliff:g id="extension">%2$s</xliff:g></string>
+    <string name="create_new_compress_file_regexp"><xliff:g id="name">%1$s</xliff:g> - νέο<xliff:g id="extension">%2$s</xliff:g></string>
     <string name="waiting_dialog_msg">Εκτέλεση λειτουργίας\u2026</string>
     <string name="waiting_dialog_copying_title">Αντιγραφή\u2026</string>
-    <string name="waiting_dialog_copying_msg"><![CDATA[<b>Από</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>Σε</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_copying_msg"><![CDATA[<b>Από</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]> <![CDATA[<b>Σε</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_moving_title">Μετακίνηση\u2026</string>
-    <string name="waiting_dialog_moving_msg"><![CDATA[<b>Από</b>]]><xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]>
-        <![CDATA[<b>Σε</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_moving_msg"><![CDATA[<b>Από</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]> <![CDATA[<b>Σε</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_deleting_title">Διαγραφή\u2026</string>
-    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Αρχείο</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Αρχείο</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_extracting_title">Αποσυμπίεση\u2026</string>
-    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Αρχείο</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Αρχείο</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_compressing_title">Συμπίεση\u2026</string>
-    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Αρχείο</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Αρχείο</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_analizing_msg"><![CDATA[<b>Ανάλυση\u2026</b>]]></string>
-    <string name="msgs_extracting_success">Η αποσυμπίεση ολοκληρώθηκε με επιτυχία. Τα αποσυμπιεσμένα αρχεία βρίσκονται
-        στο<xliff:g id="destination">%1$s</xliff:g>.
-    </string>
-    <string name="msgs_compressing_success">Η συμπίεση ολοκληρώθηκε με επιτυχία. Τα αρχεία συμπιέστηκαν στο<xliff:g
-            id="destination">%1$s</xliff:g>.
-    </string>
+    <string name="msgs_extracting_success">Η αποσυμπίεση ολοκληρώθηκε με επιτυχία. Τα αποσυμπιεσμένα αρχεία βρίσκονται στο <xliff:g id="destination">%1$s</xliff:g>.</string>
+    <string name="msgs_compressing_success">Η συμπίεση ολοκληρώθηκε με επιτυχία. Τα αρχεία συμπιέστηκαν στο <xliff:g id="destination">%1$s</xliff:g>.</string>
     <string name="actions_dialog_title">Ενέργειες</string>
     <string name="actions_menu_properties_current_folder">Ιδιότητες</string>
     <string name="actions_menu_refresh">Ανανέωση</string>
@@ -302,7 +209,7 @@
     <string name="actions_menu_deselect_all">Αποεπιλογή όλων</string>
     <string name="actions_menu_select">Επιλογή</string>
     <string name="actions_menu_deselect">Αποεπιλογή</string>
-    <string name="actions_menu_paste_selection">Επικόλληση επιλογής εδώ</string>
+    <string name="actions_menu_paste_selection">Αντιγραφή επιλογής εδώ</string>
     <string name="actions_menu_move_selection">Μετακίνηση επιλογής εδώ</string>
     <string name="actions_menu_delete_selection">Διαγραφή επιλογής</string>
     <string name="actions_menu_compress_selection">Συμπίεση επιλογής</string>
@@ -322,16 +229,11 @@
     <string name="actions_menu_add_shortcut">Προσθήκη συντόμευσης</string>
     <string name="actions_menu_open_parent_folder">Άνοιγμα γονικού</string>
     <string name="actions_menu_compute_checksum">Υπολογισμός checksum</string>
-    <string name="actions_ask_undone_operation_msg">Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Θέλετε να συνεχίσετε;
-    </string>
+    <string name="actions_ask_undone_operation_msg">Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Θέλετε να συνεχίσετε;</string>
     <string name="input_name_dialog_label">Όνομα:</string>
     <string name="input_name_dialog_message_empty_name">Το όνομα δεν μπορεί να είναι κενό.</string>
-    <string name="input_name_dialog_message_invalid_path_name">Μη έγκυρο όνομα. Οι χαρακτήρες \'<xliff:g
-            id="invalid_characters">%1$s</xliff:g>\' δεν επιτρέπονται.
-    </string>
-    <string name="input_name_dialog_message_invalid_name">Μη έγκυρο όνομα. Τα ονόματα \'.\' και \'..\' δεν
-        επιτρέπονται.
-    </string>
+    <string name="input_name_dialog_message_invalid_path_name">Μη έγκυρο όνομα. Οι χαρακτήρες \'<xliff:g id="invalid_characters">%1$s</xliff:g>\' δεν επιτρέπονται.</string>
+    <string name="input_name_dialog_message_invalid_name">Μη έγκυρο όνομα. Τα ονόματα \'.\' και \'..\' δεν επιτρέπονται.</string>
     <string name="input_name_dialog_message_name_exists">Το όνομα υπάρχει ήδη.</string>
     <string name="associations_dialog_title">Συσχετισμοί</string>
     <string name="associations_dialog_remember">Αποθήκευση επιλογής</string>
@@ -344,10 +246,7 @@
     <string name="execution_console_script_name_label">Script:</string>
     <string name="execution_console_script_execution_time_label">Ώρα:</string>
     <string name="execution_console_script_exitcode_label">Exit code:</string>
-    <string name="execution_console_script_execution_time_text">
-        <xliff:g id="seconds">%1$s</xliff:g>
-        δευτ.
-    </string>
+    <string name="execution_console_script_execution_time_text"><xliff:g id="seconds">%1$s</xliff:g> δευτ.</string>
     <string name="compute_checksum_title">Υπολογισμός checksum</string>
     <string name="compute_checksum_filename_label">Αρχείο:</string>
     <string name="compute_checksum_computing_checksum_msg">Υπολογισμός του checksum\u2026</string>
@@ -359,40 +258,7 @@
     <string name="filetime_format_mode_ddMMyyyy_HHmmss">ηη/μμ/εεεε ωω:λλ:δδ</string>
     <string name="filetime_format_mode_MMddyyyy_HHmmss">μμ/ηη/εεεε ωω:λλ:δδ</string>
     <string name="filetime_format_mode_yyyyMMdd_HHmmss">εεεε-μμ-ηη ωω:λλ:δδ</string>
-    <string name="selection_one_folder">Επιλέχθηκε
-        <xliff:g id="folders">%1$s</xliff:g>
-        φάκελος.
-    </string>
-    <string name="selection_other_folders">Επιλέχθηκαν
-        <xliff:g id="folders">%1$s</xliff:g>
-        φάκελοι.
-    </string>
-    <string name="selection_one_file">Επιλέχθηκε
-        <xliff:g id="files">%1$s</xliff:g>
-        αρχείο.
-    </string>
-    <string name="selection_other_files">Επιλέχθηκαν
-        <xliff:g id="files">%1$s</xliff:g>
-        αρχεία.
-    </string>
-    <string name="selection_other_folders_one_file">Επιλέχθηκαν
-        <xliff:g id="folders">%1$s</xliff:g>
-        φάκελοι και
-        <xliff:g id="files">%2$s</xliff:g>
-        αρχείο.
-    </string>
-    <string name="selection_one_folder_other_files">Επιλέχθηκαν
-        <xliff:g id="folder2">%1$s</xliff:g>
-        φάκελος και
-        <xliff:g id="file2">%2$s</xliff:g>
-        αρχεία.
-    </string>
-    <string name="selection_other_folders_other_files">Επιλέχθηκαν
-        <xliff:g id="folder2">%1$s</xliff:g>
-        φάκελοι και
-        <xliff:g id="files">%2$s</xliff:g>
-        αρχεία.
-    </string>
+    <string name="selection_folders_and_files">Επιλέχθηκαν <xliff:g id="folders">%1$s</xliff:g> και <xliff:g id="files">%2$s</xliff:g>.</string>
     <string name="category_system">ΣΥΣΤΗΜΑ</string>
     <string name="category_app">ΕΦΑΡΜΟΓΗ</string>
     <string name="category_binary">BINARY</string>
@@ -418,42 +284,25 @@
     <string name="pref_editor">Επιλογές επεξεργασίας</string>
     <string name="pref_themes">Θέματα</string>
     <string name="pref_about">Σχετικά</string>
-    <string name="pref_about_summary">Διαχείριση αρχείων v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9 2013
-        The CyanogenMod Project
-    </string>
+    <string name="pref_about_summary">Διαχείριση αρχείων v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9 2013 The CyanogenMod Project</string>
     <string name="pref_general_behaviour_category">Γενικά</string>
     <string name="pref_case_sensitive_sort">Πεζά-κεφαλαία</string>
-    <string name="pref_case_sensitive_sort_summary">Ταξινόμιση με βάση πεζά-κεφαλαία κατά την πλοήγηση ή την εμφάνιση
-        αποτελεσμάτων αναζήτησης
-    </string>
+    <string name="pref_case_sensitive_sort_summary">Ταξινόμιση με βάση πεζά-κεφαλαία κατά την πλοήγηση ή την εμφάνιση αποτελεσμάτων αναζήτησης</string>
     <string name="pref_filetime_format_mode">Μορφή ημερομηνίας/ώρας</string>
     <string name="pref_disk_usage_warning_level">Προειδοποίηση χρήσης δίσκου</string>
-    <string name="pref_disk_usage_warning_level_summary" formatted="false">Εμφάνιση διαφορετικού χρώματος στα widget
-        χρήσης δίσκου όταν καταληφθεί το
-        <xliff:g id="level">%1$s</xliff:g>
-        τοις εκατό του ελεύθερου χώρου
-    </string>
+    <string name="pref_disk_usage_warning_level_summary" formatted="false">Εμφάνιση διαφορετικού χρώματος στα widget χρήσης δίσκου όταν καταληφθεί το <xliff:g id="level">%1$s</xliff:g> τοις εκατό του ελεύθερου χώρου</string>
     <string name="pref_compute_folder_statistics">Υπολογισμός στατιστικών φακέλου</string>
-    <string name="pref_compute_folder_statistics_on">Προσοχή! Ο υπολογισμός των στατιστικών φακέλου είναι δαπανηρός σε
-        χρόνο και πόρους του συστήματος
-    </string>
+    <string name="pref_compute_folder_statistics_on">Προσοχή! Ο υπολογισμός των στατιστικών φακέλου είναι δαπανηρός σε χρόνο και πόρους του συστήματος</string>
     <string name="pref_use_flinger">Χρήση χειρονομιών swipe</string>
     <string name="pref_use_flinger_summary">Κάντε swipe από αριστερά προς δεξιά για διαγραφή αρχείων ή φακέλων.</string>
     <string name="pref_general_advanced_settings_category">Για προχωρημένους</string>
     <string name="pref_access_mode">Λειτουργία πρόσβασης</string>
     <string name="pref_access_mode_safe">Ασφαλής Λειτουργία</string>
-    <string name="pref_access_mode_safe_summary">Ασφαλής Λειτουργία\n\nΗ εφαρμογή τρέχει χωρίς δικαιώματα και τα μόνα
-        προσπελάσιμα συστήματα αρχείων είναι οι κάρτες SD και οι αποθηκευτικοί χώροι USB
-    </string>
+    <string name="pref_access_mode_safe_summary">Ασφαλής Λειτουργία\n\nΗ εφαρμογή τρέχει χωρίς δικαιώματα και τα μόνα προσπελάσιμα συστήματα αρχείων είναι οι κάρτες SD και οι αποθηκευτικοί χώροι USB</string>
     <string name="pref_access_mode_prompt">Λειτουργία ερώτησης χρήστη</string>
-    <string name="pref_access_mode_prompt_summary">Λειτουργία ερώτησης χρήστη\n\nΗ εφαρμογή τρέχει με πλήρη πρόσβαση στο
-        σύστημα αρχείων, αλλά θα ζητήσει άδεια πριν από την εκτέλεση οποιασδήποτε ενέργειας που απαιτεί δικαιώματα
-    </string>
+    <string name="pref_access_mode_prompt_summary">Λειτουργία ερώτησης χρήστη\n\nΗ εφαρμογή τρέχει με πλήρη πρόσβαση στο σύστημα αρχείων, αλλά θα ζητήσει άδεια πριν από την εκτέλεση οποιασδήποτε ενέργειας που απαιτεί δικαιώματα</string>
     <string name="pref_access_mode_root">Λειτουργία πρόσβασης Root</string>
-    <string name="pref_access_mode_root_summary">Λειτουργία πρόσβασης Root\n\nΠροσοχή! Αυτή η λειτουργία επιτρέπει
-        ενέργειες που θα μπορούσαν να χαλάσουν τη συσκευή σας. Είναι δική σας ευθύνη να διασφαλίσετε ότι μία ενέργεια
-        είναι ασφαλής
-    </string>
+    <string name="pref_access_mode_root_summary">Λειτουργία πρόσβασης Root\n\nΠροσοχή! Αυτή η λειτουργία επιτρέπει ενέργειες που θα μπορούσαν να χαλάσουν τη συσκευή σας. Είναι δική σας ευθύνη να διασφαλίσετε ότι μία ενέργεια είναι ασφαλής</string>
     <string name="pref_search_results_category">Αποτελέσματα</string>
     <string name="pref_show_relevance_widget">Εμφάνιση widget συνάφειας</string>
     <string name="pref_highlight_terms">Επισήμανση όρων αναζήτησης</string>
@@ -463,36 +312,24 @@
     <string name="pref_sort_search_results_mode_relevance">Κατά συνάφεια</string>
     <string name="pref_search_privacity_category">Απόρρητο</string>
     <string name="pref_save_search_terms">Αποθήκευση όρων αναζήτησης</string>
-    <string name="pref_save_search_terms_on">Οι όροι θα αποθηκεύνται και θα χρησιμοποιούνται ως προτάσεις σε μελλοντικές
-        αναζητήσεις
-    </string>
+    <string name="pref_save_search_terms_on">Οι όροι θα αποθηκεύνται και θα χρησιμοποιούνται ως προτάσεις σε μελλοντικές αναζητήσεις</string>
     <string name="pref_save_search_terms_off">Οι όροι δεν θα αποθηκεύονται</string>
     <string name="pref_remove_saved_search_terms">Διαγραφή αποθηκευμένων όρων</string>
-    <string name="pref_remove_saved_search_terms_summary">Πιέστε για διαγραφή όλων των αποθηκευμένων όρων αναζήτησης
-    </string>
+    <string name="pref_remove_saved_search_terms_summary">Πιέστε για διαγραφή όλων των αποθηκευμένων όρων αναζήτησης</string>
     <string name="pref_remove_saved_search_terms_msg">Όλοι οι αποθηκευμένοι όροι αναζήτησης έχουν διαγραφεί.</string>
     <string name="pref_editor_behaviour_category">Συμπεριφορά</string>
     <string name="pref_no_suggestions">Απενεργοποίηση προτάσεων</string>
-    <string name="pref_no_suggestions_desc">Να μην εμφανίζονται προτάσεις λεξικού κατά την επεξεργασία του αρχείου
-    </string>
+    <string name="pref_no_suggestions_desc">Να μην εμφανίζονται προτάσεις λεξικού κατά την επεξεργασία του αρχείου</string>
     <string name="pref_word_wrap">Αναδίπλωση λέξεων</string>
     <string name="pref_hexdump">Δημιουργία δεκαεξαδικής μορφής σε αρχεία binary</string>
-    <string name="pref_hexdump_desc">Κατά το άνοιγμα ενός αρχείου binary, δημιουργία δεκαεξαδικής μορφής του αρχείου και
-        άνοιγμα στην προβολή δεκαεξαδικής μορφής.
-    </string>
+    <string name="pref_hexdump_desc">Κατά το άνοιγμα ενός αρχείου binary, δημιουργία δεκαεξαδικής μορφής του αρχείου και άνοιγμα στην προβολή δεκαεξαδικής μορφής.</string>
     <string name="pref_editor_syntax_highlight_category">Επισήμανση σύνταξης</string>
     <string name="pref_syntax_highlight">Επισήμανση σύνταξης</string>
-    <string name="pref_syntax_highlight_desc">Επισήμανση της σύνταξης του αρχείου που εμφανίζεται στον επεξεργαστή (μόνο
-        όταν υπάρχει επεξεργαστής επισήμανσης για τον συγκεκριμένο τύπο αρχείου)
-    </string>
+    <string name="pref_syntax_highlight_desc">Επισήμανση της σύνταξης του αρχείου που εμφανίζεται στον επεξεργαστή (μόνο όταν υπάρχει επεξεργαστής επισήμανσης για τον συγκεκριμένο τύπο αρχείου)</string>
     <string name="pref_syntax_highlight_color_scheme">Συνδυασμός χρωμάτων</string>
-    <string name="pref_syntax_highlight_color_scheme_desc">Πιέστε για επιλογή του συνδυασμού χρωμάτων της επισήμανσης
-        σύνταξης
-    </string>
+    <string name="pref_syntax_highlight_color_scheme_desc">Πιέστε για επιλογή του συνδυασμού χρωμάτων της επισήμανσης σύνταξης</string>
     <string name="pref_syntax_sh_use_theme_default">Χρήση προεπιλογής του θέματος</string>
-    <string name="pref_syntax_sh_use_theme_default_desc">Χρήση του προεπιλεγμένου συνδυασμού χρωμάτων του τρέχοντος
-        θέματος
-    </string>
+    <string name="pref_syntax_sh_use_theme_default_desc">Χρήση του προεπιλεγμένου συνδυασμού χρωμάτων του τρέχοντος θέματος</string>
     <string name="pref_editor_sh_item_category">Αντικείμενα</string>
     <string name="pref_themes_selection_category">Θέματα</string>
     <string name="pref_themes_set_theme">Ορισμός θέματος</string>
@@ -507,8 +344,7 @@
     <string name="color_picker_current_text">Τρέχον:</string>
     <string name="color_picker_new_text">Νέο:</string>
     <string name="color_picker_color">Χρώμα:</string>
-    <string name="ash_reset_color_scheme">Πιέστε για επαναφορά του προεπιλεγμένου συνδυασμού χρωμάτων του θέματος
-    </string>
+    <string name="ash_reset_color_scheme">Πιέστε για επαναφορά του προεπιλεγμένου συνδυασμού χρωμάτων του θέματος</string>
     <string name="ash_text">Κείμενο</string>
     <string name="ash_assignment">Εκχώρηση</string>
     <string name="ash_singleline_comment">Σχόλιο μιας γραμμής</string>
@@ -516,15 +352,8 @@
     <string name="ash_keyword">Λέξη-κλειδί</string>
     <string name="ash_quoted_string">Κείμενο σε εισαγωγικά</string>
     <string name="ash_variable">Μεταβλητή</string>
-    <string name="security_warning_extract">Προσοχή!\n\nΗ εξαγωγή ενός αρχείου με σχετικά ή απόλυτα μονοπάτια μπορεί να
-        προκαλέσει βλάβη στη συσκευή σας αντικαταστώντας αρχεία συστήματος.\n\nΘέλετε να συνεχίσετε;
-    </string>
+    <string name="security_warning_extract">Προσοχή!\n\nΗ εξαγωγή ενός αρχείου με σχετικά ή απόλυτα μονοπάτια μπορεί να προκαλέσει βλάβη στη συσκευή σας αντικαταστώντας αρχεία συστήματος.\n\nΘέλετε να συνεχίσετε;</string>
     <string name="changelog_title">Αρχείο αλλαγών</string>
     <string name="welcome_title">Καλώς ήλθατε</string>
-    <string name="welcome_msg">Καλώς ήλθατε στη Διαχείριση αρχείων του CyanogenMod.\n\nΗ εφαρμογή αυτή σας επιτρέπει να
-        εξερευνήσετε το σύστημα αρχείων και να εκτελέσετε ενέργειες που ενδέχεται να χαλάσουν τη συσκευή σας. Για την
-        αποφυγή πρόκλησης βλάβης, η εφαρμογή θα ξεκινήσει σε Ασφαλή Λειτουργία.\n\nΜπορείτε να αποκτήσετε πρόσβαση στην
-        προηγμένη λειτουργία πρόσβασης Root μέσω των ρυθμίσεων. Είναι δική σας ευθύνη να διασφαλίσετε ότι μία ενέργεια
-        είναι ασφαλής για την συσκευή σας.\n\nCyanogenMod Team.\n
-    </string>
+    <string name="welcome_msg">Καλώς ήλθατε στη Διαχείριση αρχείων του CyanogenMod.\n\nΗ εφαρμογή αυτή σας επιτρέπει να εξερευνήσετε το σύστημα αρχείων και να εκτελέσετε ενέργειες που ενδέχεται να χαλάσουν τη συσκευή σας. Για την αποφυγή πρόκλησης βλάβης, η εφαρμογή θα ξεκινήσει σε Ασφαλή Λειτουργία.\n\nΜπορείτε να αποκτήσετε πρόσβαση στην προηγμένη λειτουργία πρόσβασης Root μέσω των ρυθμίσεων. Είναι δική σας ευθύνη να διασφαλίσετε ότι μία ενέργεια είναι ασφαλής για την συσκευή σας.\n\nCyanogenMod Team.\n</string>
 </resources>

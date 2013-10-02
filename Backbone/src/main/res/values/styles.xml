@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012 The CyanogenMod Project
-     Copyright (C) 2013 BrandroidTools
+<!--
+     Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!--
     ##
@@ -34,6 +35,7 @@
         <item name="android:progressBarStyle">@style/ProgressBar.Holo_dark</item>
     </style>
 
+    <!-- A theme with overlay -->
     <style name="PopupMenu.Holo_dark" parent="@android:style/Widget.Holo.ListPopupWindow">
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holo_dark</item>
     </style>
@@ -42,6 +44,7 @@
         <item name="android:listSelector">@drawable/selectable_background_holo_dark</item>
     </style>
 
+    <!-- Action bar -->
     <style name="ActionBarTabStyle.Holo_dark" parent="@android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_holo_dark</item>
     </style>
@@ -92,6 +95,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <!-- The text appearance for breadcrumb information -->
     <style name="breadcrumb_text_appearance">
         <item name="android:textSize">@dimen/primary_text_size</item>
@@ -99,6 +103,7 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">normal</item>
     </style>
+
     <!-- The text appearance for principal information (text that need to be highlighted) -->
     <style name="primary_text_appearance">
         <item name="android:textSize">@dimen/primary_text_size</item>
@@ -106,10 +111,12 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
     </style>
+
     <!-- The text appearance for principal information (important but not highlight) -->
     <style name="primary_text_appearance_nohighlight" parent="@style/primary_text_appearance">
         <item name="android:textStyle">normal</item>
     </style>
+
     <!-- The text appearance for secondary information (text with a lower importance) -->
     <style name="secondary_text_appearance">
         <item name="android:textSize">@dimen/secondary_text_size</item>
@@ -189,15 +196,19 @@
         <item name="android:textColor">@color/black_transparent</item>
         <item name="android:textStyle">normal</item>
     </style>
+
     <!-- The text appearance for a console widget -->
     <style name="console_text_appearance">
         <item name="android:textSize">@dimen/console_text_size</item>
         <item name="android:textColor">@color/console_fg</item>
         <item name="android:textStyle">normal</item>
     </style>
+
     <!-- The text appearance for dialog titles -->
-    <style name="dialog_title_text_appearance" parent="android:TextAppearance.DialogWindowTitle">
+    <style name="dialog_title_text_appearance">
+        <item name="android:textSize">@dimen/dialog_title_text_size</item>
         <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Breadcrumb Element -->

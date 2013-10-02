@@ -17,6 +17,10 @@
 
     <string name="app_name">Fájlkezelő</string>
     <string name="app_description">CyanogenMod fájlkezelő</string>
+    <string name="size_bytes">B</string>
+    <string name="size_kilobytes">kB</string>
+    <string name="size_megabytes">MB</string>
+    <string name="size_gigabytes">GB</string>
     <string name="datetime_format_order">%1$s %2$s</string>
     <string name="device_blockdevice">Blokkeszköz</string>
     <string name="device_characterdevice">Karaktereszköz</string>
@@ -30,9 +34,7 @@
     <string name="overwrite">Felülír</string>
     <string name="select">Kijelöl</string>
     <string name="root_directory_name"><![CDATA[<Root folder>]]></string>
-    <string name="search_result_name">Keresés:
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_result_name">Keresés: <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="loading_message">Betöltés\u2026</string>
     <string name="cancelled_message">Megszakítva</string>
     <string name="error_message">Hiba</string>
@@ -44,17 +46,11 @@
     <string name="confirm_overwrite">Felülírás megerősítése</string>
     <string name="confirm_deletion">Törlés megerősítése</string>
     <string name="msgs_change_to_prompt_access_mode_title">Váltás megerősítése</string>
-    <string name="msgs_change_to_prompt_access_mode_msg">Nem lehet futtatni rendszergazda módban. Váltás biztonságos
-        módba.\n\nFolytatja a váltást?
-    </string>
+    <string name="msgs_change_to_prompt_access_mode_msg">Nem lehet futtatni rendszergazda módban. Váltás biztonságos módba.\n\nFolytatja a váltást?</string>
     <string name="msgs_cant_create_console">A funkcióhoz nincs megfelelő jogosultsága.</string>
-    <string name="msgs_privileged_console_alloc_failed">Nem lehet futtatni rendszergazda módban. Váltás biztonságos
-        módba.
-    </string>
+    <string name="msgs_privileged_console_alloc_failed">Nem lehet futtatni rendszergazda módban. Váltás biztonságos módba.</string>
     <string name="msgs_settings_save_failure">A beállítást nem lehet alkalmazni, vagy elmenteni.</string>
-    <string name="msgs_settings_invalid_initial_directory">A kezdő könyvtár "<xliff:g id="initial_dir">%1$s</xliff:g>"
-        érvénytelen. Váltás a gyökérkönyvtárra.
-    </string>
+    <string name="msgs_settings_invalid_initial_directory">A kezdő könyvtár "<xliff:g id="initial_dir">%1$s</xliff:g>" érvénytelen. Váltás a gyökérkönyvtárra.</string>
     <string name="msgs_success">A művelet sikeresen befejeződött.</string>
     <string name="msgs_unknown">A művelet sikertelen, hiba történt.</string>
     <string name="msgs_insufficient_permissions">Ehhez a művelethez nincs jogosultsága.</string>
@@ -65,21 +61,15 @@
     <string name="msgs_operation_failure">A művelet sikertelen.</string>
     <string name="msgs_console_alloc_failure">Belső hiba történt.</string>
     <string name="msgs_operation_can_not_be_cancelled">A művelet nem szakítható meg.</string>
-    <string name="msgs_read_only_filesystem">A fájlrendszer csak olvasható. Próbálja meg írhatóként újracsatlakoztatni a
-        művelet előtt.
-    </string>
+    <string name="msgs_read_only_filesystem">A fájlrendszer csak olvasható. Próbálja meg írhatóként újracsatlakoztatni a művelet előtt.</string>
     <string name="msgs_illegal_argument">Érvénytelen paraméter, sikertelen futtatás.</string>
     <string name="msgs_unresolved_inconsistencies">A művelet nem engedélyezett, mert következetlenséget okozna.</string>
-    <string name="msgs_operation_not_allowed_in_current_directory">A művelet nem engedélyezett a jelenlegi
-        mappában.\n\nA célmappa nem lehet azonos a forrásmappával, és nem lehet annak almappája.
-    </string>
+    <string name="msgs_operation_not_allowed_in_current_directory">A művelet nem engedélyezett a jelenlegi mappában.\n\nA célmappa nem lehet azonos a forrásmappával, és nem lehet annak almappája.</string>
     <string name="msgs_push_again_to_exit">Nyomja meg mégegyszer a kilépéshez.</string>
     <string name="msgs_not_registered_app">A kijelölt fájltípushoz nincs alkalmazás társítva.</string>
     <string name="msgs_overwrite_files">Néhány fájl már létezik a célkönyvtárban.\n\nFelülírja?</string>
     <string name="msgs_action_association_failed">A műveletet nem sikerült társítani az alkalmazáshoz.</string>
-    <string name="advise_insufficient_permissions">A művelet elvégzéséhez nincs megfelelő jogosultsága.\n\nÁtvált
-        rendszergazda módra?
-    </string>
+    <string name="advise_insufficient_permissions">A művelet elvégzéséhez nincs megfelelő jogosultsága.\n\nÁtvált rendszergazda módra?</string>
     <string name="parent_dir">Szülő könyvtár</string>
     <string name="external_storage">Külső tárhely</string>
     <string name="usb_storage">USB tárhely</string>
@@ -109,12 +99,8 @@
     <string name="filesystem_info_warning_title">Nincs információ</string>
     <string name="filesystem_info_warning_msg">Nincs elérhető információ a fájlrendszerről.</string>
     <string name="filesystem_info_cant_be_mounted_msg">A fájlrendszer nem csatolható.</string>
-    <string name="filesystem_info_mount_not_allowed_msg">Fájlrendszer-csatolási műveletek nincsenek engedélyezve a
-        biztonságos módban. Érintse meg a rendszergazda módba való váltáshoz.
-    </string>
-    <string name="filesystem_info_mount_failed_msg">Fájlrendszer-csatolási művelet sikertelen. Néhány fájlrendszer, mint
-        bizonyos SD-kártyák fizikailag nem írhatóak.
-    </string>
+    <string name="filesystem_info_mount_not_allowed_msg">Fájlrendszer-csatolási műveletek nincsenek engedélyezve a biztonságos módban. Érintse meg a rendszergazda módba való váltáshoz.</string>
+    <string name="filesystem_info_mount_failed_msg">Fájlrendszer-csatolási művelet sikertelen. Néhány fájlrendszer, mint bizonyos SD-kártyák fizikailag nem írhatóak.</string>
     <string name="filesystem_info_dialog_title">Fájlrendszer-információ</string>
     <string name="filesystem_info_dialog_tab_info">Információ</string>
     <string name="filesystem_info_dialog_tab_disk_usage">Tárhelyhasználat</string>
@@ -127,19 +113,10 @@
     <string name="filesystem_info_dialog_total_disk_usage">Teljes:</string>
     <string name="filesystem_info_dialog_used_disk_usage">Foglalt:</string>
     <string name="filesystem_info_dialog_free_disk_usage">Szabad:</string>
-    <string name="fso_properties_permissions_not_allowed_msg">A jogosultság állítása nem engedélyezett biztonságos
-        módban. Érintse meg a rendszergazda módba való váltáshoz.
-    </string>
-    <string name="fso_properties_failed_to_change_owner_msg">A tulajdonos váltása sikertelen.\n\nBiztonsági okoból
-        néhány fájlrendszer, mint az SD-kártyák, nem engedélyezik a tulajdonos megváltoztatását.
-    </string>
-    <string name="fso_properties_failed_to_change_group_msg">A csoport váltása sikertelen.\n\nBiztonsági okoból néhány
-        fájlrendszer, mint az SD-kártyák, nem engedélyezik a csoport megváltoztatását.
-    </string>
-    <string name="fso_properties_failed_to_change_permission_msg">A jogosultság megváltoztatása
-        sikertelen.\n\nBiztonsági okoból néhány fájlrendszer, mint az SD-kártyák, nem engedélyezik a jogosultságok
-        megváltoztatását.
-    </string>
+    <string name="fso_properties_permissions_not_allowed_msg">A jogosultság állítása nem engedélyezett biztonságos módban. Érintse meg a rendszergazda módba való váltáshoz.</string>
+    <string name="fso_properties_failed_to_change_owner_msg">A tulajdonos váltása sikertelen.\n\nBiztonsági okoból néhány fájlrendszer, mint az SD-kártyák, nem engedélyezik a tulajdonos megváltoztatását.</string>
+    <string name="fso_properties_failed_to_change_group_msg">A csoport váltása sikertelen.\n\nBiztonsági okoból néhány fájlrendszer, mint az SD-kártyák, nem engedélyezik a csoport megváltoztatását.</string>
+    <string name="fso_properties_failed_to_change_permission_msg">A jogosultság megváltoztatása sikertelen.\n\nBiztonsági okoból néhány fájlrendszer, mint az SD-kártyák, nem engedélyezik a jogosultságok megváltoztatását.</string>
     <string name="fso_properties_dialog_title">Tulajdonságok</string>
     <string name="fso_properties_dialog_tab_info">Információ</string>
     <string name="fso_properties_dialog_tab_permissions">Jogosultságok</string>
@@ -156,29 +133,13 @@
     <string name="fso_properties_dialog_owner">Tulajdonos:</string>
     <string name="fso_properties_dialog_group">Csoport:</string>
     <string name="fso_properties_dialog_others">Mások:</string>
-    <plurals name="fso_properties_dialog_folders">
-        <item quantity="other">
-            <xliff:g id="folders">%1$d</xliff:g>
-            könyvtár
-        </item>
-    </plurals>
-    <plurals name="fso_properties_dialog_files">
-        <item quantity="other">
-            <xliff:g id="files">%1$d</xliff:g>
-            fájl
-        </item>
-    </plurals>
     <string name="fso_properties_dialog_include_in_media_scan">Médiakeresés kihagyása:</string>
     <string name="fso_failed_to_allow_media_scan">Sikertelen a médiakeresés engedélyezése</string>
     <string name="fso_failed_to_prevent_media_scan">Sikertelen a médiakeresés letiltása</string>
     <string name="fso_delete_nomedia_dir_title">.nomedia könyvtár törlése</string>
-    <string name="fso_delete_nomedia_dir_body">Ez a könyvtár tartalmaz .nomedia könyvtárat.\n\nBiztosan törli a
-        tartalmával együtt?
-    </string>
+    <string name="fso_delete_nomedia_dir_body">Ez a könyvtár tartalmaz .nomedia könyvtárat.\n\nBiztosan törli a tartalmával együtt?</string>
     <string name="fso_delete_nomedia_non_empty_title">.nomedia fájl törlése</string>
-    <string name="fso_delete_nomedia_non_empty_body">Ez a könyvtár egy nem üres .nomedia fájlt tartalmaz.\n\nBiztosan
-        törli?
-    </string>
+    <string name="fso_delete_nomedia_non_empty_body">Ez a könyvtár egy nem üres .nomedia fájlt tartalmaz.\n\nBiztosan törli?</string>
     <string name="history">Előzmények</string>
     <string name="msgs_history_empty">Nincsenek előzmények.</string>
     <string name="msgs_history_unknown">Ismeretlen előzmény bejegyzés.</string>
@@ -187,25 +148,10 @@
     <string name="search_voice_hint">Mondja ki a keresést</string>
     <string name="search_error_msg">Hiba történt keresés közben. Nincs találat.</string>
     <string name="search_no_results_msg">Nincs találat.</string>
-    <plurals name="search_found_items">
-        <item quantity="zero">Nem található elem</item>
-        <item quantity="other">
-            <xliff:g id="count">%d</xliff:g>
-            találat
-        </item>
-    </plurals>
-    <string name="search_found_items_in_directory">
-        <xliff:g id="items">%1$s</xliff:g>
-        /
-        <xliff:g id="path">%2$s</xliff:g>
-    </string>
-    <string name="search_terms"><![CDATA[<b>Feltételek:</b>]]>
-        <xliff:g id="terms">%1$s</xliff:g>
-    </string>
+    <string name="search_found_items_in_directory"><xliff:g id="items">%1$s</xliff:g> / <xliff:g id="path">%2$s</xliff:g></string>
+    <string name="search_terms"><![CDATA[<b>Feltételek:</b>]]> <xliff:g id="terms">%1$s</xliff:g></string>
     <string name="search_few_characters_title">Keresés megerősítése</string>
-    <string name="search_few_characters_msg">Néhány keresési kifejezés túl rövid. A művelet sokáig eltarthat és
-        megterhelheti a rendszert.\n\nBiztosan folytatja?
-    </string>
+    <string name="search_few_characters_msg">Néhány keresési kifejezés túl rövid. A művelet sokáig eltarthat és megterhelheti a rendszert.\n\nBiztosan folytatja?</string>
     <string name="searching">Kérem várjon\u2026</string>
     <string name="searching_action_label">Keresés folyamatban</string>
     <string name="picker_title">Válasszon fájlt</string>
@@ -239,46 +185,22 @@
     <string name="menu_no_suggestions">Nincs javaslat</string>
     <string name="menu_word_wrap">Sortörés</string>
     <string name="menu_syntax_highlight">Szintaxis kiemelése</string>
-    <string name="create_copy_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - másolás
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
-    <string name="create_new_compress_file_regexp">
-        <xliff:g id="name">%1$s</xliff:g>
-        - új
-        <xliff:g id="extension">%2$s</xliff:g>
-    </string>
+    <string name="create_copy_regexp"><xliff:g id="name">%1$s</xliff:g> - másolás<xliff:g id="extension">%2$s</xliff:g></string>
+    <string name="create_new_compress_file_regexp"><xliff:g id="name">%1$s</xliff:g> - új<xliff:g id="extension">%2$s</xliff:g></string>
     <string name="waiting_dialog_msg">Művelet végrehajtása\u2026</string>
     <string name="waiting_dialog_copying_title">Másolás\u2026</string>
-    <string name="waiting_dialog_copying_msg"><![CDATA[<b>Másolás innen:</b>]]><xliff:g id="from">%1$s</xliff:g>
-        <![CDATA[<br/>]]><![CDATA[<b>Ide:</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_copying_msg"><![CDATA[<b>Másolás innen:</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>Ide:</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_moving_title">Áthelyezés\u2026</string>
-    <string name="waiting_dialog_moving_msg"><![CDATA[<b>Másolás innen:</b>]]><xliff:g id="from">%1$s</xliff:g>
-        <![CDATA[<br/>]]><![CDATA[<b>Ide:</b>]]>
-        <xliff:g id="to">%2$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_moving_msg"><![CDATA[<b>Másolás innen:</b>]]> <xliff:g id="from">%1$s</xliff:g><![CDATA[<br/>]]><![CDATA[<b>Ide:</b>]]> <xliff:g id="to">%2$s</xliff:g></string>
     <string name="waiting_dialog_deleting_title">Törlés\u2026</string>
-    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Fájl</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_deleting_msg"><![CDATA[<b>Fájl</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_extracting_title">Kicsomagolás\u2026</string>
-    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Fájl</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_extracting_msg"><![CDATA[<b>Fájl</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_compressing_title">Tömörítés\u2026</string>
-    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Fájl</b>]]>
-        <xliff:g id="file">%1$s</xliff:g>
-    </string>
+    <string name="waiting_dialog_compressing_msg"><![CDATA[<b>Fájl</b>]]> <xliff:g id="file">%1$s</xliff:g></string>
     <string name="waiting_dialog_analizing_msg"><![CDATA[<b>Elemzés\u2026</b>]]></string>
-    <string name="msgs_extracting_success">A kitömörítés sikeresen befejeződött. Az adatokat a következő helyen találja:
-        <xliff:g id="destination">%1$s</xliff:g>.
-    </string>
-    <string name="msgs_compressing_success">A tömörítés sikeresen befejeződött. Az adatokat a következő helyen találja:
-        <xliff:g id="destination">%1$s</xliff:g>.
-    </string>
+    <string name="msgs_extracting_success">A kitömörítés sikeresen befejeződött. Az adatokat a következő helyen találja: <xliff:g id="destination">%1$s</xliff:g>.</string>
+    <string name="msgs_compressing_success">A tömörítés sikeresen befejeződött. Az adatokat a következő helyen találja: <xliff:g id="destination">%1$s</xliff:g>.</string>
     <string name="actions_dialog_title">Műveletek</string>
     <string name="actions_menu_properties_current_folder">Tulajdonságok</string>
     <string name="actions_menu_refresh">Frissítés</string>
@@ -311,9 +233,7 @@
     <string name="actions_ask_undone_operation_msg">A művelet nem visszavonható. Biztosan folytatja?</string>
     <string name="input_name_dialog_label">Név:</string>
     <string name="input_name_dialog_message_empty_name">A név mező nem lehet üres.</string>
-    <string name="input_name_dialog_message_invalid_path_name">Helytelen név. A \'<xliff:g id="invalid_characters">
-        %1$s</xliff:g>\' karakterek nem megengedettek.
-    </string>
+    <string name="input_name_dialog_message_invalid_path_name">Helytelen név. A \'<xliff:g id="invalid_characters">%1$s</xliff:g>\' karakterek nem megengedettek.</string>
     <string name="input_name_dialog_message_invalid_name">Helytelen név. A \'.\' és a \'..\' nem megengedett.</string>
     <string name="input_name_dialog_message_name_exists">A név már létezik.</string>
     <string name="associations_dialog_title">Társítások</string>
@@ -327,10 +247,7 @@
     <string name="execution_console_script_name_label">Szkript:</string>
     <string name="execution_console_script_execution_time_label">Idő:</string>
     <string name="execution_console_script_exitcode_label">Kilépő kód:</string>
-    <string name="execution_console_script_execution_time_text">
-        <xliff:g id="seconds">%1$s</xliff:g>
-        mp.
-    </string>
+    <string name="execution_console_script_execution_time_text"><xliff:g id="seconds">%1$s</xliff:g> mp.</string>
     <string name="compute_checksum_title">Ellenőrzőösszeg számolása</string>
     <string name="compute_checksum_filename_label">Fájl:</string>
     <string name="compute_checksum_computing_checksum_msg">Ellenőrzőösszeg kiszámítása\u2026</string>
@@ -342,40 +259,7 @@
     <string name="filetime_format_mode_ddMMyyyy_HHmmss">nn/hh/éééé óó:pp:mm</string>
     <string name="filetime_format_mode_MMddyyyy_HHmmss">hh/nn/éééé óó:pp:mm</string>
     <string name="filetime_format_mode_yyyyMMdd_HHmmss">éééé/hh/nn óó:pp:mm</string>
-    <string name="selection_one_folder">
-        <xliff:g id="folders">%1$s</xliff:g>
-        könyvtár kiválasztva.
-    </string>
-    <string name="selection_other_folders">
-        <xliff:g id="folders">%1$s</xliff:g>
-        könyvtár kiválasztva.
-    </string>
-    <string name="selection_one_file">
-        <xliff:g id="files">%1$s</xliff:g>
-        fájl kiválasztva.
-    </string>
-    <string name="selection_other_files">
-        <xliff:g id="files">%1$s</xliff:g>
-        fájl kiválasztva.
-    </string>
-    <string name="selection_other_folders_one_file">
-        <xliff:g id="folders">%1$s</xliff:g>
-        könyvtár és
-        <xliff:g id="files">%2$s</xliff:g>
-        fájl kiválasztva.
-    </string>
-    <string name="selection_one_folder_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        könyvtár és
-        <xliff:g id="file2">%2$s</xliff:g>
-        fájl kiválasztva.
-    </string>
-    <string name="selection_other_folders_other_files">
-        <xliff:g id="folder2">%1$s</xliff:g>
-        könyvtár és
-        <xliff:g id="files">%2$s</xliff:g>
-        fájl kiválasztva.
-    </string>
+    <string name="selection_folders_and_files"><xliff:g id="folders">%1$s</xliff:g> és <xliff:g id="files">%2$s</xliff:g> kiválasztva.</string>
     <string name="category_system">RENDSZER</string>
     <string name="category_app">ALKALMAZÁS</string>
     <string name="category_binary">BINÁRIS</string>
@@ -401,42 +285,27 @@
     <string name="pref_editor">Szerkesztő beállítások</string>
     <string name="pref_themes">Témák</string>
     <string name="pref_about">Névjegy</string>
-    <string name="pref_about_summary">Fájlkezelő v
-        <xliff:g id="version">%1$s</xliff:g>
-        \nCopyright \u00A9 2012 The CyanogenMod Project
-    </string>
+    <string name="pref_about_summary">Fájlkezelő v<xliff:g id="version">%1$s</xliff:g> \nCopyright \u00A9 2012 The CyanogenMod Project</string>
     <string name="pref_general_behaviour_category">Általános</string>
     <string name="pref_case_sensitive_sort">Kis-/nagybetű helyes rendezés</string>
-    <string name="pref_case_sensitive_sort_summary">Kis-/nagybetű figyelembe vétele navigáláskor, illetve találatok
-        sorba rendezésekor
-    </string>
+    <string name="pref_case_sensitive_sort_summary">Kis-/nagybetű figyelembe vétele navigáláskor, illetve találatok sorba rendezésekor</string>
     <string name="pref_filetime_format_mode">Dátum/idő formátum</string>
     <string name="pref_disk_usage_warning_level">Figyelmeztetés kevés tárterületnél</string>
-    <string name="pref_disk_usage_warning_level_summary" formatted="false">Tárterület-használat megjelenítése más
-        színnel, amikor az eléri a
-        <xliff:g id="level">%1$s</xliff:g>
-        százalékot.
-    </string>
+    <string name="pref_disk_usage_warning_level_summary" formatted="false">Tárterület-használat megjelenítése más színnel, amikor az eléri a <xliff:g id="level">%1$s</xliff:g> százalékot.</string>
     <string name="pref_compute_folder_statistics">Mappa statisztika számítása</string>
-    <string name="pref_compute_folder_statistics_on">Figyelem! A művelet sokáig eltarthat és megterhelheti a
-        rendszert.
-    </string>
+    <string name="pref_compute_folder_statistics_on">Figyelem! A művelet sokáig eltarthat és megterhelheti a rendszert.</string>
+    <string name="pref_display_thumbs">Miniatűrök</string>
+    <string name="pref_display_thumbs_summary">Miniatűrök megjelenítése ismert fájltípus esetén (kép, videó, zene, alkalmazás).</string>
     <string name="pref_use_flinger">Kézmozdulatok használata</string>
     <string name="pref_use_flinger_summary">Fájlok és mappák törlése jobbra történő elhúzással.</string>
     <string name="pref_general_advanced_settings_category">Speciális</string>
     <string name="pref_access_mode">Hozzáférési mód</string>
     <string name="pref_access_mode_safe">Biztonságos mód</string>
-    <string name="pref_access_mode_safe_summary">Biztonságos mód\n\nAz alkalmazás jogosultságok nélkül fut, csak a
-        cserélhető fájlrendszerek hozzáférhetőek (SD-kártyák, USB kulcsok)
-    </string>
+    <string name="pref_access_mode_safe_summary">Biztonságos mód\n\nAz alkalmazás jogosultságok nélkül fut, csak a cserélhető fájlrendszerek hozzáférhetőek (SD-kártyák, USB kulcsok)</string>
     <string name="pref_access_mode_prompt">Rákérdezéses mód</string>
-    <string name="pref_access_mode_prompt_summary">Rákérdezéses mód\n\nAz alkalmazás teljes jogkörrel hozzáfér a
-        fájlrendszerhez, de kényes művelet végrehajtása előtt engedélyt kér a felhasználótól.
-    </string>
+    <string name="pref_access_mode_prompt_summary">Rákérdezéses mód\n\nAz alkalmazás teljes jogkörrel hozzáfér a fájlrendszerhez, de kényes művelet végrehajtása előtt engedélyt kér a felhasználótól.</string>
     <string name="pref_access_mode_root">Rendszergazda mód</string>
-    <string name="pref_access_mode_root_summary">Rendszergazda mód\n\nFigyelem! Ebben a módban semmi nem akadályozza
-        meg, hogy egy helytelen művelet tönkretegye az eszközét. Csak saját felelősségére használja!
-    </string>
+    <string name="pref_access_mode_root_summary">Rendszergazda mód\n\nFigyelem! Ebben a módban semmi nem akadályozza meg, hogy egy helytelen művelet tönkretegye az eszközét. Csak saját felelősségére használja!</string>
     <string name="pref_search_results_category">Találatok</string>
     <string name="pref_show_relevance_widget">Relevancia modul megjelenítése</string>
     <string name="pref_highlight_terms">Keresési feltételek kiemelése</string>
@@ -446,9 +315,7 @@
     <string name="pref_sort_search_results_mode_relevance">Találati pontosság szerint</string>
     <string name="pref_search_privacity_category">Titoktartás</string>
     <string name="pref_save_search_terms">Keresési feltételek elmentése</string>
-    <string name="pref_save_search_terms_on">A keresési feltételek el lesznek mentve a használható javaslatok
-        érdekében
-    </string>
+    <string name="pref_save_search_terms_on">A keresési feltételek el lesznek mentve a használható javaslatok érdekében</string>
     <string name="pref_save_search_terms_off">A keresési feltételek nem lesznek elmentve</string>
     <string name="pref_remove_saved_search_terms">Keresési feltételek törlése</string>
     <string name="pref_remove_saved_search_terms_summary">Érintse meg az összes keresési feltételek törléséhez</string>
@@ -458,19 +325,14 @@
     <string name="pref_no_suggestions_desc">Fájl szerkesztéskor ne legyenek szótár javaslatok</string>
     <string name="pref_word_wrap">Sortörés</string>
     <string name="pref_hexdump">Hexadecimális nézet</string>
-    <string name="pref_hexdump_desc">Bináris fájl megnyitásakor generáljon hexadecimális nézetet, majd jelenítse azt
-        meg.
-    </string>
+    <string name="pref_hexdump_desc">Bináris fájl megnyitásakor generáljon hexadecimális nézetet, majd jelenítse azt meg.</string>
     <string name="pref_editor_syntax_highlight_category">Szintaxis kiemelés</string>
     <string name="pref_syntax_highlight">Szintaxis kiemelés</string>
-    <string name="pref_syntax_highlight_desc">Szintaxis kiemelés a megjelenített fájlban (ha elérhető szintaxis
-        feldolgozó az adott fájltípushoz)
-    </string>
+    <string name="pref_syntax_highlight_desc">Szintaxis kiemelés a megjelenített fájlban (ha elérhető szintaxis feldolgozó az adott fájltípushoz)</string>
     <string name="pref_syntax_highlight_color_scheme">Színséma</string>
     <string name="pref_syntax_highlight_color_scheme_desc">Érintse meg a szintaxis kiemelés beállításához.</string>
     <string name="pref_syntax_sh_use_theme_default">Téma alapértelmezése</string>
-    <string name="pref_syntax_sh_use_theme_default_desc">Téma alapértelmezésének használata a szintaxis kiemeléshez
-    </string>
+    <string name="pref_syntax_sh_use_theme_default_desc">Téma alapértelmezésének használata a szintaxis kiemeléshez</string>
     <string name="pref_editor_sh_item_category">Elemek</string>
     <string name="pref_themes_selection_category">Témák</string>
     <string name="pref_themes_set_theme">Téma beállítása</string>
@@ -493,17 +355,9 @@
     <string name="ash_keyword">Kulcsszó</string>
     <string name="ash_quoted_string">Idézett karakterlánc</string>
     <string name="ash_variable">Változó</string>
-    <string name="security_warning_extract">Figyelem!\n\nAz archív fájl relatív vagy abszolút elérési úttal történő
-        kicsomagolása kárt okozhat a készülékben azáltal, hogy felülírja rendszerfájlokat.\n\nBiztosan folytatni
-        kívánja?
-    </string>
+    <string name="security_warning_extract">Figyelem!\n\nAz archív fájl relatív vagy abszolút elérési úttal történő kicsomagolása kárt okozhat a készülékben azáltal, hogy felülírja rendszerfájlokat.\n\nBiztosan folytatni kívánja?</string>
     <string name="changelog_title">Változások</string>
     <string name="welcome_title">Üdvözöljük</string>
-    <string name="welcome_msg">Üdvözöli a CyanogenMod fájlkezelő.\n\nEz az alkalmazás lehetővé teszi a fájlrendszer
-        böngészését és olyan műveletek végrehajtását is, melyek esetleg károsíthatják az eszközt. A károsodás elkerülése
-        érdekében az alkalmazás védett, alacsony jogosultsággal indul.\n\nLehetősége van a speciális beállításoknál a
-        teljes privilegizált módú futtatásra is. Az Ön felelőssége annak biztosítása, hogy az egyes műveletek ne
-        károsítsák a rendszert.\n\nA CyanogenMod csapata.\n
-    </string>
+    <string name="welcome_msg">Üdvözöli a CyanogenMod fájlkezelő.\n\nEz az alkalmazás lehetővé teszi a fájlrendszer böngészését és olyan műveletek végrehajtását is, melyek esetleg károsíthatják az eszközt. A károsodás elkerülése érdekében az alkalmazás védett, alacsony jogosultsággal indul.\n\nLehetősége van a speciális beállításoknál a teljes privilegizált módú futtatásra is. Az Ön felelőssége annak biztosítása, hogy az egyes műveletek ne károsítsák a rendszert.\n\nA CyanogenMod csapata.\n</string>
 
 </resources>

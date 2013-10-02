@@ -140,6 +140,11 @@ public class NavigationActivity extends AbstractNavigationActivity
     private static boolean DEBUG = false;
 
     /**
+     * Intent code for request a bookmark selection.
+     */
+    public static final int INTENT_REQUEST_BOOKMARK = 10001;
+
+    /**
      * Intent code for request a history selection.
      */
     public static final int INTENT_REQUEST_HISTORY = 20001;
@@ -218,6 +223,14 @@ public class NavigationActivity extends AbstractNavigationActivity
                         if (key.compareTo(FileManagerSettings.
                                 SETTINGS_CASE_SENSITIVE_SORT.getId()) == 0) {
                             getCurrentNavigationFragment().refresh();
+                            return;
+                        }
+
+                        // Display thumbs
+                        if (key.compareTo(FileManagerSettings.
+                                SETTINGS_DISPLAY_THUMBS.getId()) == 0) {
+                            // Clean the icon cache applying the current theme
+                            applyTheme();
                             return;
                         }
 
@@ -1328,7 +1341,7 @@ public class NavigationActivity extends AbstractNavigationActivity
      * @param history The history reference
      * @return boolean A problem occurs while navigate
      */
-    public boolean navigateToHistory(History history) {
+    public synchronized boolean navigateToHistory(History history) {
         try {
             NavigationFragment currentNavFragment = getCurrentNavigationFragment();
             //Gets the history
@@ -1341,7 +1354,9 @@ public class NavigationActivity extends AbstractNavigationActivity
                         (NavigationViewInfoParcelable)realHistory.getItem();
                 // Selected items must not be restored from on history navigation
                 info.setSelectedFiles(currentNavFragment.getSelectedFiles());
-                currentNavFragment.onRestoreState(info);
+                if (!currentNavFragment.onRestoreState(info)) {
+                    return true;
+                }
 
             } else if (realHistory.getItem() instanceof SearchInfoParcelable) {
                 //Search (open search with the search results)
@@ -1681,8 +1696,6 @@ public class NavigationActivity extends AbstractNavigationActivity
     public boolean isChRooted(){
         return this.mChRooted;
     }
-
-
 
     /**
      * {@inheritDoc}
