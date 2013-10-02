@@ -112,20 +112,20 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
      * @param root The root file
      * @return DiskUsage The disk usage
      */
-    private DiskUsage createDiskUsuage(File file) {
-        long total = file.getTotalSpace();
-        long free = file.getFreeSpace();
+    private DiskUsage createDiskUsuage(File root) {
+        long total = root.getTotalSpace();
+        long free = root.getFreeSpace();
         if(total < 0)
         {
             try {
                 return new me.toolify.backbone.commands.shell.DiskUsageCommand(
-                        file.getAbsolutePath()).getResult().get(0);
+                        root.getAbsolutePath()).getResult().get(0);
             } catch(Exception e) {
                 Log.w(TAG, "Unable to run shell DiskUsage", e);
             }
         }
         DiskUsage du = new DiskUsage(
-                                file.getAbsolutePath(),
+                                root.getAbsolutePath(),
                                 total,
                                 total - free,
                                 free);
