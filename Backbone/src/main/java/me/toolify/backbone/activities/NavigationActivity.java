@@ -34,6 +34,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -985,6 +986,18 @@ public class NavigationActivity extends AbstractNavigationActivity
                 } catch (Exception ex) {/**NON BLOCK**/}
             }
         } catch (Exception e) {
+            if(b.getType().equals(Bookmark.BOOKMARK_TYPE.SDCARD))
+            {
+                String newpath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                if((newpath != null && path == null) || !newpath.equalsIgnoreCase(path))
+                {
+                    onBookmarkOpen(new BookmarkOpenEvent(newpath));
+                    return;
+                }
+//                else if(!path.equalsIgnoreCase("/mnt/shell/emulated/0"))
+//                    onBookmarkOpen(new BookmarkOpenEvent("/mnt/shell/emulated/0"));
+
+            }
             // Capture the exception
             ExceptionUtil.translateException(this, e);
             if (e instanceof NoSuchFileOrDirectory || e instanceof FileNotFoundException) {

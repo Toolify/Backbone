@@ -16,6 +16,7 @@
 package me.toolify.backbone.util;
 
 import android.content.Context;
+import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.util.Log;
 
@@ -56,6 +57,16 @@ public final class StorageHelper {
                 StorageManager sm = (StorageManager) ctx.getSystemService(Context.STORAGE_SERVICE);
                 Method method = sm.getClass().getMethod("getVolumeList"); //$NON-NLS-1$
                 sStorageVolumes = (Object[])method.invoke(sm);
+                for(int i = 0; i < sStorageVolumes.length; i++)
+                {
+                    Object sv = sStorageVolumes[i];
+                    String path = getStoragePath(sv);
+                    if(path == null || path == "/storage/emulated/0")
+                    {
+                        sStorageVolumes[i] = Environment.getExternalStorageDirectory();
+                    }
+
+                }
 
             } catch (Exception ex) {
                 //Ignore. Android SDK StorageManager class doesn't have this method
