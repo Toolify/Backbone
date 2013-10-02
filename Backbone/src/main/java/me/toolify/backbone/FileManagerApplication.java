@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 import me.toolify.backbone.console.Console;
 import me.toolify.backbone.console.ConsoleAllocException;
@@ -40,7 +41,9 @@ import me.toolify.backbone.util.MimeTypeHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -459,7 +462,7 @@ public final class FileManagerApplication extends Application {
      *
      * @return boolean Check if the device has all of the shell commands
      */
-    private boolean areShellCommandsPresent() {
+    public boolean areShellCommandsPresent() {
         try {
             String shellCommands = getString(R.string.shell_required_commands);
             String[] commands = shellCommands.split(","); //$NON-NLS-1$
@@ -469,6 +472,8 @@ public final class FileManagerApplication extends Application {
                 Log.w(TAG, "No shell commands."); //$NON-NLS-1$
                 return false;
             }
+            boolean allGood = true;
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cc; i++) {
                 String c = commands[i].trim();
                 if (c.length() == 0) continue;
@@ -480,8 +485,17 @@ public final class FileManagerApplication extends Application {
                                     c,
                                     String.valueOf(cmd.exists()),
                                     String.valueOf(cmd.isFile())));
-                    return false;
+                    sb.append(c);
+                    sb.append(", ");
+                    allGood = false;
                 }
+            }
+            if(!allGood)
+            {
+                sb.setLength(sb.length() - 2);
+                Toast.makeText(getApplicationContext(),
+                        "Missing commands: " + sb.toString(), Toast.LENGTH_LONG).show();
+                return false;
             }
             // All commands are present
             return true;
