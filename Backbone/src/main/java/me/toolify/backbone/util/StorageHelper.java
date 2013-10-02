@@ -21,13 +21,16 @@ import android.util.Log;
 
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
+import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.FileSystemObject;
 import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.model.StorageVolume;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -50,12 +53,22 @@ public final class StorageHelper {
     @SuppressWarnings("boxing")
     public static synchronized Object[] getStorageVolumes(Context ctx) {
         if (sStorageVolumes == null) {
+
             //IMP!! Android SDK doesn't have a "getVolumeList" but is supported by CM10.
             //Use reflect to get this value (if possible)
             try {
                 StorageManager sm = (StorageManager) ctx.getSystemService(Context.STORAGE_SERVICE);
                 Method method = sm.getClass().getMethod("getVolumeList"); //$NON-NLS-1$
-                sStorageVolumes = (Object[])method.invoke(sm);
+                List<Object> volumes = new ArrayList<Object>();
+                for(Object o : (Object[])method.invoke(sm))
+                {
+                    String path = getStoragePath(o);
+                    DiskUsage du = CommandHelper.getDiskUsage(ctx, path, null);
+                    if(du.getTotal() <= 0) continue; // Ensure validity by checking for disk space
+                    volumes.add(o);
+                }
+                if(volumes.size() == 0) throw new Exception("No valid volumes");
+                return volumes.toArray();
 
             } catch (Exception ex) {
                 //Ignore. Android SDK StorageManager class doesn't have this method
