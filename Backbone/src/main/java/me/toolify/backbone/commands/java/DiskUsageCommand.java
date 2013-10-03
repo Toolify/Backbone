@@ -18,6 +18,7 @@ package me.toolify.backbone.commands.java;
 
 import android.util.Log;
 
+import me.toolify.backbone.BuildConfig;
 import me.toolify.backbone.commands.DiskUsageExecutable;
 import me.toolify.backbone.console.ExecutionException;
 import me.toolify.backbone.console.InsufficientPermissionsException;
@@ -27,6 +28,7 @@ import me.toolify.backbone.model.MountPoint;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 
@@ -39,7 +41,7 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
 
     private final String mMountsFile;
     private final String mSrc;
-    private final List<DiskUsage> mDisksUsage;
+    private final Hashtable<String, DiskUsage> mDisksUsage = new Hashtable<String, DiskUsage>();
 
     /**
      * Constructor of <code>DiskUsageCommand</code>.
@@ -60,7 +62,6 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
         super();
         this.mMountsFile = mountsFile;
         this.mSrc = null;
-        this.mDisksUsage = new ArrayList<DiskUsage>();
     }
 
     /**
@@ -68,7 +69,10 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
      */
     @Override
     public List<DiskUsage> getResult() {
-        return this.mDisksUsage;
+        List<DiskUsage> ret = new ArrayList<DiskUsage>();
+        for(DiskUsage du : mDisksUsage.values())
+            ret.add(du);
+        return ret;
     }
 
     /**
@@ -94,11 +98,12 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
 
             // Get every disk usage
             for (int i = 0; i < mp.size(); i++) {
-                File root = new File(mp.get(i).getMountPoint());
-                this.mDisksUsage.add(createDiskUsuage(root));
+                String mpp = mp.get(i).getMountPoint();
+                File root = new File(mpp);
+                mDisksUsage.put(mpp, createDiskUsage(root));
             }
         } else {
-            this.mDisksUsage.add(createDiskUsuage(new File(this.mSrc)));
+            mDisksUsage.put(mSrc, createDiskUsage(new File(this.mSrc)));
         }
 
         if (isTrace()) {
@@ -112,12 +117,14 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
      * @param root The root file
      * @return DiskUsage The disk usage
      */
-    private DiskUsage createDiskUsuage(File file) {
+    private DiskUsage createDiskUsage(File root) {
+        long total = root.getTotalSpace();
+        long free = root.getFreeSpace();
         DiskUsage du = new DiskUsage(
-                                file.getAbsolutePath(),
-                                file.getTotalSpace(),
-                                file.getTotalSpace() - file.getFreeSpace(),
-                                file.getFreeSpace());
+                root.getAbsolutePath(),
+                total,
+                total - free,
+                free);
         if (isTrace()) {
             Log.v(TAG, du.toString());
         }

@@ -95,7 +95,10 @@ public class FilesystemAsyncTask extends AsyncTask<String, Integer, Boolean> {
         if (isCancelled()) {
             return Boolean.TRUE;
         }
-        final MountPoint mp = MountPointHelper.getMountPointFromDirectory(dir);
+        MountPoint mp1 = MountPointHelper.getMountPointFromDirectory(dir);
+        if(mp1.getMountPoint().equals("/") && dir.equals("/storage/emulated/0")) // AOSP 4.3 bug
+            mp1 = MountPointHelper.getMountPointFromDirectory("/mnt/shell/emulated");
+        final MountPoint mp = mp1;
         if (mp == null) {
             //There is no information about
             if (isCancelled()) {

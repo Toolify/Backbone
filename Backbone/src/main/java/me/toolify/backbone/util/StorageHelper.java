@@ -19,15 +19,18 @@ import android.content.Context;
 import android.os.storage.StorageManager;
 import android.util.Log;
 
+import java.io.File;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
+import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.FileSystemObject;
 import me.toolify.backbone.model.MountPoint;
 import me.toolify.backbone.model.StorageVolume;
-
-import java.io.File;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 
 
 /**
@@ -50,12 +53,22 @@ public final class StorageHelper {
     @SuppressWarnings("boxing")
     public static synchronized Object[] getStorageVolumes(Context ctx) {
         if (sStorageVolumes == null) {
+
             //IMP!! Android SDK doesn't have a "getVolumeList" but is supported by CM10.
             //Use reflect to get this value (if possible)
             try {
                 StorageManager sm = (StorageManager) ctx.getSystemService(Context.STORAGE_SERVICE);
                 Method method = sm.getClass().getMethod("getVolumeList"); //$NON-NLS-1$
-                sStorageVolumes = (Object[])method.invoke(sm);
+                List<Object> volumes = new ArrayList<Object>();
+                for(Object o : (Object[])method.invoke(sm))
+                {
+                    String path = getStoragePath(o);
+                    DiskUsage du = CommandHelper.getDiskUsage(ctx, path, null);
+                    if(du.getTotal() <= 0) continue; // Ensure validity by checking for disk space
+                    volumes.add(o);
+                }
+                if(volumes.size() == 0) throw new Exception("No valid volumes");
+                return volumes.toArray();
 
             } catch (Exception ex) {
                 //Ignore. Android SDK StorageManager class doesn't have this method
@@ -68,12 +81,12 @@ public final class StorageHelper {
                         if(!MountPointHelper.isReadWrite(mp)) continue;
                         String path = mp.getMountPoint();
                         if(!mp.getDevice().startsWith("/")) continue;
-                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data)"))
-                           continue;
+                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data|acct|sys)\\/"))
+                            continue;
+                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data|acct|sys)$"))
+                            continue;
                         StorageVolume sv = null;
                         try {
-                            if(MountPointHelper.getMountPointDiskUsage(mp).getTotal() < 5000000)
-                                continue;
                             FileSystemObject fso = CommandHelper.getFileInfo(ctx, path, null);
                             sv = convertToStorageVolume(fso);
                         } catch(Exception e3) { }
@@ -149,7 +162,7 @@ public final class StorageHelper {
     /**
      * Method that determines the mount path of a {@link StorageVolume} object.
      *
-     * @param volume Object returned from {@link StorageHelper.getStorageVolumes()}
+     * @param volume Object returned from StorageHelper.getStorageVolumes()
      * @return Mounted path
      */
     public static String getStoragePath(Object volume)
@@ -167,7 +180,7 @@ public final class StorageHelper {
 
     /**
      * Method that determines whether a path returned from
-     * {@link StorageHelper.getStorageVolumes()} is a valid, mounted, path.
+     * getStorageVolumes is a valid, mounted, path.
      * @param path Path to root of mount
      * @return boolean Whether path is mounted & valid
      */

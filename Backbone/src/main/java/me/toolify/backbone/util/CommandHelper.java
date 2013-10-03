@@ -17,7 +17,13 @@
 package me.toolify.backbone.util;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
+import me.toolify.backbone.BuildConfig;
 import me.toolify.backbone.commands.AsyncResultListener;
 import me.toolify.backbone.commands.ChangeOwnerExecutable;
 import me.toolify.backbone.commands.ChangePermissionsExecutable;
@@ -73,10 +79,6 @@ import me.toolify.backbone.model.Query;
 import me.toolify.backbone.model.SearchResult;
 import me.toolify.backbone.model.User;
 import me.toolify.backbone.preferences.CompressionMode;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -909,9 +911,16 @@ public final class CommandHelper {
         DiskUsageExecutable executable =
                 c.getExecutableFactory().newCreator().createDiskUsageExecutable(dir);
         execute(context, executable, c);
-        List<DiskUsage> du = executable.getResult();
-        if (du != null && du.size() > 0) {
-            return du.get(0);
+        List<DiskUsage> dus = executable.getResult();
+        if (dus != null && dus.size() > 0) {
+            for(DiskUsage du : dus)
+            {
+                if(!du.getMountPoint().equals(dir)) continue;
+                return du;
+            }
+            if(BuildConfig.DEBUG)
+                Log.w("CommandHelper", "Unable to find correct DiskUsage for " + dir);
+            return dus.get(0); // return first if none match
         }
         return null;
     }

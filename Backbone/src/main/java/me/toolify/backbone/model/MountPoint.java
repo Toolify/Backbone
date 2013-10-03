@@ -135,7 +135,7 @@ public class MountPoint implements Serializable, Comparable<MountPoint> {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof MountPoint)) {
             return false;
         }
         MountPoint other = (MountPoint) obj;
