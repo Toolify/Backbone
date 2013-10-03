@@ -17,6 +17,7 @@
 package me.toolify.backbone.activities.preferences;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -213,7 +214,21 @@ public class GeneralPreferenceFragment extends TitlePreferenceFragment {
                             defaultValue);
         this.mOnChangeListener.onPreferenceChange(this.mAccessMode, value);
         // If device is not rooted, this setting cannot be changed
-        this.mAccessMode.setEnabled(FileManagerApplication.isDeviceRooted());
+        //this.mAccessMode.setEnabled(FileManagerApplication.isDeviceRooted());
+        if(!FileManagerApplication.isDeviceRooted())
+            mAccessMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    if(!((FileManagerApplication)getActivity().getApplication())
+                            .areShellCommandsPresent())
+                    {
+                        if(mAccessMode.getDialog() != null)
+                            mAccessMode.getDialog().dismiss();
+                        return true; // NONE SHALL PASS!
+                    }
+                    return false;
+                }
+            });
 
         // Capture Debug traces
         this.mDebugTraces =
