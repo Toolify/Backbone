@@ -277,4 +277,30 @@ public enum FileManagerSettings {
         }
         return null;
     }
+
+    /**
+     * Convenience method for changing sorting mode
+     * @param sort Setting to use for sorting
+     */
+    public static void setSorting(NavigationSortMode sort) {
+        Preferences.getSharedPreferences().edit().putInt(
+                FileManagerSettings.SETTINGS_SORT_MODE.getId(),
+                sort.getId()).apply();
+    }
+
+    public static void setLayout(NavigationLayoutMode layout) {
+        Preferences.getSharedPreferences().edit().putInt(
+                FileManagerSettings.SETTINGS_LAYOUT_MODE.getId(),
+                layout.getId()).apply();
+    }
+
+    /**
+     * Convenience method for toggling a checkable view preference
+     * @param key The setting to toggle
+     */
+    public static void toggleViewPreference(FileManagerSettings key) {
+        Preferences.getSharedPreferences().edit().putBoolean(key.getId(),
+                !Preferences.getSharedPreferences().getBoolean(key.getId(),
+                        (Boolean.parseBoolean(key.getDefaultValue().toString())))).apply();
+    }
 }

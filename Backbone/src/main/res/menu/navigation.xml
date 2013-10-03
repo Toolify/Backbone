@@ -63,7 +63,7 @@
             android:showAsAction="never"
             android:title="@string/actionbar_button_sort_mode_cd">
             <menu>
-                <group android:checkableBehavior="all">
+                <group android:checkableBehavior="single">
                     <item
                             android:id="@+id/mnu_actions_sort_by_name_asc"
                             android:title="@string/sort_by_name_asc"/>

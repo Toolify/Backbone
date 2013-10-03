@@ -29,6 +29,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignWithParentIfMissing="true"
             android:background="@color/light_grey_transparent">
+
         <me.toolify.backbone.ui.widgets.TransparentNonFocusableButtonItem
                 android:id="@+id/navigation_view_item_icon"
                 android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:contentDescription="@null"
                 android:src="@null"/>
+
     </RelativeLayout>
 
     <RelativeLayout
