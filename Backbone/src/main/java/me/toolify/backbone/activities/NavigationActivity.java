@@ -856,6 +856,9 @@ public class NavigationActivity extends AbstractNavigationActivity
                             getCurrentNavigationFragment(),
                             getCurrentNavigationFragment(),
                             NavigationActivity.this);
+                    /* Clear files as soon as the user decides to paste, thus permitting more copy
+                       selections while this paste task finishes. */
+                    onClearFilesMarkedForPaste();
                 }
                 break;
 
@@ -1764,6 +1767,8 @@ public class NavigationActivity extends AbstractNavigationActivity
     public void onClearFilesMarkedForPaste() {
         this.mFilesForPaste = null;
         this.mPasteOperationType = null;
+        // Make sure that the paste action item is removed
+        invalidateOptionsMenu();
     }
 
     /**

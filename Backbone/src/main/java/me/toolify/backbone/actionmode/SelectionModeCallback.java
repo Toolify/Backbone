@@ -74,13 +74,9 @@ public class SelectionModeCallback implements ActionMode.Callback {
     private MenuItem mActionAddBookmark;
     private MenuItem mActionAddShortcut;
     private MenuItem mActionChecksum;
-    private MenuItem mActionOpenParentFolder;
-    private ShareActionProvider mShareActionProvider;
 
     private TextView mFileCount;
     private TextView mFolderCount;
-
-    private boolean pasteReady = false;
 
     boolean mClosedByUser = true;
     private Activity mActivity;
@@ -178,10 +174,6 @@ public class SelectionModeCallback implements ActionMode.Callback {
         mActionAddBookmark = menu.findItem(R.id.mnu_actions_add_to_bookmarks);
         mActionAddShortcut = menu.findItem(R.id.mnu_actions_add_shortcut);
         mActionChecksum = menu.findItem(R.id.mnu_actions_compute_checksum);
-
-        // Set file with share history to the provider and set the share intent.
-//        mShareActionProvider = (ShareActionProvider) mShare.getActionProvider();
-//        mShareActionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 
         return true;
     }
@@ -462,6 +454,8 @@ public class SelectionModeCallback implements ActionMode.Callback {
                     CopyMoveActionPolicy.createCopyFileSystemObject(
                             selection,
                             this.onCopyMoveListener);
+                    // Make sure that the main menu updates and shows the paste button.
+                    mActivity.invalidateOptionsMenu();
                     finish();
                 }
                 break;
@@ -474,6 +468,8 @@ public class SelectionModeCallback implements ActionMode.Callback {
                     CopyMoveActionPolicy.createMoveFileSystemObject(
                             selection,
                             this.onCopyMoveListener);
+                    // Make sure that the main menu updates and shows the paste button.
+                    mActivity.invalidateOptionsMenu();
                     finish();
                 }
                 break;
