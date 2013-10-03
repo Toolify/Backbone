@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Properties Drawer (right) width. Full width on large-port -->
+    <dimen name="properties_drawer_width">360dp</dimen>
+</resources>
