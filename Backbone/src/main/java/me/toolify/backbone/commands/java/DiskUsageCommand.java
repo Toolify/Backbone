@@ -95,10 +95,10 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
             // Get every disk usage
             for (int i = 0; i < mp.size(); i++) {
                 File root = new File(mp.get(i).getMountPoint());
-                this.mDisksUsage.add(createDiskUsuage(root));
+                this.mDisksUsage.add(createDiskUsage(root));
             }
         } else {
-            this.mDisksUsage.add(createDiskUsuage(new File(this.mSrc)));
+            this.mDisksUsage.add(createDiskUsage(new File(this.mSrc)));
         }
 
         if (isTrace()) {
@@ -112,18 +112,9 @@ public class DiskUsageCommand extends Program implements DiskUsageExecutable {
      * @param root The root file
      * @return DiskUsage The disk usage
      */
-    private DiskUsage createDiskUsuage(File root) {
+    private DiskUsage createDiskUsage(File root) {
         long total = root.getTotalSpace();
         long free = root.getFreeSpace();
-        if(total < 0)
-        {
-            try {
-                return new me.toolify.backbone.commands.shell.DiskUsageCommand(
-                        root.getAbsolutePath()).getResult().get(0);
-            } catch(Exception e) {
-                Log.w(TAG, "Unable to run shell DiskUsage", e);
-            }
-        }
         DiskUsage du = new DiskUsage(
                                 root.getAbsolutePath(),
                                 total,

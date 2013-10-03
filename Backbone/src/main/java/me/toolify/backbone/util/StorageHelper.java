@@ -21,6 +21,7 @@ import android.util.Log;
 
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
+import me.toolify.backbone.model.Directory;
 import me.toolify.backbone.model.DiskUsage;
 import me.toolify.backbone.model.FileSystemObject;
 import me.toolify.backbone.model.MountPoint;
@@ -64,6 +65,8 @@ public final class StorageHelper {
                 {
                     String path = getStoragePath(o);
                     DiskUsage du = CommandHelper.getDiskUsage(ctx, path, null);
+                    if(DEBUG)
+                        Log.d(TAG, "DiskUsage: " + du.toString());
                     if(du.getTotal() <= 0) continue; // Ensure validity by checking for disk space
                     volumes.add(o);
                 }
@@ -81,12 +84,12 @@ public final class StorageHelper {
                         if(!MountPointHelper.isReadWrite(mp)) continue;
                         String path = mp.getMountPoint();
                         if(!mp.getDevice().startsWith("/")) continue;
-                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data)"))
-                           continue;
+                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data|acct|sys)\\/"))
+                            continue;
+                        if(path.matches("^\\/(dev|persist|cache|proc|efs|data|acct|sys)$"))
+                            continue;
                         StorageVolume sv = null;
                         try {
-                            if(MountPointHelper.getMountPointDiskUsage(mp).getTotal() < 5000000)
-                                continue;
                             FileSystemObject fso = CommandHelper.getFileInfo(ctx, path, null);
                             sv = convertToStorageVolume(fso);
                         } catch(Exception e3) { }
@@ -162,7 +165,7 @@ public final class StorageHelper {
     /**
      * Method that determines the mount path of a {@link StorageVolume} object.
      *
-     * @param volume Object returned from {@link StorageHelper.getStorageVolumes()}
+     * @param volume Object returned from StorageHelper.getStorageVolumes()
      * @return Mounted path
      */
     public static String getStoragePath(Object volume)
@@ -180,7 +183,7 @@ public final class StorageHelper {
 
     /**
      * Method that determines whether a path returned from
-     * {@link StorageHelper.getStorageVolumes()} is a valid, mounted, path.
+     * getStorageVolumes is a valid, mounted, path.
      * @param path Path to root of mount
      * @return boolean Whether path is mounted & valid
      */
