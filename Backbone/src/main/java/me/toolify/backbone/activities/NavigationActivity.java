@@ -64,6 +64,7 @@ import me.toolify.backbone.BuildConfig;
 import me.toolify.backbone.FileManagerApplication;
 import me.toolify.backbone.R;
 import me.toolify.backbone.actionmode.PropertiesModeCallback;
+import me.toolify.backbone.activities.preferences.SettingsPreferences;
 import me.toolify.backbone.adapters.NavigationFragmentPagerAdapter;
 import me.toolify.backbone.bus.BusProvider;
 import me.toolify.backbone.bus.events.BookmarkDeleteEvent;
@@ -992,6 +993,12 @@ public class NavigationActivity extends AbstractNavigationActivity
                     ExceptionUtil.translateException(this, e, true, false);
                 }
                 break;
+            // Open settings
+            case R.id.mnu_settings:
+                Intent settings = new Intent(
+                NavigationActivity.this, SettingsPreferences.class);
+                startActivity(settings);
+                break;
 
             default:
                return super.onOptionsItemSelected(item);
@@ -1015,33 +1022,6 @@ public class NavigationActivity extends AbstractNavigationActivity
                     refreshItem.setActionView(null);
                 }
             }
-        }
-    }
-
-    /**
-     * Method invoked when a custom action item is clicked. This does not handle action items populated by the default
-     * action bar menu inflater.  It does handle the custom action buttons from the "Navigation View" as views instead
-     * of MenuItems.  The Navigation View is the custom view inserted into the top action bar.
-     *
-     * @param view The button pushed
-     */
-    public void onActionBarItemClick(View view) {
-        switch (view.getId()) {
-            //######################
-            //Selection Actions
-            //######################
-            case R.id.ab_selection_done:
-                // Show information of the filesystem
-                getCurrentNavigationFragment().onDeselectAll();
-                break;
-
-            case R.id.ab_select_all:
-                // Select all items in the visible navigation fragment
-                getCurrentNavigationFragment().onSelectAllVisibleItems();
-                break;
-
-            default:
-                break;
         }
     }
     

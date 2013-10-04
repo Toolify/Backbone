@@ -357,6 +357,11 @@ public class SelectionModeCallback implements ActionMode.Callback {
 
         switch (menuItem.getItemId()) {
 
+            case R.id.mnu_select_all:
+                // Select all items in the visible navigation fragment
+                this.mOnSelectionListener.onSelectAllVisibleItems();
+                break;
+
             //- Rename
             case R.id.mnu_actions_rename:
                 if (this.mOnSelectionListener != null) {

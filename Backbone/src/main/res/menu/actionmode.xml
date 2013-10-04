@@ -16,6 +16,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+            android:id="@+id/mnu_select_all"
+            android:icon="?attr/actionIconSelectAll"
+            android:showAsAction="ifRoom"
+            android:title="@string/actions_menu_copy"/>
+    <item
             android:id="@+id/mnu_actions_copy"
             android:icon="?attr/actionIconCreateCopy"
             android:showAsAction="ifRoom"

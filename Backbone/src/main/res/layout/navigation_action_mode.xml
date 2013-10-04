@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/folder_count"
             android:layout_gravity="center"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             style="@style/selectedCount"
             android:text="0"/>
 
@@ -22,13 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/indicatorIconFolder"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="4dp"
             android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/file_count"
             android:layout_gravity="center"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             style="@style/selectedCount"
             android:text="0"/>
 
@@ -37,17 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="8dp"
             android:background="?attr/indicatorIconFile"/>
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ab_select_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        style="?android:attr/actionButtonStyle"
-        android:src="?attr/actionIconSelectAll"
-        android:onClick="onActionBarItemClick"/>
-
-</RelativeLayout>
+</LinearLayout>
