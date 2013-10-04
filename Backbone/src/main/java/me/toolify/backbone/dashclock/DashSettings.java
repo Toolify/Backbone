@@ -78,14 +78,19 @@ public class DashSettings extends PreferenceActivity {
         for(Object storage : StorageHelper.getStorageVolumes(this))
         {
             final String path = StorageHelper.getStoragePath(storage);
-            final String desc = StorageHelper.getStorageVolumeDescription(this, storage);
+            String desc = StorageHelper.getStorageVolumeDescription(this, storage);
             final CheckBoxPreference p = new CheckBoxPreference(this);
             int storeIcon = DashExtension.getIcon(desc);
+            if(desc.equals(getString(R.string.external_storage))||
+                    desc.equals(getString(R.string.internal_storage)))
+                storeIcon = R.drawable.dashclock_sd;
             p.setIcon(storeIcon);
             boolean useMe = true;
             MountPoint mp = MountPointHelper.getMountPointFromDirectory(path);
             if(mp.getOptions().indexOf("mode=0")>-1) useMe = false; // Cyanogenmod USB workaround
             if(!MountPointHelper.isReadWrite(mp)) useMe = false;
+            if(desc.equals(getString(R.string.bookmarks_system_folder)))
+                desc = path;
             p.setTitle(desc);
             p.setChecked(prefs.getBoolean("storage_" + path, useMe));
             p.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

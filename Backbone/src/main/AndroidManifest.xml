@@ -196,7 +196,7 @@
           <meta-data android:name="description"
                      android:value="@string/dashclock_extension_description" />
           <meta-data android:name="settingsActivity"
-                     android:value=".dashclock.DashSettings" />
+                     android:value="me.toolify.backbone.dashclock.DashSettings" />
       </service>
 
       <activity android:name=".dashclock.DashSettings"

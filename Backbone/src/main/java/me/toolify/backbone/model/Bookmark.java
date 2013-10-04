@@ -22,10 +22,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.BaseColumns;
 
-import me.toolify.backbone.providers.BookmarksContentProvider;
-
 import java.io.File;
 import java.io.Serializable;
+
+import me.toolify.backbone.providers.BookmarksContentProvider;
 
 /**
  * A class that represent a bookmark.
@@ -190,7 +190,7 @@ public class Bookmark implements Serializable, Comparable<Bookmark>, Parcelable 
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Bookmark)) {
             return false;
         }
         Bookmark other = (Bookmark) obj;
@@ -266,6 +266,10 @@ public class Bookmark implements Serializable, Comparable<Bookmark>, Parcelable 
             return c;
         }
         return this.mPath.compareTo(another.mPath);
+    }
+
+    public BOOKMARK_TYPE getType() {
+        return mType;
     }
 
     /**

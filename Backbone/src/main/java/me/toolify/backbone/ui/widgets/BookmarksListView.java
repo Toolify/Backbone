@@ -96,7 +96,7 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
 
     @Subscribe
     public void onBookmarkRefreshEvent (BookmarkRefreshEvent event) {
-        reInitBookmarks();
+        refresh();
     }
 
     /**
@@ -104,35 +104,22 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
      */
     private void initBookmarks() {
 
-        this.mChRooted = FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
-
         List<Bookmark> bookmarks = new ArrayList<Bookmark>();
         mAdapter = new BookmarksAdapter(mActivity, bookmarks, this);
         this.setAdapter(mAdapter);
         this.setOnItemClickListener(this);
 
-        // Reload the data
-        refresh();
     }
-
-    private void reInitBookmarks() {
-
-        this.mChRooted = FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
-
-        // Reload the data
-        refresh();
-    }
-
 
     /**
      * Method that makes the refresh of the data.
      */
     public void refresh() {
-        // Retrieve the loading view
-        //final View waiting = findViewById(R.id.bookmarks_waiting);
-        final BookmarksAdapter adapter = (BookmarksAdapter)this.getAdapter();
 
-        // Load the history in background
+        // Determine whether we are loading bookmarks for a chrooted or rooted environment
+        this.mChRooted = FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
+
+        // Load the bookmarks in background
         AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
             Exception mCause;
             List<Bookmark> mBookmarks;
@@ -168,11 +155,6 @@ public class BookmarksListView extends ListView implements OnItemClickListener, 
                         ExceptionUtil.translateException(mActivity, this.mCause);
                     }
                 }
-            }
-
-            @Override
-            protected void onCancelled() {
-                //waiting.setVisibility(View.GONE);
             }
         };
         task.execute();
