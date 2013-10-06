@@ -43,6 +43,7 @@
         </attr>
     </declare-styleable>
 
+    <!-- Main application styleables -->
     <declare-styleable name="FileManager">
         <attr name="actionIconFolderProperties" format="reference"/>
         <attr name="actionIconRefresh" format="reference"/>
@@ -83,6 +84,17 @@
 
         <attr name="indicatorIconFolder" format="reference"/>
         <attr name="indicatorIconFile" format="reference"/>
+
+    </declare-styleable>
+
+    <!-- Preference styleables -->
+    <declare-styleable name="FileManagerPrefs">
+
+        <attr name="preferenceIconGeneral" format="reference"/>
+        <attr name="preferenceIconSearch" format="reference"/>
+        <attr name="preferenceIconEditor" format="reference"/>
+        <attr name="preferenceIconAbout" format="reference"/>
+        <attr name="preferenceIconDashclock" format="reference"/>
 
     </declare-styleable>
 

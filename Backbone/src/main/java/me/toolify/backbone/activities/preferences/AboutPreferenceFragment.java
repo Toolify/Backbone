@@ -67,6 +67,7 @@ public class AboutPreferenceFragment extends TitlePreferenceFragment {
         // Changelog
         this.mChangelog = findPreference("bb_filemanager_changelog");
         mChangelog.setIntent(new Intent(getActivity(), ChangeLogActivity.class));
+        this.mChangelog.setEnabled(false);
 
         // Privacy Policy
         this.mPrivacyPolicy = findPreference("bb_filemanager_privacy_policy");

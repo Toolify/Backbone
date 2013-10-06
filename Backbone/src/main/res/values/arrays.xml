@@ -107,11 +107,15 @@
     <!-- Credits and license headers -->
     <string-array name="credits_headers" translatable="false">
         <item>@string/pref_license_cmfm</item>
+        <item>@string/pref_license_syntax_highlight</item>
+        <item>@string/pref_license_color_picker_view</item>
     </string-array>
 
     <!-- Credits and license details -->
     <string-array name="credits_details" translatable="false">
         <item>@string/pref_license_cmfm_details</item>
+        <item>@string/pref_license_syntax_highlight_details</item>
+        <item>@string/pref_license_color_picker_view_details</item>
     </string-array>
 
     <string-array name="file_types">

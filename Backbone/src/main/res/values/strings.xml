@@ -624,7 +624,10 @@
     <!-- Preferences - About title -->
     <string name="pref_about">About</string>
     <!-- Preferences - About summary -->
-    <string name="pref_about_summary">File Manager v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9 2013 The CyanogenMod Project</string>
+    <string name="pref_about_summary">File Manager v<xliff:g id="version">%1$s</xliff:g>\nCopyright \u00A9 2013 Toolify</string>
+    <!-- Preferences - Dashclock title -->
+    <string name="pref_dashclock">Dashclock settings</string>
+
 
     <!-- Preferences - General - Behaviour category -->
     <string name="pref_general_behaviour_category">General</string>
@@ -668,6 +671,9 @@
     <string name="pref_access_mode_root">Root Access mode</string>
     <!-- Preferences - General - Root access mode summary -->
     <string name="pref_access_mode_root_summary">Root Access mode\n\nWarning! This mode allows operations that could break your device. It\'s your responsibility to ensure that an operation is safe</string>
+    <!-- Preferences - General - Capture debug traces -->
+    <string name="pref_debug_traces">Log debugging information</string>
+
     <!-- Preferences - Search - Results category -->
     <string name="pref_search_results_category">Results</string>
     <!-- Preferences - Search - Show relevance widget -->
@@ -696,6 +702,7 @@
     <string name="pref_remove_saved_search_terms_summary">Tap to remove all the saved search terms</string>
     <!-- Preferences - Search - Suggestions were truncated -->
     <string name="pref_remove_saved_search_terms_msg">All saved search terms were removed.</string>
+
     <!-- Preferences - Editor - Behaviour category -->
     <string name="pref_editor_behaviour_category">Behaviour</string>
     <!-- Preferences - Editor - No suggestions -->
@@ -724,6 +731,7 @@
     <string name="pref_syntax_sh_use_theme_default_desc">Use the default syntax highlight of the current theme</string>
     <!-- Preferences - Editor - Syntax highlight - Color Scheme - Items category -->
     <string name="pref_editor_sh_item_category">Items</string>
+
     <!-- Preferences - Themes - Themes selection category -->
     <string name="pref_themes_selection_category">Themes</string>
     <!-- Preferences - Themes - Set theme button -->
@@ -734,6 +742,7 @@
     <string name="pref_themes_confirmation">Theme was applied successfully.</string>
     <!-- Preferences - Themes - Theme not found message -->
     <string name="pref_themes_not_found">Theme not found.</string>
+
     <!-- Preferences - About - FAQ -->
     <string name="pref_about_faq">FAQ</string>
     <!-- Preferences - About - FAQ summary -->
@@ -750,14 +759,19 @@
     <string name="pref_about_version">Build version</string>
     <!-- Preferences - About - Build version summary -->
     <string name="pref_about_version_num">Version:<xliff:g id="version_num">%1$s</xliff:g></string>
-
-    <!-- Preferences - About - Credits and licenses * CMFileManager -->
+    <!-- Preferences - About - Credits and licenses - CMFileManager -->
     <string name="pref_license_cmfm" translatable="false"><![CDATA[<a href="https://github.com/CyanogenMod/android_packages_apps_CMFileManager">CyanogenMod File Manager</a>]]></string>
-    <!-- Preferences - About - Build version summary -->
-    <string name="pref_license_cmfm_details" translatable="false">A file manager for AOSP, focused on rooted devices and specially designed for the CyanogenMod Project. This source was released under the terms of <![CDATA[<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>]]>  license. Visit <![CDATA[<a href="https://github.com/CyanogenMod">CyanogenMod Github</a>]]> and <![CDATA[<a href="http://review.cyanogenmod.com/">CyanogenMod Code Review</a>]]> to get the source and patches. Copyright © 2012 The CyanogenMod Project</string>
+    <!-- Preferences - About - Credits and licenses - CMFileManager license details -->
+    <string name="pref_license_cmfm_details" translatable="false">A file manager for AOSP, focused on rooted devices and specially designed for the CyanogenMod Project.<![CDATA[<br/><br/>]]>This source was released under the terms of <![CDATA[<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>]]> license. <![CDATA[<br/><br/>]]>Visit <![CDATA[<a href="https://github.com/CyanogenMod">CyanogenMod Github</a>]]> and <![CDATA[<a href="http://review.cyanogenmod.com/">CyanogenMod Code Review</a>]]> to get the source and patches.<![CDATA[<br/><br/>]]>Copyright © 2013 The CyanogenMod Project</string>
+    <!-- Preferences - About - Credits and licenses - Android Syntax Highlight -->
+    <string name="pref_license_syntax_highlight" translatable="false"><![CDATA[<a href="https://github.com/CyanogenMod/android_packages_apps_CMFileManager">Android Syntax highlight</a>]]></string>
+    <!-- Preferences - About - Credits and licenses - Android Syntax Highlight license details -->
+    <string name="pref_license_syntax_highlight_details" translatable="false">A library for add syntax highlight to TextView and EditText widgets.<![CDATA[<br/><br/>]]>This library was developed as part of the CMFileManager app.<![CDATA[<br/><br/>]]>This source was released under the terms of <![CDATA[<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>]]> license.<![CDATA[<br/><br/>]]>Visit <![CDATA[<a href="https://github.com/CyanogenMod">CyanogenMod Github</a>]]> and <![CDATA[<a href="http://review.cyanogenmod.com/">CyanogenMod Code Review</a>]]> to get the source and patches.<![CDATA[<br/><br/>]]>Copyright © 2013 The CyanogenMod Project</string>
+    <!-- Preferences - About - Credits and licenses - ColorPickerView -->
+    <string name="pref_license_color_picker_view" translatable="false"><![CDATA[<a href="https://github.com/CyanogenMod/android_packages_apps_CMFileManager">Color Picker View</a>]]></string>
+    <!-- Preferences - About - Credits and licenses - ColorPickerView license details -->
+    <string name="pref_license_color_picker_view_details" translatable="false">A color picker is something that has always been missing from the standard set of components which developers can build their user interface in Android with. Although there have been a few color pickers floating around on the internet I never found any that I thought was good enough for use in my applications so I sat down to write my own. This is the result and I have decided to release it as open source application for all you developers out there to use, free of charge of course.<![CDATA[<br/><br/>]]>Checkout latest sources at <![CDATA[<a href="http://code.google.com/p/color-picker-view/">http://code.google.com/p/color-picker-view/</a>]]> <![CDATA[<br/><br/>]]>This library is released under the <![CDATA[<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>]]>  license.<![CDATA[<br/><br/>]]>Copyright © 2010 Daniel Nilsson Copyright © 2013 The CyanogenMod Project</string>
 
-    <!-- Preferences - Debug - Capture debug traces -->
-    <string name="pref_debug_traces">Log debugging information</string>
 
     <!-- Themes - Default theme name -->
     <string name="theme_default_name">Light Theme</string>
@@ -797,9 +811,10 @@
     <!-- Welcome Dialog - Message -->
     <string name="welcome_msg">Welcome to Backbone File Manager.\n\nThis app allows you to explore the file system and do operations that could break your device. To prevent damage, the app will start in a safe, low-privileged mode.\n\nYou can access the advanced, full-privileged mode via Settings. It\'s your responsibility to ensure that an operation doesn\'t break your system.\n\nThe Toolify Team</string>
 
+    <!-- Dashclock extension -->
     <string name="dashclock_extension_title">Filesystem status</string>
     <string name="dashclock_extension_description">Displays a summary of available drives on device. Shows either free or used disk space.</string>
-    <string name="dashclock_settings">Backbone extension settings</string>
+    <string name="dashclock_settings">Backbone Extension Settings</string>
     <string name="dashclock_icon">Icon</string>
     <string name="dashclock_usage">Disk usage to display</string>
     <string name="dashclock_settings_storage_title">Storage to display</string>

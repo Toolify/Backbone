@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.util.Log;
@@ -115,13 +116,45 @@ public class SettingsPreferences extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
-        if(DashExtension.isEnabled(this))
-        {
+
+        /* Manually load the header icons, since Android chokes on icons referenced via '?attr/xxx'
+           which must be done for theming */
+        final TypedArray a = getTheme().obtainStyledAttributes(R.styleable.FileManagerPrefs);
+
+        for (Header header : target) {
+            switch (header.titleRes) {
+                case R.string.pref_general:
+                    header.iconRes = a.getResourceId(R.styleable.FileManagerPrefs_preferenceIconGeneral,
+                            R.drawable.ic_preference_black_general);
+                    break;
+                case R.string.pref_search:
+                    header.iconRes = a.getResourceId(R.styleable.FileManagerPrefs_preferenceIconSearch,
+                            R.drawable.ic_preference_black_search);
+                    break;
+                case R.string.pref_editor:
+                    header.iconRes = a.getResourceId(R.styleable.FileManagerPrefs_preferenceIconEditor,
+                            R.drawable.ic_preference_black_editor);
+                    break;
+                case R.string.pref_about:
+                    header.iconRes = a.getResourceId(R.styleable.FileManagerPrefs_preferenceIconAbout,
+                            R.drawable.ic_preference_black_about);
+                    break;
+            }
+        }
+
+        // Create Dashclock preference if the user has enabled our Dashclock extension
+        if(DashExtension.isEnabled(this)) {
             Header dashHeader = new Header();
-            dashHeader.titleRes = R.string.dashclock_settings;
-            dashHeader.intent = new Intent(this, DashSettings.class);
+            dashHeader.titleRes = R.string.pref_dashclock;
+            Intent i =  new Intent(this, DashSettings.class);
+            i.putExtra("showLauncherIcon", true);
+            dashHeader.intent = i;
+            dashHeader.iconRes = a.getResourceId(R.styleable.FileManagerPrefs_preferenceIconDashclock,
+                    R.drawable.ic_preference_black_dashclock);
             target.add(dashHeader);
         }
+
+        a.recycle();
     }
 
     @Override

@@ -80,6 +80,12 @@
         <item name="indicatorIconFolder">@drawable/ic_indicator_holo_dark_folder</item>
         <item name="indicatorIconFile">@drawable/ic_indicator_holo_dark_file</item>
 
+        <!-- Preference icons -->
+        <item name="preferenceIconGeneral">@drawable/ic_preference_black_general</item>
+        <item name="preferenceIconSearch">@drawable/ic_preference_black_search</item>
+        <item name="preferenceIconEditor">@drawable/ic_preference_black_editor</item>
+        <item name="preferenceIconAbout">@drawable/ic_preference_black_about</item>
+        <item name="preferenceIconDashclock">@drawable/ic_preference_black_dashclock</item>
     </style>
 
     <!-- Base theme: Dark Actionbar (not implemented yet)  -->

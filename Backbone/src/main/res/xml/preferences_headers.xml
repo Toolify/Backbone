@@ -15,19 +15,21 @@
  -->
 
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- *NOTE: Android has problems loading header icons via ?attr/xxx, so we're loading them
+                manually in SettingsPreferences > onBuildHeaders() -->
     <header
             android:fragment="me.toolify.backbone.activities.preferences.GeneralPreferenceFragment"
-            android:title="@string/pref_general"/>
+            android:title="@string/pref_general" />
     <header
             android:fragment="me.toolify.backbone.activities.preferences.SearchPreferenceFragment"
-            android:title="@string/pref_search"/>
+            android:title="@string/pref_search" />
     <header
             android:fragment="me.toolify.backbone.activities.preferences.EditorPreferenceFragment"
-            android:title="@string/pref_editor"/>
-    <header
-            android:fragment="me.toolify.backbone.activities.preferences.ThemesPreferenceFragment"
-            android:title="@string/pref_themes"/>
+            android:title="@string/pref_editor" />
+    <!--<header-->
+            <!--android:fragment="me.toolify.backbone.activities.preferences.ThemesPreferenceFragment"-->
+            <!--android:title="@string/pref_themes"/>-->
     <header
             android:fragment="me.toolify.backbone.activities.preferences.AboutPreferenceFragment"
-            android:title="@string/pref_about"/>
+            android:title="@string/pref_about" />
 </preference-headers>

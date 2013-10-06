@@ -20,13 +20,16 @@
               android:layout_height="match_parent">
 
     <TextView
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/license_header"
             android:layout_gravity="left"
-            android:layout_margin="8dp"
-            android:textSize="32dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:paddingLeft="@dimen/extra_large_margin"
+            android:paddingRight="@dimen/extra_large_margin"
+            android:textSize="22dp"
             android:text="Header"/>
     <TextView
             android:fontFamily="sans-serif-light"
@@ -34,6 +37,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/license_details"
             android:layout_gravity="left"
-            android:layout_margin="8dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:paddingLeft="@dimen/extra_large_margin"
+            android:paddingRight="@dimen/extra_large_margin"
             android:text="Details"/>
 </LinearLayout>
