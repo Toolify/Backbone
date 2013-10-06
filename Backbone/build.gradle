@@ -1,3 +1,11 @@
+/* Define each version code component separately to facilitate cleaner version increments.
+   Suggestion courtesy of Jake Wharton:
+   https://plus.google.com/108284392618554783657/posts/6f5TcVPRZij */
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 1 // bump for dogfood builds, public betas, etc.
+
 buildscript {
     repositories {
         mavenCentral()
@@ -28,16 +36,23 @@ android {
 
     defaultConfig {
         packageName "me.toolify.backbone"
-        versionCode 1
-        versionName "0.0.0.1"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
         minSdkVersion 14
         targetSdkVersion 17
     }
 
+    /* Define a separate signing config for release builds, and we'll load the specifics in later
+       if the Toolify private credentials are present  */
     signingConfigs {
         release
     }
 
+    /* The buildConfig strings below allow content providers for each of the specified
+       build types to be simultaneously installed.  If we did not do this, debug and alpha builds
+       would have content providers with the same package name as the release version, and could not
+       be installed side-by-side.  Courtesy of Cyril Mottier:
+       https://plus.google.com/118417777153109946393/posts/EATUmhntaCQ */
     buildTypes {
         debug {
             buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_DEBUG + "\";" +
@@ -61,10 +76,13 @@ android {
         }
     }
 
-    // Plug in private keystore credentials if they exist
-    //  Note: A private gradle.properties file at the root of the project contains the properties
-    //  referenced below.  Building the Debug variant will work without the file, but release and
-    //  releaseAlpha will not until the properties file and its referenced keystore file are present
+    /* Plug in private keystore credentials if they exist
+       ==================================================
+       Note! A gradle.properties (private and not checked into source control) file at the root of
+       the project contains the properties referenced below.  Building the Debug variant will work
+       without the file, but release and releaseAlpha will not until the properties file and its
+       referenced keystore file are present
+       ================================================== */
     if (project.hasProperty('storeFile') && project.hasProperty('storePassword')
             && project.hasProperty('keyAlias') && project.hasProperty('keyPassword')) {
 
@@ -108,5 +126,24 @@ android {
                     'src/main/res',
                     'src/alpha/res']
         }
+    }
+
+    /* Now that each of the Android build types have been defined (including all of the background
+       stuff that is run from the gradle android plugin), go back in and change the
+       outputFile name of each build type to match template: "Backbone-v0.0.0.0-alpha" */
+    android.applicationVariants.all { variant ->
+
+        /* Define the outputFile names here.  Alpha and debug builds are assigned corresponding
+           suffixes, and release has no suffix */
+        def newName
+        if (variant.buildType.versionNameSuffix) {
+            newName = "Backbone-v${android.defaultConfig.versionName}${variant.buildType.versionNameSuffix}.apk"
+        } else {
+            newName = "Backbone-v${android.defaultConfig.versionName}.apk"
+        }
+
+        /* Assign the new outputFile name, and put the APK in the parent directory (parentFile) of
+           the of the default APK (which is Backbone/build/apk)  */
+        variant.outputFile = new File(variant.outputFile.parentFile, newName)
     }
 }
