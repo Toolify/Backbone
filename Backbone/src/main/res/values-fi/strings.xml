@@ -227,7 +227,6 @@
   <string name="actions_menu_extract">Pura</string>
   <string name="actions_menu_delete">Poista</string>
   <string name="actions_menu_rename">Uudelleennimeä</string>
-  <string name="actions_menu_create_copy">Luo kopio</string>
   <string name="actions_menu_properties">Ominaisuudet</string>
   <string name="actions_menu_add_to_bookmarks">Lisää kirjanmerkkeihin</string>
   <string name="actions_menu_add_shortcut">Luo pikakuvake</string>

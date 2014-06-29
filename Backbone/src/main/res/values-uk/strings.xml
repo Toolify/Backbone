@@ -258,7 +258,6 @@ xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="actions_menu_extract">Видобути</string>
     <string name="actions_menu_delete">Видалити</string>
     <string name="actions_menu_rename">Перейменувати</string>
-    <string name="actions_menu_create_copy">Копіювати</string>
     <string name="actions_menu_properties">Властивості</string>
     <string name="actions_menu_add_to_bookmarks">Додати до закладок</string>
     <string name="actions_menu_add_shortcut">Додати ярлик</string>

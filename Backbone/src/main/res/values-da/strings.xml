@@ -235,7 +235,6 @@
   <string name="actions_menu_extract">Udpak</string>
   <string name="actions_menu_delete">Slet</string>
   <string name="actions_menu_rename">Omdøb</string>
-  <string name="actions_menu_create_copy">Opret kopi</string>
   <string name="actions_menu_properties">Egenskaber</string>
   <string name="actions_menu_add_to_bookmarks">Tilføj til bogmærker</string>
   <string name="actions_menu_add_shortcut">Tilføj genvej</string>

@@ -223,7 +223,6 @@
     <string name="actions_menu_extract">Αποσυμπίεση</string>
     <string name="actions_menu_delete">Διαγραφή</string>
     <string name="actions_menu_rename">Μετονομασία</string>
-    <string name="actions_menu_create_copy">Δημ. αντίγραφου</string>
     <string name="actions_menu_properties">Ιδιότητες</string>
     <string name="actions_menu_add_to_bookmarks">Προσθ. στους σελιδοδείκτες</string>
     <string name="actions_menu_add_shortcut">Προσθήκη συντόμευσης</string>

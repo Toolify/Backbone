@@ -225,7 +225,6 @@
     <string name="actions_menu_extract">Entpacken</string>
     <string name="actions_menu_delete">Löschen</string>
     <string name="actions_menu_rename">Umbenennen</string>
-    <string name="actions_menu_create_copy">Kopie erstellen</string>
     <string name="actions_menu_properties">Eigenschaften</string>
     <string name="actions_menu_add_to_bookmarks">Neues Lesezeichen</string>
     <string name="actions_menu_add_shortcut">Neue Verknüpfung</string>

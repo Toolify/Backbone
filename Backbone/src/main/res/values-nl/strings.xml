@@ -223,7 +223,6 @@
     <string name="actions_menu_extract">Uitpakken</string>
     <string name="actions_menu_delete">Verwijderen</string>
     <string name="actions_menu_rename">Naam wijzigen</string>
-    <string name="actions_menu_create_copy">Kopie maken</string>
     <string name="actions_menu_properties">Eigenschappen</string>
     <string name="actions_menu_add_to_bookmarks">Favoriet maken</string>
     <string name="actions_menu_add_shortcut">Snelkoppeling maken</string>

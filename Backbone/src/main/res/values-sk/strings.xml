@@ -463,8 +463,6 @@
   <string name="actions_menu_delete">Odstrániť</string>
   <!-- Actions Dialog * Menu * Rename -->
   <string name="actions_menu_rename">Premenovať</string>
-  <!-- Actions Dialog * Menu * Create copy -->
-  <string name="actions_menu_create_copy">Vytvoriť kópiu</string>
   <!-- Actions Dialog * Menu * Properties -->
   <string name="actions_menu_properties">Vlastnosti</string>
   <!-- Actions Dialog * Menu * Add to bookmarks -->

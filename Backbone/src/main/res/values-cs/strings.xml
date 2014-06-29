@@ -247,7 +247,6 @@
   <string name="actions_menu_extract">Rozbalit</string>
   <string name="actions_menu_delete">Smazat</string>
   <string name="actions_menu_rename">Přejmenovat</string>
-  <string name="actions_menu_create_copy">Vytvořit kopii</string>
   <string name="actions_menu_properties">Vlastnosti</string>
   <string name="actions_menu_add_to_bookmarks">Přidat do záložek</string>
   <string name="actions_menu_add_shortcut">Přidat zástupce</string>

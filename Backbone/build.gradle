@@ -11,10 +11,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 /* mavenCentral() is specified at this level in addition to the buildscript block above so that
    Gradle knows which repository to use when resolving the dependancies listed below.  See answer in
@@ -24,25 +24,17 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.0'
-    compile 'de.greenrobot:eventbus:2.2.0'
+    compile 'com.android.support:support-v4:19.0.1'
+    compile 'de.greenrobot:eventbus:2.2.1'
     compile files('libs/dashclock-api-r2.0.jar')
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0.0"
-
-    final SEARCHES_PROVIDER_DEBUG = "me.toolify.backbone.debug.providers.recentsearches"
-    final SEARCHES_PROVIDER_RELEASE = "me.toolify.backbone.providers.recentsearches"
-    final SEARCHES_PROVIDER_ALPHA = "me.toolify.backbone.alpha.providers.recentsearches"
-
-    final BOOKMARKS_PROVIDER_DEBUG = "me.toolify.backbone.debug.providers.bookmarks"
-    final BOOKMARKS_PROVIDER_RELEASE = "me.toolify.backbone.providers.bookmarks"
-    final BOOKMARKS_PROVIDER_ALPHA = "me.toolify.backbone.alpha.providers.bookmarks"
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
-        packageName "me.toolify.backbone"
+        applicationId "me.toolify.backbone"
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
         minSdkVersion 14
@@ -62,24 +54,26 @@ android {
        https://plus.google.com/118417777153109946393/posts/EATUmhntaCQ */
     buildTypes {
         debug {
-            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_DEBUG + "\";" +
-                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_DEBUG + "\";"
-            packageNameSuffix ".debug"
+            buildConfigField "String" , "SEARCHES_PROVIDER_AUTHORITY" , "\"me.toolify.backbone.debug.providers.recentsearches\""
+            buildConfigField "String" , "BOOKMARKS_PROVIDER_AUTHORITY" ,  "\"me.toolify.backbone.debug.providers.bookmarks\""
+            applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+            debuggable true
         }
 
         release {
-            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_RELEASE + "\";" +
-                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_RELEASE + "\";"
+            buildConfigField "String" , "SEARCHES_PROVIDER_AUTHORITY" , "\"me.toolify.backbone.providers.recentsearches\""
+            buildConfigField "String" , "BOOKMARKS_PROVIDER_AUTHORITY" ,  "\"me.toolify.backbone.providers.bookmarks\""
             signingConfig signingConfigs.release
         }
 
         alpha.initWith(buildTypes.release) // base alpha buildType on release buildType
         alpha {
-            buildConfig "public static final String SEARCHES_PROVIDER_AUTHORITY = \"" + SEARCHES_PROVIDER_ALPHA + "\";" +
-                        "public static final String BOOKMARKS_PROVIDER_AUTHORITY = \"" + BOOKMARKS_PROVIDER_ALPHA + "\";"
-            packageNameSuffix ".alpha"
+            buildConfigField "String" , "SEARCHES_PROVIDER_AUTHORITY" , "\"me.toolify.backbone.alpha.providers.recentsearches\""
+            buildConfigField "String" , "BOOKMARKS_PROVIDER_AUTHORITY" ,  "\"me.toolify.backbone.alpha.providers.bookmarks\""
+            applicationIdSuffix ".alpha"
             versionNameSuffix "-alpha"
+            debuggable true
         }
     }
 
@@ -112,26 +106,20 @@ android {
 
     sourceSets {
         main {
-            resources.srcDirs = ['libs/color-picker-view/src','libs/android-syntax-highlight/src','themes/src']
+            main.resources.srcDirs = ['libs/color-picker-view/src','libs/android-syntax-highlight/src','themes/src', 'src/main/res']
         }
 
         // Merge in build type specific resources
         debug {
-            res.srcDirs = [
-                    'src/main/res',
-                    'src/debug/res']
+            resources.srcDirs = ['src/debug/res']
         }
 
         release {
-            res.srcDirs = [
-                    'src/main/res',
-                    'src/release/res']
+            resources.srcDirs = ['src/release/res']
         }
 
         alpha {
-            res.srcDirs = [
-                    'src/main/res',
-                    'src/alpha/res']
+            resources.srcDirs = ['src/alpha/res']
         }
     }
 
@@ -156,5 +144,5 @@ android {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
+    gradleVersion = '1.12'
 }

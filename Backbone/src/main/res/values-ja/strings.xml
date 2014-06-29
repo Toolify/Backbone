@@ -480,8 +480,6 @@
   <string name="actions_menu_delete">削除</string>
   <!-- Actions Dialog * Menu * Rename -->
   <string name="actions_menu_rename">リネーム</string>
-  <!-- Actions Dialog * Menu * Create copy -->
-  <string name="actions_menu_create_copy">コピーを作成</string>
   <!-- Actions Dialog * Menu * Properties -->
   <string name="actions_menu_properties">プロパティ</string>
   <!-- Actions Dialog * Menu * Add to bookmarks -->

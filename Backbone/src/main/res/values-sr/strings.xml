@@ -500,8 +500,6 @@
   <string name="actions_menu_delete">Избриши</string>
   <!-- Actions Dialog * Menu * Rename -->
   <string name="actions_menu_rename">Преименуј</string>
-  <!-- Actions Dialog * Menu * Create copy -->
-  <string name="actions_menu_create_copy">Направи копију</string>
   <!-- Actions Dialog * Menu * Properties -->
   <string name="actions_menu_properties">Особине</string>
   <!-- Actions Dialog * Menu * Add to bookmarks -->

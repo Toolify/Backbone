@@ -275,7 +275,6 @@
   <string name="actions_menu_extract">解压</string>
   <string name="actions_menu_delete">删除</string>
   <string name="actions_menu_rename">重命名</string>
-  <string name="actions_menu_create_copy">创建副本</string>
   <string name="actions_menu_properties">属性</string>
   <string name="actions_menu_add_to_bookmarks">添加到书签</string>
   <string name="actions_menu_add_shortcut">添加快捷方式</string>

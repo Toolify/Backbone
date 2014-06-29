@@ -493,8 +493,6 @@
   <!-- Actions Dialog * Menu * Rename -->
   <string name="actions_menu_rename">Hernoem</string>
   <!-- Actions Dialog * Menu * Create copy -->
-  <string name="actions_menu_create_copy">Maak \'n kopie</string>
-  <!-- Actions Dialog * Menu * Properties -->
   <string name="actions_menu_properties">Eienskappe</string>
   <!-- Actions Dialog * Menu * Add to bookmarks -->
   <string name="actions_menu_add_to_bookmarks">Voeg by boekmerke</string>
